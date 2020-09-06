@@ -1,9 +1,16 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('Admin component', () => {
+  let wrapper;
+  // let instance;
+
+  beforeEach(() => {
+    wrapper = shallow(<App />);
+    // instance = wrapper.instance();
+  });
+
+  it('renders without crashing', () => {
+    expect(wrapper.length).toEqual(1);
+  });
 });
