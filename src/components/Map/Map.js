@@ -34,7 +34,10 @@ const renderPopups = (wrecks) => {
                 src={renderPopupImage(wreck.properties.featureTypeShort)}
               />
               <Card.Header><div className='wreck-popup-name'>{wreck.properties.name}</div></Card.Header>
-              <Card.Meta>{wreck.properties.featureTypeShort}</Card.Meta>
+              <Card.Meta>
+                {wreck.properties.featureTypeShort}
+                {wreck.properties.yearSunk && `: sunk ${wreck.properties.yearSunk}`}
+              </Card.Meta>
               <Card.Description>
                 <div className='wreck-popup-history' title={wreck.properties.history}>{wreck.properties.history}</div>
               </Card.Description>
