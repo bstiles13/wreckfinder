@@ -1,13 +1,15 @@
 import React from 'react';
 import { Map } from './components/Map/Map';
+import { Sidebar } from './components/Sidebar/Sidebar';
 
 import './App.scss';
 
 const App = () => {
   return (
     <div className='app'>
-      Wreck Finder
-      <Map />
+      <Sidebar>
+        <Map />
+      </Sidebar>
     </div>
   );
 };
