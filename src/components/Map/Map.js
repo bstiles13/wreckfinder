@@ -4,8 +4,18 @@ import { Map as LeafletMap, Marker, Popup } from 'react-leaflet';
 import { isEmpty, map } from 'lodash';
 import axios from 'axios';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
+import { Button, Card, Image } from 'semantic-ui-react';
 
 import './Map.scss';
+
+const renderPopupImage = (type) => {
+  const types = {
+    wreck: require('../../assets/wreck_icon.png'),
+    obstruction: require('../../assets/rocks_icon.png')
+  };
+
+  return types[type];
+};
 
 const renderPopups = (wrecks) => {
   if (isEmpty(wrecks)) return;
@@ -16,11 +26,28 @@ const renderPopups = (wrecks) => {
     return (
       <Marker key={`wreck-${i}`} position={wreck.geometry.coordinates} transparent>
         <Popup className='wreck-popup'>
-          <div className='wreck-popup-name'>{wreck.properties.name}</div>
-          <div className='wreck-popup-history' title={wreck.properties.history}>{wreck.properties.history}</div>
+          <Card>
+            <Card.Content>
+              <Image
+                floated='right'
+                size='mini'
+                src={renderPopupImage(wreck.properties.featureTypeShort)}
+              />
+              <Card.Header><div className='wreck-popup-name'>{wreck.properties.name}</div></Card.Header>
+              <Card.Meta>{wreck.properties.featureTypeShort}</Card.Meta>
+              <Card.Description>
+                <div className='wreck-popup-history' title={wreck.properties.history}>{wreck.properties.history}</div>
+              </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <div className='ui two buttons'>
+                <Button basic color='green'>Favorite</Button>
+                <Button basic color='red'>Search</Button>
+              </div>
+            </Card.Content>
+          </Card>
         </Popup>
       </Marker>
-
     );
   });
 };

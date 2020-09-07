@@ -5,4 +5,8 @@
     -webkit-box-orient: vertical;  
     overflow: hidden;
   }
+
+  .ui.card {
+    box-shadow: none !important;
+  }
 }
