@@ -1,13 +1,14 @@
-import * as esri from 'esri-leaflet';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Map as LeafletMap, Marker, Popup } from 'react-leaflet';
+import * as esri from 'esri-leaflet';
 import { isEmpty, map } from 'lodash';
-import axios from 'axios';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { Button, Card, Image } from 'semantic-ui-react';
-// import L from 'leaflet';
+import { setSelectedWreck } from '../../store/actions';
 
 import './Map.scss';
+import { bindActionCreators } from 'redux';
 
 const renderPopupImage = (type) => {
   const types = {
@@ -18,7 +19,7 @@ const renderPopupImage = (type) => {
   return types[type];
 };
 
-const renderPopups = (wrecks) => {
+const renderMarkers = ({ wrecks, setSelectedWreck }) => {
   if (isEmpty(wrecks)) return;
 
   let newWrecks = wrecks.slice(0, 100);
@@ -26,7 +27,7 @@ const renderPopups = (wrecks) => {
   return map(newWrecks, (wreck, i) => {
     return (
       <Marker key={`wreck-${i}`} position={wreck.geometry.coordinates} transparent>
-        <Popup className='wreck-popup'>
+        <Popup className='wreck-popup' onOpen={() => setSelectedWreck(wreck)}>
           <Card>
             <Card.Content>
               <Image
@@ -56,16 +57,7 @@ const renderPopups = (wrecks) => {
   });
 };
 
-const fetchWrecks = async (cb) => {
-  try {
-    const res = await axios.get('/wrecks');
-    cb(res.data);
-  } catch (error) {
-    return error;
-  }
-};
-
-export const Map = () => {
+export const Map = ({ wrecks, setSelectedWreck }) => {
   const mapRef = useRef();
 
   useEffect(() => {
@@ -79,11 +71,6 @@ export const Map = () => {
     // }).addTo(mapRef.current);
   }, []);
 
-  const [wrecks, setWrecks] = useState([]);
-  useEffect(() => {
-    fetchWrecks(setWrecks);
-  }, []);
-
   return (
     <LeafletMap
       className='map'
@@ -94,8 +81,18 @@ export const Map = () => {
       style={{ height: '100%', width: '100%' }}
     >
       <MarkerClusterGroup maxClusterRadius={40}>
-        {renderPopups(wrecks)}
+        {renderMarkers({ wrecks, setSelectedWreck })}
       </MarkerClusterGroup>
     </LeafletMap>
   );
 };
+
+const mapStateToProps = state => ({
+  wrecks: state.wrecks.wrecks
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setSelectedWreck
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
