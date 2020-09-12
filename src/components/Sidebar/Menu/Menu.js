@@ -1,52 +1,56 @@
 import React, { useState } from 'react';
 import {
   Menu as SemanticMenu,
-  Icon,
-  Segment
+  Icon
 } from 'semantic-ui-react';
+import { Login } from './Login/Login';
+import { Results } from './Results/Results';
+import { Articles } from './Articles/Articles';
+import { Favorites } from './Favorites/Favorites';
+import { Trivia } from './Trivia/Trivia';
 
 export const Menu = () => {
-  const [activeItem, setActiveItem] = useState('tab1');
-  const handleItemClick = (e, { name }) => setActiveItem(name);
+  const [activeTab, setActiveTab] = useState('login');
+  const handleItemClick = (e, { name }) => setActiveTab(name);
 
   return (
     <>
       <SemanticMenu attached='top' tabular>
         <SemanticMenu.Item
-          name='tab1'
-          active={activeItem === 'tab1'}
+          name='login'
+          active={activeTab === 'login'}
           onClick={handleItemClick}
           as='a'
         >
           <Icon name='user' />Sign In
         </SemanticMenu.Item>
         <SemanticMenu.Item
-          name='tab2'
-          active={activeItem === 'tab2'}
+          name='results'
+          active={activeTab === 'results'}
           onClick={handleItemClick}
           as='a'
         >
           <Icon name='database' />Results
         </SemanticMenu.Item>
         <SemanticMenu.Item
-          name='tab3'
-          active={activeItem === 'tab3'}
+          name='articles'
+          active={activeTab === 'articles'}
           onClick={handleItemClick}
           as='a'
         >
           <Icon name='newspaper outline' />Articles
         </SemanticMenu.Item>
         <SemanticMenu.Item
-          name='tab4'
-          active={activeItem === 'tab4'}
+          name='favorites'
+          active={activeTab === 'favorites'}
           onClick={handleItemClick}
           as='a'
         >
           <Icon name='favorite' />Favorites
         </SemanticMenu.Item>
         <SemanticMenu.Item
-          name='tab5'
-          active={activeItem === 'tab5'}
+          name='trivia'
+          active={activeTab === 'trivia'}
           onClick={handleItemClick}
           as='a'
         >
@@ -54,19 +58,11 @@ export const Menu = () => {
         </SemanticMenu.Item>
       </SemanticMenu>
 
-      <Segment attached='bottom'>
-        {`There are many variations of passages of Lorem Ipsum available, but
-                the majority have suffered alteration in some form, by injected
-                humour, or randomised words which don't look even slightly believable.
-                If you are going to use a passage of Lorem Ipsum, you need to be sure
-                there isn't anything embarrassing hidden in the middle of text. All
-                the Lorem Ipsum generators on the Internet tend to repeat predefined
-                chunks as necessary, making this the first true generator on the
-                Internet. It uses a dictionary of over 200 Latin words, combined with
-                a handful of model sentence structures, to generate Lorem Ipsum which
-                looks reasonable. The generated Lorem Ipsum is therefore always free
-                from repetition, injected humour, or non-characteristic words etc.`}
-      </Segment>
+      <Login isActive={activeTab === 'login'} />
+      <Results isActive={activeTab === 'results'} />
+      <Articles isActive={activeTab === 'articles'} />
+      <Favorites isActive={activeTab === 'favorites'} />
+      <Trivia isActive={activeTab === 'trivia'} />
     </>
   );
 };
