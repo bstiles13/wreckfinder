@@ -27,7 +27,7 @@ export const Search = () => {
               className={`advanced-toggle ${state.advancedMode ? 'active' : ''}`}
               onClick={() => setState({ ...state, advancedMode: !state.advancedMode })}>
               Advanced
-              {state.advancedMode && <Icon name='check' />}
+              <Icon name={state.advancedMode ? 'angle down' : 'angle left'} />
             </Label>
           </div>
         }
