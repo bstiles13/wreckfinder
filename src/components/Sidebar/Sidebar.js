@@ -5,7 +5,7 @@ import {
   Segment,
   Sidebar as SemanticSidebar
 } from 'semantic-ui-react';
-import { Search } from './Search/Search';
+import Search from './Search/Search';
 
 import './Sidebar.scss';
 

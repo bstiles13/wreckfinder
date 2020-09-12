@@ -19,12 +19,10 @@ const renderPopupImage = (type) => {
   return types[type];
 };
 
-const renderMarkers = ({ wrecks, setSelectedWreck }) => {
+const renderMarkers = ({ filteredWrecks: wrecks, setSelectedWreck }) => {
   if (isEmpty(wrecks)) return;
 
-  let newWrecks = wrecks.slice(0, 100);
-
-  return map(newWrecks, (wreck, i) => {
+  return map(wrecks, (wreck, i) => {
     return (
       <Marker key={`wreck-${i}`} position={wreck.geometry.coordinates} transparent>
         <Popup className='wreck-popup' onOpen={() => setSelectedWreck(wreck)}>
@@ -35,7 +33,7 @@ const renderMarkers = ({ wrecks, setSelectedWreck }) => {
                 size='mini'
                 src={renderPopupImage(wreck.properties.featureTypeShort)}
               />
-              <Card.Header><div className='wreck-popup-name'>{wreck.properties.name}</div></Card.Header>
+              <Card.Header><div className='wreck-popup-name'>{wreck.properties.name || 'Unknown'}</div></Card.Header>
               <Card.Meta>
                 {wreck.properties.featureTypeShort}
                 {wreck.properties.yearSunk && `: sunk ${wreck.properties.yearSunk}`}
@@ -57,7 +55,7 @@ const renderMarkers = ({ wrecks, setSelectedWreck }) => {
   });
 };
 
-export const Map = ({ wrecks, setSelectedWreck }) => {
+export const Map = ({ wrecks, setSelectedWreck, filteredWrecks }) => {
   const mapRef = useRef();
 
   useEffect(() => {
@@ -79,16 +77,18 @@ export const Map = ({ wrecks, setSelectedWreck }) => {
       zoom={4}
       minZoom={3}
       style={{ height: '100%', width: '100%' }}
+      worldCopyJump={true}
     >
       <MarkerClusterGroup maxClusterRadius={40}>
-        {renderMarkers({ wrecks, setSelectedWreck })}
+        {renderMarkers({ filteredWrecks, setSelectedWreck })}
       </MarkerClusterGroup>
     </LeafletMap>
   );
 };
 
 const mapStateToProps = state => ({
-  wrecks: state.wrecks.wrecks
+  wrecks: state.wrecks.wrecks,
+  filteredWrecks: state.filteredWrecks.filteredWrecks
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
