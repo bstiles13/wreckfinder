@@ -15,7 +15,7 @@ export const Menu = () => {
 
   return (
     <>
-      <SemanticMenu attached='top' tabular>
+      <SemanticMenu className='sidebar-menu' attached='top' tabular>
         <SemanticMenu.Item
           name='login'
           active={activeTab === 'login'}

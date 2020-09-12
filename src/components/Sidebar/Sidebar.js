@@ -34,10 +34,10 @@ export const Sidebar = ({ children }) => {
               <div className='app-title'>Wreck Finder</div>
               <Icon className='map-sidebar-toggle' name='angle double left' size='large' onClick={() => setVisible(false)} />
             </div>
-            <div className='map-sidebar-content-body'>
+            <div className='search-container'>
               <Search />
             </div>
-            <div>
+            <div className='menu-container'>
               <Menu />
             </div>
           </div>

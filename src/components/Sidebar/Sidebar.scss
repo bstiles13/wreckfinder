@@ -22,19 +22,17 @@
       }
     }
 
-    &-body {
+    .search-container{
       padding: 0.5rem;
     }
 
-    &-results {
+    .menu-container {
+      height: 100%;
       display: flex;
-      
-      .item {
-        flex: 1 !important;
-      }
+      flex-direction: column;
 
-      .item:hover {
-        border-bottom: none !important;
+      .ui.segment {
+        flex: 1 !important;
       }
     }
   }
