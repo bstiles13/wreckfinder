@@ -7,7 +7,7 @@ export const FETCH_WRECKS_FAILURE = 'FETCH_WRECKS_FAILURE';
 export const fetchWrecks = () => async (dispatch) => {
   dispatch({ type: FETCH_WRECKS_REQUEST });
   try {
-    const res = await axios.get('/wrecks');
+    const res = await axios.get('/api/wrecks');
     dispatch({
       type: FETCH_WRECKS_SUCCESS,
       payload: res.data

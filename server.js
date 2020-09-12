@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3001;
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/wrecks', (req, res) => {
+app.get('/api/wrecks', (req, res) => {
   return res.json(wrecks);
 });
 
