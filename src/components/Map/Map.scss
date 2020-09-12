@@ -1,3 +1,10 @@
+.map {
+  .leaflet-control-zoom {
+    right: 10px !important;
+    position: fixed !important;
+  }
+}
+
 .wreck-popup {
   &-history {
     display: -webkit-box;

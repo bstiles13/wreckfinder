@@ -1,0 +1,49 @@
+.search {
+  text-align: left;
+  padding-bottom: 1rem;
+
+  &-buttons {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &-submit-button {
+    text-align: right;
+  }
+
+  .description-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin: 0 0 .28571429rem 0;
+
+    .advanced-toggle {
+      cursor: pointer;
+      background-color: transparent !important;
+      // border: 1px solid white;
+      padding: 0.2rem 0.3rem;
+      align-self: flex-end;
+
+      i {
+        margin: 0 0 0 0.4rem !important;
+      }
+
+      &.active, &:hover {
+        // border: 1px solid rgb(9, 91, 158);
+        background-color: rgb(54, 144, 218) !important;
+        color: rgb(54, 144, 218);
+        color: white;
+      }
+    }
+  }
+
+  label {
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .ui.labeled.input>.label {
+    width: 7.2rem !important;
+    background-color: rgb(247, 246, 213);
+  }
+}

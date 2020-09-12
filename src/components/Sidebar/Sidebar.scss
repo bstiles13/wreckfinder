@@ -1,6 +1,8 @@
 .map-sidebar {
-  min-width: 15rem;
-  width: 25% !important;
+  min-width: 28%;
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  resize: both !important;
+  overflow: auto !important;
 
   &-content {
     display: flex;
@@ -16,6 +18,23 @@
         flex: 1;
         font-size: 1.5rem;
         font-weight: bold;
+        text-transform: uppercase;
+      }
+    }
+
+    &-body {
+      padding: 0.5rem;
+    }
+
+    &-results {
+      display: flex;
+      
+      .item {
+        flex: 1 !important;
+      }
+
+      .item:hover {
+        border-bottom: none !important;
       }
     }
   }
@@ -25,8 +44,8 @@
 
     &-show {
       position: fixed !important;
-      left: 0.8rem;
-      top: 6rem;
+      left: 10px;
+      top: 10px;
       z-index: 1;
       color: #383232 !important;
     }

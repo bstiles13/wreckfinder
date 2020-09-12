@@ -5,6 +5,7 @@ import { isEmpty, map } from 'lodash';
 import axios from 'axios';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { Button, Card, Image } from 'semantic-ui-react';
+// import L from 'leaflet';
 
 import './Map.scss';
 
@@ -71,6 +72,11 @@ export const Map = () => {
     if (isEmpty(mapRef.current)) return false;
 
     esri.basemapLayer('Oceans').addTo(mapRef.current.leafletElement);
+
+    // add zoom control with your options
+    // L.control.zoom({
+    //   position: 'topright'
+    // }).addTo(mapRef.current);
   }, []);
 
   const [wrecks, setWrecks] = useState([]);
@@ -80,6 +86,7 @@ export const Map = () => {
 
   return (
     <LeafletMap
+      className='map'
       ref={mapRef}
       center={[38.0406, -84.5037]}
       zoom={4}
