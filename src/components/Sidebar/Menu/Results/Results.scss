@@ -2,13 +2,19 @@
   padding: 0 !important;
 
   .result {
-    cursor: pointer;
-    display: flex;
-    text-align: left;
-    padding: 0.7rem;
 
-    &:hover {
-      background-color: rgb(243, 243, 243);
+    &-row {
+      padding: 0.7rem;
+
+      &.selectable {
+        display: flex;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      &.selectable:hover {
+        background-color: rgb(243, 243, 243);
+      }
     }
 
     &-content-right {
