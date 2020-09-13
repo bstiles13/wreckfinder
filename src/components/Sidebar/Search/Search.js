@@ -112,12 +112,14 @@ export const Search = ({ wrecks, setFilteredWrecks }) => {
       }
       <Form.Group as={Button.Group} className='search-buttons'>
         <Form.Button
+          type='button'
           className='search-form-button search-clear-button'
           onClick={() => { setState({ ...INITIAL_STATE }); setFilteredWrecks([]); }}
           inverted>
           Clear
         </Form.Button>
         <Form.Button
+          type='button'
           className='search-form-button search-random-button'
           onClick={() => randomizeWrecks({ wrecks, setFilteredWrecks })}>
           Random
