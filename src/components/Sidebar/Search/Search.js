@@ -33,7 +33,7 @@ export const Search = ({ wrecks, setFilteredWrecks }) => {
   };
 
   const searchWrecks = ({ after, before, description, hasName, name, wrecks, setFilteredWrecks }) => {
-    const results = filter(wrecks, wreck => {
+    const results = shuffle(filter(wrecks, wreck => {
       const nameMatch = isEmpty(name) || toLower(get(wreck, 'properties.name', '')).includes(toLower(name));
       const descriptionMatch = (
         isEmpty(description) ||
@@ -42,10 +42,10 @@ export const Search = ({ wrecks, setFilteredWrecks }) => {
       );
       const afterMatch = isEmpty(after) || parseInt(get(wreck, 'properties.yearSunk', 0)) > parseInt(after);
       const beforeMatch = isEmpty(before) || parseInt(get(wreck, 'properties.yearSunk', 0)) < parseInt(before);
-      const hasNameMatch = !hasName || (!!wreck.properties.name && toLower(wreck.properties.name) !== 'unknown');
+      const hasNameMatch = !hasName || (!!wreck.properties.name && toLower(wreck.properties.name) !== 'unknown' && toLower(wreck.properties.name) !== 'obstruction');
 
       return nameMatch && descriptionMatch && afterMatch && beforeMatch && hasNameMatch;
-    });
+    }));
 
     setFilteredWrecks(results.slice(0, 100));
   };
