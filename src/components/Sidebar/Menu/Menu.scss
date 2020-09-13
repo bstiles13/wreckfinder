@@ -1,3 +1,10 @@
 .sidebar-menu {
   min-height: 3.9rem !important;
+  flex-wrap: wrap-reverse;
+  justify-content: center;
+
+  a.item {
+    flex: 1 !important;
+    max-width: 7rem !important;
+  }
 }

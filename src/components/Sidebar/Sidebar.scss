@@ -1,5 +1,5 @@
 .map-sidebar {
-  min-width: 28%;
+  min-width: 29%;
   background-color: rgba(255, 255, 255, 0.98) !important;
   resize: both !important;
   overflow: auto !important;
@@ -50,5 +50,11 @@
       z-index: 1;
       color: #383232 !important;
     }
+  }
+}
+
+@media (max-width: 1280px) {
+  .map-sidebar {
+    min-width: 36%;
   }
 }
