@@ -27,7 +27,8 @@
     "semantic-ui-react": "1.2.1"
   },
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "start-watch": "nodemon server.js",
     "start-ui": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
