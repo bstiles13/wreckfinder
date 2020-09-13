@@ -12,9 +12,7 @@ app.get('/api/wrecks', (req, res) => {
   return res.json(wrecks);
 });
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'build', 'index.html')));
 
 app.listen(PORT, () => {
   console.log(`Successful connection on port ${PORT}`);
