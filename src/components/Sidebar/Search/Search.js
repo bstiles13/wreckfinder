@@ -8,11 +8,12 @@ import { get, shuffle, filter, toLower, reduce, isEmpty } from 'lodash';
 import './Search.scss';
 
 const INITIAL_STATE = {
+  advancedMode: false,
   name: '',
   description: '',
   after: null,
   before: null,
-  hasName: false
+  hasName: true
 };
 
 export const Search = ({ wrecks, setFilteredWrecks }) => {
