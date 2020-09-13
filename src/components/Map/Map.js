@@ -80,12 +80,20 @@ export const Map = ({ wrecks, setSelectedWreck, filteredWrecks, selectedWreck })
     }
   }, [selectedWreck]);
 
+  const [layer, setLayer] = useState({ type: 'Oceans', labels: 'OceansLabels' })
   useEffect(() => {
-    if (isEmpty(mapRef.current)) return false;
+    const map = get(mapRef, 'current.leafletElement');
 
-    esri.basemapLayer('Oceans').addTo(mapRef.current.leafletElement);
-    esri.basemapLayer('OceansLabels').addTo(mapRef.current.leafletElement);
-  }, []);
+    if (!map) return false;
+
+    // Removes stale layers before adding new layers
+    map.eachLayer(layer => {
+      layer._url && map.removeLayer(layer);
+    });
+
+    esri.basemapLayer(layer.type).addTo(map);
+    esri.basemapLayer(layer.labels).addTo(map);
+  }, [layer]);
 
   return (
     <LeafletMap
@@ -100,6 +108,11 @@ export const Map = ({ wrecks, setSelectedWreck, filteredWrecks, selectedWreck })
       <MarkerClusterGroup maxClusterRadius={40}>
         {renderMarkers({ filteredWrecks, selectedWreck, setSelectedWreck })}
       </MarkerClusterGroup>
+      <div
+        className={`layer-toggle ${layer.type === 'Oceans' ? 'layer-toggle-imagery' : 'layer-toggle-oceans'}`}
+        onClick={() => layer.type === 'Oceans' ? setLayer({ type: 'Imagery', labels: 'ImageryLabels' }) : setLayer({ type: 'Oceans', labels: 'OceansLabels' })}>
+        {layer.type === 'Oceans' ? 'Imagery' : 'Oceans'}
+      </div>
     </LeafletMap>
   );
 };
