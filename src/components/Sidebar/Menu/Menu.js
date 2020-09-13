@@ -15,7 +15,7 @@ import { setSelectedWreck } from '../../../store/actions';
 
 import './Menu.scss';
 
-export const Menu = ({ filteredWrecks, setSelectedWreck }) => {
+export const Menu = ({ filteredWrecks, selectedWreck, setSelectedWreck }) => {
   const [activeTab, setActiveTab] = useState('results');
   const handleItemClick = (e, { name }) => setActiveTab(name);
 
@@ -70,7 +70,7 @@ export const Menu = ({ filteredWrecks, setSelectedWreck }) => {
         </SemanticMenu.Item>
       </SemanticMenu>
 
-      <Results isActive={activeTab === 'results'} filteredWrecks={filteredWrecks} setSelectedWreck={setSelectedWreck} />
+      <Results isActive={activeTab === 'results'} filteredWrecks={filteredWrecks} selectedWreck={selectedWreck} setSelectedWreck={setSelectedWreck} />
       <Articles isActive={activeTab === 'articles'} />
       <Favorites isActive={activeTab === 'favorites'} />
       <Trivia isActive={activeTab === 'trivia'} />
@@ -80,7 +80,8 @@ export const Menu = ({ filteredWrecks, setSelectedWreck }) => {
 };
 
 const mapStateToProps = state => ({
-  filteredWrecks: state.filteredWrecks.filteredWrecks
+  filteredWrecks: state.filteredWrecks.filteredWrecks,
+  selectedWreck: state.selectedWreck.selectedWreck
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
