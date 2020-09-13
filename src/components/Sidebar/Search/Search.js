@@ -3,12 +3,20 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Form, Label, Icon, Button } from 'semantic-ui-react';
 import { setFilteredWrecks } from '../../../store/actions';
-import { shuffle } from 'lodash';
+import { get, shuffle, filter, toLower, reduce, isEmpty } from 'lodash';
 
 import './Search.scss';
 
+const INITIAL_STATE = {
+  name: '',
+  description: '',
+  after: null,
+  before: null,
+  hasName: false
+};
+
 export const Search = ({ wrecks, setFilteredWrecks }) => {
-  const [state, setState] = useState({});
+  const [state, setState] = useState({ ...INITIAL_STATE });
 
   const handleChange = e => {
     setState({
@@ -21,6 +29,24 @@ export const Search = ({ wrecks, setFilteredWrecks }) => {
     let randomWrecks = shuffle(wrecks);
     randomWrecks = randomWrecks.slice(0, 100);
     setFilteredWrecks(randomWrecks);
+  };
+
+  const searchWrecks = ({ after, before, description, hasName, name, wrecks, setFilteredWrecks }) => {
+    const results = filter(wrecks, wreck => {
+      const nameMatch = isEmpty(name) || toLower(get(wreck, 'properties.name', '')).includes(toLower(name));
+      const descriptionMatch = (
+        isEmpty(description) ||
+        reduce(description.split(' '), (acc, word) => { acc = toLower(get(wreck, 'properties.history', '')).includes(toLower(word)); return acc; }, true) ||
+        reduce(description.split(' '), (acc, word) => { acc = toLower(get(wreck, 'properties.name', '')).includes(toLower(word)); return acc; }, true)
+      );
+      const afterMatch = isEmpty(after) || parseInt(get(wreck, 'properties.yearSunk', 0)) > parseInt(after);
+      const beforeMatch = isEmpty(before) || parseInt(get(wreck, 'properties.yearSunk', 0)) < parseInt(before);
+      const hasNameMatch = !hasName || (!!wreck.properties.name && toLower(wreck.properties.name) !== 'unknown');
+
+      return nameMatch && descriptionMatch && afterMatch && beforeMatch && hasNameMatch;
+    });
+
+    setFilteredWrecks(results.slice(0, 100));
   };
 
   console.log('state', state);
@@ -45,6 +71,7 @@ export const Search = ({ wrecks, setFilteredWrecks }) => {
         icon='search'
         iconPosition='left'
         onChange={handleChange}
+        value={state.description}
       />
       {
         state.advancedMode && (<>
@@ -56,10 +83,11 @@ export const Search = ({ wrecks, setFilteredWrecks }) => {
             icon='ship'
             iconPosition='left'
             onChange={handleChange}
+            value={state.name}
           />
           <Form.Group widths='equal'>
-            <Form.Input id='after' fluid label='After' placeholder='1910' icon='arrow up' iconPosition='left' onChange={handleChange} />
-            <Form.Input id='before' fluid label='Before' placeholder='1990' icon='arrow down' iconPosition='left' onChange={handleChange} />
+            <Form.Input id='after' fluid label='After' placeholder='1910' icon='arrow up' iconPosition='left' onChange={handleChange} value={state.after} />
+            <Form.Input id='before' fluid label='Before' placeholder='1990' icon='arrow down' iconPosition='left' onChange={handleChange} value={state.before} />
           </Form.Group>
           <Form.Checkbox
             id='hasName'
@@ -72,6 +100,7 @@ export const Search = ({ wrecks, setFilteredWrecks }) => {
       <Form.Group as={Button.Group} className='search-buttons'>
         <Form.Button
           className='search-form-button search-clear-button'
+          onClick={() => { setState({ ...INITIAL_STATE }); setFilteredWrecks([]); }}
           inverted>
           Clear
         </Form.Button>
@@ -83,6 +112,7 @@ export const Search = ({ wrecks, setFilteredWrecks }) => {
         <Button.Or />
         <Form.Button
           className='search-form-button search-submit-button'
+          onClick={() => searchWrecks({ ...state, wrecks, setFilteredWrecks })}
           positive>
           Search
         </Form.Button>
