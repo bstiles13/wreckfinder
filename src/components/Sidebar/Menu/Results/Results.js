@@ -18,7 +18,7 @@ export const Results = ({ isActive, filteredWrecks, setSelectedWreck }) => {
 
   const renderResults = ({ filteredWrecks, setSelectedWreck }) => {
     return map(filteredWrecks, (wreck, i) => (
-      <div key={`result-${i}`} className='result selectable' onClick={() => setSelectedWreck(wreck)}>
+      <div key={`result-${i}`} className='result-row selectable' onClick={() => setSelectedWreck(wreck)}>
         <div className='result-content-left'>
           <Image size='tiny' src={renderPopupImage(wreck.properties.featureTypeShort)} />
         </div>
