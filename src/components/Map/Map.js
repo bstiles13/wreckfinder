@@ -36,8 +36,9 @@ const renderMarkers = ({ filteredWrecks: wrecks, selectedWreck, setSelectedWreck
         position={wreck.geometry.coordinates}
         transparent
         ref={openPopup}
+        onClick={() => setSelectedWreck(wreck)}
       >
-        <Popup className='wreck-popup' onOpen={() => setSelectedWreck(wreck)}>
+        <Popup className='wreck-popup'>
           <Card>
             <Card.Content>
               <Image

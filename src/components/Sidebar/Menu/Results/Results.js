@@ -6,6 +6,11 @@ import './Results.scss';
 
 export const Results = ({ isActive, filteredWrecks, selectedWreck, setSelectedWreck }) => {
   useEffect(() => {
+    if (!selectedWreck) {
+      const element = get(document.getElementsByClassName('results'), '0');
+      if (element) element.scrollTop = 0;
+    }
+
     if (selectedWreck && selectedWreck.id) {
       const element = document.getElementById(`result-${selectedWreck.id}`);
       element && element.scrollIntoView({ behavior: 'smooth', block: 'center' });
