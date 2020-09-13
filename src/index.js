@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -22,7 +23,9 @@ const store = createStore(reducers, applyMiddleware(...middleware));
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>
   ,
   document.getElementById('root')

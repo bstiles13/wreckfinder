@@ -1,0 +1,13 @@
+.privacy {
+  height: 100%;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  background-image: url('../../assets/privacy_background.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  &-content {
+    width: 40rem !important;
+  }
+}
