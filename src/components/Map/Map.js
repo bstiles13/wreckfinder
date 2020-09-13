@@ -84,6 +84,7 @@ export const Map = ({ wrecks, setSelectedWreck, filteredWrecks, selectedWreck })
     if (isEmpty(mapRef.current)) return false;
 
     esri.basemapLayer('Oceans').addTo(mapRef.current.leafletElement);
+    esri.basemapLayer('OceansLabels').addTo(mapRef.current.leafletElement);
   }, []);
 
   return (
