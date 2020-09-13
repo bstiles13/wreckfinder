@@ -1,0 +1,36 @@
+.results {
+  padding: 0 !important;
+
+  .result {
+    cursor: pointer;
+    display: flex;
+    text-align: left;
+    padding: 0.7rem;
+
+    &:hover {
+      background-color: rgb(243, 243, 243);
+    }
+
+    &-content-right {
+      flex: 1;
+      padding-left: 0.5rem;
+    }
+
+    &-header {
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    &-meta {
+      font-size: 0.9rem;
+      color: gray;
+    }
+
+    &-description {
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;  
+      overflow: hidden;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Map as LeafletMap, Marker, Popup } from 'react-leaflet';
 import * as esri from 'esri-leaflet';
@@ -55,26 +55,30 @@ const renderMarkers = ({ filteredWrecks: wrecks, setSelectedWreck }) => {
   });
 };
 
-export const Map = ({ wrecks, setSelectedWreck, filteredWrecks }) => {
+export const Map = ({ wrecks, setSelectedWreck, filteredWrecks, selectedWreck }) => {
   const mapRef = useRef();
+
+  const [view, setView] = useState([38.0406, -84.5037]);
+  const [zoom, setZoom] = useState(4);
+  useEffect(() => {
+    if (!isEmpty(selectedWreck)) {
+      setView([selectedWreck.geometry.coordinates[0], selectedWreck.geometry.coordinates[1] - 0.13]); // offset required to center marker
+      setZoom(11);
+    }
+  }, [selectedWreck]);
 
   useEffect(() => {
     if (isEmpty(mapRef.current)) return false;
 
     esri.basemapLayer('Oceans').addTo(mapRef.current.leafletElement);
-
-    // add zoom control with your options
-    // L.control.zoom({
-    //   position: 'topright'
-    // }).addTo(mapRef.current);
   }, []);
 
   return (
     <LeafletMap
       className='map'
       ref={mapRef}
-      center={[38.0406, -84.5037]}
-      zoom={4}
+      center={view}
+      zoom={zoom}
       minZoom={3}
       style={{ height: '100%', width: '100%' }}
       worldCopyJump={true}
@@ -88,7 +92,8 @@ export const Map = ({ wrecks, setSelectedWreck, filteredWrecks }) => {
 
 const mapStateToProps = state => ({
   wrecks: state.wrecks.wrecks,
-  filteredWrecks: state.filteredWrecks.filteredWrecks
+  filteredWrecks: state.filteredWrecks.filteredWrecks,
+  selectedWreck: state.selectedWreck.selectedWreck
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

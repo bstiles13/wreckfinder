@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { isEmpty } from 'lodash';
 import {
   Menu as SemanticMenu,
   Icon
@@ -8,22 +11,23 @@ import { Results } from './Results/Results';
 import { Articles } from './Articles/Articles';
 import { Favorites } from './Favorites/Favorites';
 import { Trivia } from './Trivia/Trivia';
+import { setSelectedWreck } from '../../../store/actions';
 
-export const Menu = () => {
-  const [activeTab, setActiveTab] = useState('login');
+import './Menu.scss';
+
+export const Menu = ({ filteredWrecks, setSelectedWreck }) => {
+  const [activeTab, setActiveTab] = useState('results');
   const handleItemClick = (e, { name }) => setActiveTab(name);
+
+  useEffect(() => {
+    if (!isEmpty(filteredWrecks)) {
+      setActiveTab('results');
+    }
+  }, [filteredWrecks]);
 
   return (
     <>
       <SemanticMenu className='sidebar-menu' attached='top' tabular>
-        <SemanticMenu.Item
-          name='login'
-          active={activeTab === 'login'}
-          onClick={handleItemClick}
-          as='a'
-        >
-          <Icon name='user' />Sign In
-        </SemanticMenu.Item>
         <SemanticMenu.Item
           name='results'
           active={activeTab === 'results'}
@@ -56,15 +60,31 @@ export const Menu = () => {
         >
           <Icon name='question' />Trivia
         </SemanticMenu.Item>
+        <SemanticMenu.Item
+          name='login'
+          active={activeTab === 'login'}
+          onClick={handleItemClick}
+          as='a'
+        >
+          <Icon name='user' />Sign In
+        </SemanticMenu.Item>
       </SemanticMenu>
 
-      <Login isActive={activeTab === 'login'} />
-      <Results isActive={activeTab === 'results'} />
+      <Results isActive={activeTab === 'results'} filteredWrecks={filteredWrecks} setSelectedWreck={setSelectedWreck} />
       <Articles isActive={activeTab === 'articles'} />
       <Favorites isActive={activeTab === 'favorites'} />
       <Trivia isActive={activeTab === 'trivia'} />
+      <Login isActive={activeTab === 'login'} />
     </>
   );
 };
 
-export default Menu;
+const mapStateToProps = state => ({
+  filteredWrecks: state.filteredWrecks.filteredWrecks
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setSelectedWreck
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
