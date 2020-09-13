@@ -22,10 +22,12 @@ const renderPopupImage = (type) => {
 const renderMarkers = ({ filteredWrecks: wrecks, setSelectedWreck }) => {
   if (isEmpty(wrecks)) return;
 
+  // onOpen={() => setSelectedWreck(wreck)
+
   return map(wrecks, (wreck, i) => {
     return (
       <Marker key={`wreck-${i}`} position={wreck.geometry.coordinates} transparent>
-        <Popup className='wreck-popup' onOpen={() => setSelectedWreck(wreck)}>
+        <Popup className='wreck-popup'>
           <Card>
             <Card.Content>
               <Image
