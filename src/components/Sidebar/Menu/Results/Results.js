@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Segment, Image, Icon } from 'semantic-ui-react';
 import { get, map, isEmpty } from 'lodash';
 
 import './Results.scss';
 
 export const Results = ({ isActive, filteredWrecks, selectedWreck, setSelectedWreck }) => {
-  if (!isActive) return false;
+  useEffect(() => {
+    if (selectedWreck && selectedWreck.id) {
+      const element = document.getElementById(`result-${selectedWreck.id}`);
+      element && element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [selectedWreck]);
 
   const renderPopupImage = (type) => {
     const types = {
@@ -17,11 +22,12 @@ export const Results = ({ isActive, filteredWrecks, selectedWreck, setSelectedWr
   };
 
   const renderResults = ({ filteredWrecks, selectedWreck, setSelectedWreck }) => {
-    return map(filteredWrecks, (wreck, i) => {
+    return map(filteredWrecks, wreck => {
       const isSelected = wreck.id === get(selectedWreck, 'id');
       return (
         <div
-          key={`result-${i}`}
+          key={`result-${wreck.id}`}
+          id={`result-${wreck.id}`}
           className={`result-row selectable ${isSelected ? 'selected' : ''}`}
           onClick={() => setSelectedWreck({ ...wreck, focus: true })}
         >
@@ -43,6 +49,8 @@ export const Results = ({ isActive, filteredWrecks, selectedWreck, setSelectedWr
       );
     });
   };
+
+  if (!isActive) return false;
 
   return (
     <Segment className='results' attached='bottom'>
