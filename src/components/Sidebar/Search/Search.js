@@ -13,7 +13,8 @@ const INITIAL_STATE = {
   description: '',
   after: null,
   before: null,
-  hasName: true
+  hasName: true,
+  isVisible: false
 };
 
 export const Search = ({ wrecks, setFilteredWrecks }) => {
@@ -22,7 +23,9 @@ export const Search = ({ wrecks, setFilteredWrecks }) => {
   const handleChange = e => {
     setState({
       ...state,
-      [e.target.id]: e.target.id === 'hasName' ? !state.hasName : e.target.value
+      [e.target.id]: e.target.id === 'hasName' || e.target.id === 'isVisible'
+        ? !state[e.target.id]
+        : e.target.value
     });
   };
 
@@ -32,7 +35,7 @@ export const Search = ({ wrecks, setFilteredWrecks }) => {
     setFilteredWrecks(randomWrecks);
   };
 
-  const searchWrecks = ({ after, before, description, hasName, name, wrecks, setFilteredWrecks }) => {
+  const searchWrecks = ({ after, before, description, hasName, isVisible, name, wrecks, setFilteredWrecks }) => {
     const results = shuffle(filter(wrecks, wreck => {
       const nameMatch = isEmpty(name) || toLower(get(wreck, 'properties.name', '')).includes(toLower(name));
       const descriptionMatch = (
@@ -43,8 +46,9 @@ export const Search = ({ wrecks, setFilteredWrecks }) => {
       const afterMatch = isEmpty(after) || parseInt(get(wreck, 'properties.yearSunk', 0)) > parseInt(after);
       const beforeMatch = isEmpty(before) || parseInt(get(wreck, 'properties.yearSunk', 0)) < parseInt(before);
       const hasNameMatch = !hasName || (!!wreck.properties.name && toLower(wreck.properties.name) !== 'unknown' && toLower(wreck.properties.name) !== 'obstruction');
+      const isVisibleMatch = !isVisible || (!!wreck.properties.featureType && toLower(wreck.properties.featureType).includes('visible'));
 
-      return nameMatch && descriptionMatch && afterMatch && beforeMatch && hasNameMatch;
+      return nameMatch && descriptionMatch && afterMatch && beforeMatch && hasNameMatch && isVisibleMatch;
     }));
 
     setFilteredWrecks(results.slice(0, 100));
@@ -90,12 +94,20 @@ export const Search = ({ wrecks, setFilteredWrecks }) => {
             <Form.Input id='after' fluid label='After' placeholder='1910' icon='arrow up' iconPosition='left' onChange={handleChange} value={state.after} />
             <Form.Input id='before' fluid label='Before' placeholder='1990' icon='arrow down' iconPosition='left' onChange={handleChange} value={state.before} />
           </Form.Group>
-          <Form.Checkbox
-            id='hasName'
-            label='Has a name'
-            checked={!!state.hasName}
-            onChange={handleChange}
-          />
+          <Form.Group>
+            <Form.Checkbox
+              id='hasName'
+              label='Has a name'
+              checked={!!state.hasName}
+              onChange={handleChange}
+            />
+            <Form.Checkbox
+              id='isVisible'
+              label='Visible'
+              checked={!!state.isVisible}
+              onChange={handleChange}
+            />
+          </Form.Group>
         </>)
       }
       <Form.Group as={Button.Group} className='search-buttons'>
