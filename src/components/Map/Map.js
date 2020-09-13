@@ -22,8 +22,6 @@ const renderPopupImage = (type) => {
 const renderMarkers = ({ filteredWrecks: wrecks, selectedWreck, setSelectedWreck }) => {
   if (isEmpty(wrecks)) return;
 
-  // onOpen={() => setSelectedWreck(wreck)s
-
   const openPopup = marker => {
     if (marker && marker.leafletElement && !!marker.props.selected) {
       setTimeout(() => marker.leafletElement.openPopup());
@@ -32,8 +30,14 @@ const renderMarkers = ({ filteredWrecks: wrecks, selectedWreck, setSelectedWreck
 
   return map(wrecks, (wreck, i) => {
     return (
-      <Marker key={`wreck-${i}`} selected={wreck.id === get(selectedWreck, 'id')} position={wreck.geometry.coordinates} transparent ref={openPopup}>
-        <Popup className='wreck-popup'>
+      <Marker
+        key={`wreck-${i}`}
+        selected={wreck.id === get(selectedWreck, 'id')}
+        position={wreck.geometry.coordinates}
+        transparent
+        ref={openPopup}
+      >
+        <Popup className='wreck-popup' onOpen={() => setSelectedWreck(wreck)}>
           <Card>
             <Card.Content>
               <Image
@@ -69,7 +73,7 @@ export const Map = ({ wrecks, setSelectedWreck, filteredWrecks, selectedWreck })
   const [view, setView] = useState([38.0406, -84.5037]);
   const [zoom, setZoom] = useState(4);
   useEffect(() => {
-    if (!isEmpty(selectedWreck)) {
+    if (!isEmpty(selectedWreck) && selectedWreck.focus) {
       setView([selectedWreck.geometry.coordinates[0], selectedWreck.geometry.coordinates[1] - 0.13]); // offset required to center marker
       setZoom(11);
     }

@@ -23,7 +23,7 @@ export const Results = ({ isActive, filteredWrecks, selectedWreck, setSelectedWr
         <div
           key={`result-${i}`}
           className={`result-row selectable ${isSelected ? 'selected' : ''}`}
-          onClick={() => setSelectedWreck(wreck)}
+          onClick={() => setSelectedWreck({ ...wreck, focus: true })}
         >
           <div className='result-content-left'>
             <Image size='tiny' src={renderPopupImage(wreck.properties.featureTypeShort)} />
