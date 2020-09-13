@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Map as LeafletMap, Marker, Popup } from 'react-leaflet';
 import * as esri from 'esri-leaflet';
-import { isEmpty, map } from 'lodash';
+import { isEmpty, map, get } from 'lodash';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { Button, Card, Image } from 'semantic-ui-react';
 import { setSelectedWreck } from '../../store/actions';
@@ -19,14 +19,20 @@ const renderPopupImage = (type) => {
   return types[type];
 };
 
-const renderMarkers = ({ filteredWrecks: wrecks, setSelectedWreck }) => {
+const renderMarkers = ({ filteredWrecks: wrecks, selectedWreck, setSelectedWreck }) => {
   if (isEmpty(wrecks)) return;
 
-  // onOpen={() => setSelectedWreck(wreck)
+  // onOpen={() => setSelectedWreck(wreck)s
+
+  const openPopup = marker => {
+    if (marker && marker.leafletElement && !!marker.props.selected) {
+      setTimeout(() => marker.leafletElement.openPopup());
+    }
+  };
 
   return map(wrecks, (wreck, i) => {
     return (
-      <Marker key={`wreck-${i}`} position={wreck.geometry.coordinates} transparent>
+      <Marker key={`wreck-${i}`} selected={wreck.id === get(selectedWreck, 'id')} position={wreck.geometry.coordinates} transparent ref={openPopup}>
         <Popup className='wreck-popup'>
           <Card>
             <Card.Content>
@@ -86,7 +92,7 @@ export const Map = ({ wrecks, setSelectedWreck, filteredWrecks, selectedWreck })
       worldCopyJump={true}
     >
       <MarkerClusterGroup maxClusterRadius={40}>
-        {renderMarkers({ filteredWrecks, setSelectedWreck })}
+        {renderMarkers({ filteredWrecks, selectedWreck, setSelectedWreck })}
       </MarkerClusterGroup>
     </LeafletMap>
   );
