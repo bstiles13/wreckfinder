@@ -80,7 +80,7 @@ export const Map = ({ wrecks, setSelectedWreck, filteredWrecks, selectedWreck })
     }
   }, [selectedWreck]);
 
-  const [layer, setLayer] = useState({ type: 'Oceans', labels: 'OceansLabels' })
+  const [layer, setLayer] = useState({ type: 'Oceans', labels: 'OceansLabels' });
   useEffect(() => {
     const map = get(mapRef, 'current.leafletElement');
 
