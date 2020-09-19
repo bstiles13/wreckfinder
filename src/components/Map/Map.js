@@ -5,7 +5,7 @@ import { Map as LeafletMap, Marker, Popup } from 'react-leaflet';
 import * as esri from 'esri-leaflet';
 import { isEmpty, map, get, some } from 'lodash';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
-import { Button, Card, Image } from 'semantic-ui-react';
+import { Button, Card, Image, Icon } from 'semantic-ui-react';
 import { setMapView, setMapZoom, setSelectedWreck, fetchFavorites, createFavorite, deleteFavorite } from '../../store/actions';
 
 import './Map.scss';
@@ -104,15 +104,23 @@ export const Map = ({
                   <div className='wreck-popup-history' title={wreck.properties.history}>{wreck.properties.history}</div>
                 </Card.Description>
               </Card.Content>
-              <Card.Content extra>
-                <div className='ui two buttons'>
-                  {
-                    isFavorite
-                      ? <Button basic color='red' onClick={() => handleDeleteFavorite(wreck._id)}>Remove</Button>
-                      : <Button basic color='green' onClick={() => handleCreateFavorite(wreck._id)}>Favorite</Button>
-                  }
-                  <Button basic color='red'>Search</Button>
-                </div>
+              <Card.Content extra className='wreck-popup-controls'>
+                {
+                  isFavorite
+                    ? (
+                      <Button basic color='red' size='tiny' onClick={() => handleDeleteFavorite(wreck._id)}>
+                        <Icon name='minus circle' />
+                        Remove Favorite
+                      </Button>
+                    )
+                    : (
+                      <Button basic color='green' size='tiny' onClick={() => handleCreateFavorite(wreck._id)}>
+                        <Icon name='star' />
+                        Add Favorite
+                      </Button>
+                    )
+                }
+                <Button basic color='black' size='tiny'>Learn More</Button>
               </Card.Content>
             </Card>
           </Popup>
