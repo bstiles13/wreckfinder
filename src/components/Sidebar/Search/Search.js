@@ -54,7 +54,7 @@ export const Search = ({ wrecks, resetMap, setFilteredWrecks, resetSelectedWreck
       );
       const afterMatch = isEmpty(after) || parseInt(get(wreck, 'properties.yearSunk', 0)) > parseInt(after);
       const beforeMatch = isEmpty(before) || parseInt(get(wreck, 'properties.yearSunk', 0)) < parseInt(before);
-      const hasNameMatch = !hasName || (!!wreck.properties.name && toLower(wreck.properties.name) !== 'unknown' && toLower(wreck.properties.name) !== 'obstruction');
+      const hasNameMatch = !hasName || (!!wreck.properties.name && toLower(wreck.properties.name) !== 'unknown' && toLower(wreck.properties.name) !== 'obstruction' && toLower(wreck.properties.name) !== 'wreck');
       const isVisibleMatch = !isVisible || (!!wreck.properties.featureType && toLower(wreck.properties.featureType).includes('visible'));
 
       return nameMatch && descriptionMatch && afterMatch && beforeMatch && hasNameMatch && isVisibleMatch;

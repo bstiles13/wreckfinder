@@ -3,10 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Map as LeafletMap, Marker, Popup } from 'react-leaflet';
 import * as esri from 'esri-leaflet';
-import { isEmpty, map, get, some } from 'lodash';
+import { isEmpty, map, get, some, debounce } from 'lodash';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { Button, Card, Image, Icon } from 'semantic-ui-react';
-import { setMapView, setMapZoom, setSelectedWreck, fetchFavorites, createFavorite, deleteFavorite } from '../../store/actions';
+import { setMapView, setMapZoom, setMapViewport, setSelectedWreck, fetchFavorites, createFavorite, deleteFavorite } from '../../store/actions';
 
 import './Map.scss';
 
@@ -16,6 +16,7 @@ export const Map = ({
   filterType,
   setMapView,
   setMapZoom,
+  setMapViewport,
   setSelectedWreck,
   filteredWrecks,
   selectedWreck,
@@ -141,6 +142,7 @@ export const Map = ({
       zoom={zoom}
       minZoom={3}
       style={{ height: '100%', width: '100%' }}
+      onViewportChanged={debounce(setMapViewport, 500)}
       worldCopyJump={true}
     >
       <MarkerClusterGroup maxClusterRadius={40}>
@@ -168,6 +170,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   setMapView,
   setMapZoom,
+  setMapViewport,
   setSelectedWreck,
   fetchFavorites,
   createFavorite,
