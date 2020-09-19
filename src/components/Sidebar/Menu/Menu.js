@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { isEmpty, get } from 'lodash';
 import {
   Menu as SemanticMenu,
   Icon,
-  Loader
+  Loader,
+  Popup,
+  Segment
 } from 'semantic-ui-react';
 import { Default } from './Default/Default';
 import { Login } from './Login/Login';
@@ -72,14 +75,30 @@ export const Menu = ({ session, fetchingSession, filteredWrecks, selectedWreck, 
             >
               <Icon name='question' />Trivia
             </SemanticMenu.Item>
-            <SemanticMenu.Item
-              name='login'
-              active={activeTab === 'login'}
-              onClick={handleItemClick}
-              as='a'
-            >
-              <Icon name='user' />Sign In
-            </SemanticMenu.Item>
+            <Popup
+              className='settings-popup'
+              on='click'
+              position='bottom center'
+              offset='0, -11'
+              pinned={true}
+              basic
+              trigger={
+                <SemanticMenu.Item name='settings' as='a'>
+                  <Icon name='ellipsis horizontal' />Settings
+                </SemanticMenu.Item>
+              }
+              content={<>
+                {
+                  get(session, 'id')
+                    ? (<>
+                      <Segment vertical>{`Hi, ${get(session, 'displayName')}!`}</Segment>
+                      <Segment className='settings-option' vertical as='a' href='http://localhost:3001/auth/logout/'>Sign Out</Segment>
+                    </>)
+                    : <Segment className='settings-option' vertical as='a' href='http://localhost:3001/auth/login/'>Sign In</Segment>
+                }
+                <Segment className='settings-option' vertical as={Link} to='/privacy'>Privacy</Segment>
+              </>}
+            />
           </SemanticMenu>
         )
       }

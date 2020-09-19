@@ -8,3 +8,24 @@
     max-width: 7rem !important;
   }
 }
+
+.settings-popup {
+  padding: 0 !important;
+  width: 10rem;
+
+  .segment {
+    text-align: center;
+    padding: 0.5rem 0.8rem !important;
+    cursor: pointer;
+
+    &.settings-option {
+      display: block;
+      color: black;
+      border: none !important;
+
+      &:hover {
+        background-color: #DFE1E2 !important;
+      }
+    }
+  }
+}
