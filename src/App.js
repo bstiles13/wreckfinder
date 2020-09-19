@@ -5,12 +5,13 @@ import { bindActionCreators } from 'redux';
 import Map from './components/Map/Map';
 import { Sidebar } from './components/Sidebar/Sidebar';
 import { Privacy } from './components/Privacy/Privacy';
-import { fetchWrecks } from './store/actions';
+import { fetchSession, fetchWrecks } from './store/actions';
 
 import './App.scss';
 
-const App = ({ fetchWrecks }) => {
+const App = ({ fetchSession, fetchWrecks }) => {
   useEffect(() => {
+    fetchSession();
     fetchWrecks();
   }, []);
 
@@ -27,6 +28,7 @@ const App = ({ fetchWrecks }) => {
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
+    fetchSession,
     fetchWrecks
   }, dispatch);
 };

@@ -1,0 +1,11 @@
+.default {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &-guest-link {
+    margin-top: 1rem;
+    cursor: pointer;
+  }
+}
