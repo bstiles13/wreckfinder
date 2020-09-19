@@ -16,13 +16,27 @@ import { Results } from './Results/Results';
 import { Articles } from './Articles/Articles';
 import { Favorites } from './Favorites/Favorites';
 import { Trivia } from './Trivia/Trivia';
-import { setSelectedWreck } from '../../../store/actions';
+import { resetMap, setMapFilterType, setSelectedWreck } from '../../../store/actions';
 
 import './Menu.scss';
 
-export const Menu = ({ session, fetchingSession, filteredWrecks, selectedWreck, setSelectedWreck }) => {
+export const Menu = ({ session, fetchingSession, resetMap, filteredWrecks, selectedWreck, setSelectedWreck, favorites, setMapFilterType }) => {
   const [activeTab, setActiveTab] = useState(null);
-  const handleItemClick = (e, { name }) => setActiveTab(name);
+  const handleItemClick = (e, { name: nextTab }) => {
+    if (nextTab === activeTab) return false;
+
+    if (nextTab === 'results') {
+      resetMap();
+      setMapFilterType(nextTab);
+    }
+
+    if (nextTab === 'favorites') {
+      resetMap();
+      setMapFilterType(nextTab);
+    }
+
+    setActiveTab(nextTab);
+  };
 
   useEffect(() => {
     if (get(session, 'id')) {
@@ -104,9 +118,9 @@ export const Menu = ({ session, fetchingSession, filteredWrecks, selectedWreck, 
       }
 
       <Default isActive={!activeTab} handleItemClick={handleItemClick} />
-      <Results isActive={activeTab === 'results'} filteredWrecks={filteredWrecks} selectedWreck={selectedWreck} setSelectedWreck={setSelectedWreck} />
+      <Results isActive={activeTab === 'results'} wrecks={filteredWrecks} selectedWreck={selectedWreck} setSelectedWreck={setSelectedWreck} />
+      <Favorites isActive={activeTab === 'favorites'} wrecks={favorites} selectedWreck={selectedWreck} setSelectedWreck={setSelectedWreck} />
       <Articles isActive={activeTab === 'articles'} />
-      <Favorites isActive={activeTab === 'favorites'} />
       <Trivia isActive={activeTab === 'trivia'} />
       <Login isActive={activeTab === 'login'} />
     </>
@@ -117,10 +131,13 @@ const mapStateToProps = state => ({
   session: state.session.session,
   fetchingSession: state.session.isFetching,
   filteredWrecks: state.filteredWrecks.filteredWrecks,
+  favorites: state.user.favorites,
   selectedWreck: state.selectedWreck.selectedWreck
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  resetMap,
+  setMapFilterType,
   setSelectedWreck
 }, dispatch);
 

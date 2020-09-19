@@ -5,6 +5,7 @@ const path = require('path');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const authRoutes = require('./server/routes/authRoutes');
+const userRoutes = require('./server/routes/userRoutes');
 const apiRoutes = require('./server/routes/apiRoutes');
 const User = require('./server/models/user');
 
@@ -78,6 +79,7 @@ app.use(passport.session());
 // ROUTES SETUP -----------------------------------------------------
 
 app.use('/auth', authRoutes);
+app.use('/user', userRoutes);
 app.use('/api', apiRoutes);
 
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'build', 'index.html')));

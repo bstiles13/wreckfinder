@@ -5,28 +5,29 @@ import { bindActionCreators } from 'redux';
 import Map from './components/Map/Map';
 import { Sidebar } from './components/Sidebar/Sidebar';
 import { Privacy } from './components/Privacy/Privacy';
-import { fetchSession, fetchWrecks } from './store/actions';
+import { fetchSession, fetchFavorites, fetchWrecks } from './store/actions';
 
 import './App.scss';
 
-const App = ({ fetchSession, fetchWrecks }) => {
-  const clearHash = () => { // Removes hash caused by passport facebook bug
+const App = ({ fetchSession, fetchFavorites, fetchWrecks, mapKey }) => {
+  const clearHash = () => { // Removes url hash appended by passport facebook bug
     if (document.location.hash === '#_=_') {
       // eslint-disable-next-line no-restricted-globals
       document.location.href = location.href.split('#')[0];
     };
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     clearHash();
-    fetchSession();
+    await fetchSession();
+    fetchFavorites();
     fetchWrecks();
   }, []);
 
   return (
     <div className='app'>
       <Switch>
-        <Route exact path='/'><Sidebar><Map /></Sidebar></Route>
+        <Route exact path='/'><Sidebar><Map key={mapKey} /></Sidebar></Route>
         <Route path='/privacy'><Privacy /></Route>
         <Redirect to='/' />
       </Switch>
@@ -34,11 +35,16 @@ const App = ({ fetchSession, fetchWrecks }) => {
   );
 };
 
+const mapStateToProps = state => ({
+  mapKey: state.map.key
+});
+
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
     fetchSession,
+    fetchFavorites,
     fetchWrecks
   }, dispatch);
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

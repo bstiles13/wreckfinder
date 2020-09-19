@@ -3,7 +3,8 @@ const { Schema } = mongoose;
 
 const User = new Schema({
   displayName: String,
-  id: String
+  id: String,
+  favorites: Array
 });
 
 module.exports = mongoose.model('user', User);

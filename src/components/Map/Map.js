@@ -1,82 +1,35 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Map as LeafletMap, Marker, Popup } from 'react-leaflet';
 import * as esri from 'esri-leaflet';
-import { isEmpty, map, get } from 'lodash';
+import { isEmpty, map, get, some } from 'lodash';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { Button, Card, Image } from 'semantic-ui-react';
-import { setSelectedWreck } from '../../store/actions';
+import { setMapView, setMapZoom, setSelectedWreck, fetchFavorites, createFavorite, deleteFavorite } from '../../store/actions';
 
 import './Map.scss';
-import { bindActionCreators } from 'redux';
 
-const renderPopupImage = (type) => {
-  const types = {
-    wreck: require('../../assets/wreck_icon.png'),
-    obstruction: require('../../assets/rocks_icon.png')
-  };
-
-  return types[type];
-};
-
-const renderMarkers = ({ filteredWrecks: wrecks, selectedWreck, setSelectedWreck }) => {
-  if (isEmpty(wrecks)) return;
-
-  const openPopup = marker => {
-    if (marker && marker.leafletElement && !!marker.props.selected) {
-      setTimeout(() => marker.leafletElement.openPopup());
-    }
-  };
-
-  return map(wrecks, (wreck, i) => {
-    return (
-      <Marker
-        key={`wreck-${i}`}
-        selected={wreck.id === get(selectedWreck, 'id')}
-        position={wreck.geometry.coordinates}
-        transparent
-        ref={openPopup}
-        onClick={() => setSelectedWreck(wreck)}
-      >
-        <Popup className='wreck-popup'>
-          <Card>
-            <Card.Content>
-              <Image
-                floated='right'
-                size='mini'
-                src={renderPopupImage(wreck.properties.featureTypeShort)}
-              />
-              <Card.Header><div className='wreck-popup-name'>{wreck.properties.name || 'Unknown'}</div></Card.Header>
-              <Card.Meta>
-                {wreck.properties.featureTypeShort}
-                {wreck.properties.yearSunk && `: sunk ${wreck.properties.yearSunk}`}
-              </Card.Meta>
-              <Card.Description>
-                <div className='wreck-popup-history' title={wreck.properties.history}>{wreck.properties.history}</div>
-              </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <div className='ui two buttons'>
-                <Button basic color='green'>Favorite</Button>
-                <Button basic color='red'>Search</Button>
-              </div>
-            </Card.Content>
-          </Card>
-        </Popup>
-      </Marker>
-    );
-  });
-};
-
-export const Map = ({ wrecks, setSelectedWreck, filteredWrecks, selectedWreck }) => {
+export const Map = ({
+  view,
+  zoom,
+  filterType,
+  setMapView,
+  setMapZoom,
+  setSelectedWreck,
+  filteredWrecks,
+  selectedWreck,
+  favorites,
+  fetchFavorites,
+  createFavorite,
+  deleteFavorite
+}) => {
   const mapRef = useRef();
 
-  const [view, setView] = useState([38.0406, -84.5037]);
-  const [zoom, setZoom] = useState(4);
   useEffect(() => {
-    if (!isEmpty(selectedWreck) && selectedWreck.focus) {
-      setView([selectedWreck.geometry.coordinates[0], selectedWreck.geometry.coordinates[1] - 0.13]); // offset required to center marker
-      setZoom(11);
+    if (!isEmpty(selectedWreck) && !!selectedWreck.focus) {
+      setMapView([selectedWreck.geometry.coordinates[0], selectedWreck.geometry.coordinates[1] - 0.13]); // offset required to center marker
+      setMapZoom(11);
     }
   }, [selectedWreck]);
 
@@ -95,6 +48,83 @@ export const Map = ({ wrecks, setSelectedWreck, filteredWrecks, selectedWreck })
     esri.basemapLayer(layer.labels).addTo(map);
   }, [layer]);
 
+  const renderPopupImage = (type) => {
+    const types = {
+      wreck: require('../../assets/wreck_icon.png'),
+      obstruction: require('../../assets/rocks_icon.png')
+    };
+
+    return types[type];
+  };
+
+  const handleCreateFavorite = async (id) => {
+    await createFavorite(id);
+    fetchFavorites();
+  };
+
+  const handleDeleteFavorite = async (id) => {
+    await deleteFavorite(id);
+    fetchFavorites();
+  };
+
+  const renderMarkers = ({ wrecks, selectedWreck, setSelectedWreck, favorites }) => {
+    if (isEmpty(wrecks)) return;
+
+    const openPopup = marker => {
+      if (marker && marker.leafletElement && !!marker.props.selected) {
+        setTimeout(() => marker.leafletElement.openPopup());
+      }
+    };
+
+    return map(wrecks, (wreck, i) => {
+      const isFavorite = some(favorites, favorite => favorite._id === wreck._id);
+      return (
+        <Marker
+          key={`wreck-${i}`}
+          selected={wreck.id === get(selectedWreck, 'id')}
+          position={wreck.geometry.coordinates}
+          transparent
+          ref={openPopup}
+          onClick={() => setSelectedWreck(wreck)}
+        >
+          <Popup className='wreck-popup'>
+            <Card>
+              <Card.Content>
+                <Image
+                  floated='right'
+                  size='mini'
+                  src={renderPopupImage(wreck.properties.featureTypeShort)}
+                />
+                <Card.Header><div className='wreck-popup-name'>{wreck.properties.name || 'Unknown'}</div></Card.Header>
+                <Card.Meta>
+                  {wreck.properties.featureTypeShort}
+                  {wreck.properties.yearSunk && `: sunk ${wreck.properties.yearSunk}`}
+                </Card.Meta>
+                <Card.Description>
+                  <div className='wreck-popup-history' title={wreck.properties.history}>{wreck.properties.history}</div>
+                </Card.Description>
+              </Card.Content>
+              <Card.Content extra>
+                <div className='ui two buttons'>
+                  {
+                    isFavorite
+                      ? <Button basic color='red' onClick={() => handleDeleteFavorite(wreck._id)}>Remove</Button>
+                      : <Button basic color='green' onClick={() => handleCreateFavorite(wreck._id)}>Favorite</Button>
+                  }
+                  <Button basic color='red'>Search</Button>
+                </div>
+              </Card.Content>
+            </Card>
+          </Popup>
+        </Marker>
+      );
+    });
+  };
+
+  const wrecks = filterType === 'favorites'
+    ? favorites
+    : filteredWrecks;
+
   return (
     <LeafletMap
       className='map'
@@ -104,9 +134,10 @@ export const Map = ({ wrecks, setSelectedWreck, filteredWrecks, selectedWreck })
       minZoom={3}
       style={{ height: '100%', width: '100%' }}
       worldCopyJump={true}
+      viewport={{ center: view, zoom: zoom }}
     >
       <MarkerClusterGroup maxClusterRadius={40}>
-        {renderMarkers({ filteredWrecks, selectedWreck, setSelectedWreck })}
+        {renderMarkers({ wrecks, selectedWreck, setSelectedWreck, favorites, createFavorite, deleteFavorite, fetchFavorites })}
       </MarkerClusterGroup>
       <div
         className={`layer-toggle ${layer.type === 'Oceans' ? 'layer-toggle-imagery' : 'layer-toggle-oceans'}`}
@@ -118,13 +149,22 @@ export const Map = ({ wrecks, setSelectedWreck, filteredWrecks, selectedWreck })
 };
 
 const mapStateToProps = state => ({
+  view: state.map.view,
+  zoom: state.map.zoom,
+  filterType: state.map.filterType,
   wrecks: state.wrecks.wrecks,
+  favorites: state.user.favorites,
   filteredWrecks: state.filteredWrecks.filteredWrecks,
   selectedWreck: state.selectedWreck.selectedWreck
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setSelectedWreck
+  setMapView,
+  setMapZoom,
+  setSelectedWreck,
+  fetchFavorites,
+  createFavorite,
+  deleteFavorite
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);
