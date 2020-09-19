@@ -134,7 +134,6 @@ export const Map = ({
       minZoom={3}
       style={{ height: '100%', width: '100%' }}
       worldCopyJump={true}
-      viewport={{ center: view, zoom: zoom }}
     >
       <MarkerClusterGroup maxClusterRadius={40}>
         {renderMarkers({ wrecks, selectedWreck, setSelectedWreck, favorites, createFavorite, deleteFavorite, fetchFavorites })}
