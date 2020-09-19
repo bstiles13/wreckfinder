@@ -10,7 +10,15 @@ import { fetchSession, fetchWrecks } from './store/actions';
 import './App.scss';
 
 const App = ({ fetchSession, fetchWrecks }) => {
+  const clearHash = () => { // Removes hash caused by passport facebook bug
+    if (document.location.hash === '#_=_') {
+      // eslint-disable-next-line no-restricted-globals
+      document.location.href = location.href.split('#')[0];
+    };
+  };
+
   useEffect(() => {
+    clearHash();
     fetchSession();
     fetchWrecks();
   }, []);
