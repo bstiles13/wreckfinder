@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Form, Label, Icon, Button } from 'semantic-ui-react';
-import { resetMap, setFilteredWrecks, resetSelectedWreck } from '../../../store/actions';
+import { setMapFilterType, setFilteredWrecks, resetSelectedWreck } from '../../../store/actions';
 import { get, shuffle, filter, toLower, reduce, isEmpty } from 'lodash';
 
 import './Search.scss';
@@ -17,7 +17,7 @@ const INITIAL_STATE = {
   isVisible: false
 };
 
-export const Search = ({ wrecks, resetMap, setFilteredWrecks, resetSelectedWreck }) => {
+export const Search = ({ wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck }) => {
   const [state, setState] = useState({ ...INITIAL_STATE });
 
   const handleChange = e => {
@@ -29,22 +29,22 @@ export const Search = ({ wrecks, resetMap, setFilteredWrecks, resetSelectedWreck
     });
   };
 
-  const clearWrecks = ({ setFilteredWrecks, resetMap, resetSelectedWreck }) => {
+  const clearWrecks = ({ setFilteredWrecks, setMapFilterType, resetSelectedWreck }) => {
     setState({ ...INITIAL_STATE });
-    resetMap();
+    setMapFilterType('results');
     resetSelectedWreck();
     setFilteredWrecks([]);
   };
 
-  const randomizeWrecks = ({ wrecks, setFilteredWrecks, resetMap, resetSelectedWreck }) => {
+  const randomizeWrecks = ({ wrecks, setFilteredWrecks, setMapFilterType, resetSelectedWreck }) => {
     let randomWrecks = shuffle(wrecks);
     randomWrecks = randomWrecks.slice(0, 100);
-    resetMap();
+    setMapFilterType('results');
     resetSelectedWreck();
     setFilteredWrecks(randomWrecks);
   };
 
-  const searchWrecks = ({ after, before, description, hasName, isVisible, name, wrecks, setFilteredWrecks, resetMap, resetSelectedWreck }) => {
+  const searchWrecks = ({ after, before, description, hasName, isVisible, name, wrecks, setFilteredWrecks, setMapFilterType, resetSelectedWreck }) => {
     const results = shuffle(filter(wrecks, wreck => {
       const nameMatch = isEmpty(name) || toLower(get(wreck, 'properties.name', '')).includes(toLower(name));
       const descriptionMatch = (
@@ -60,7 +60,7 @@ export const Search = ({ wrecks, resetMap, setFilteredWrecks, resetSelectedWreck
       return nameMatch && descriptionMatch && afterMatch && beforeMatch && hasNameMatch && isVisibleMatch;
     }));
 
-    resetMap();
+    setMapFilterType('results');
     resetSelectedWreck();
     setFilteredWrecks(results.slice(0, 100));
   };
@@ -123,20 +123,20 @@ export const Search = ({ wrecks, resetMap, setFilteredWrecks, resetSelectedWreck
         <Form.Button
           type='button'
           className='search-form-button search-clear-button'
-          onClick={() => clearWrecks({ resetMap, setFilteredWrecks, resetSelectedWreck })}
+          onClick={() => clearWrecks({ setMapFilterType, setFilteredWrecks, resetSelectedWreck })}
           inverted>
           Clear
         </Form.Button>
         <Form.Button
           type='button'
           className='search-form-button search-random-button'
-          onClick={() => randomizeWrecks({ wrecks, resetMap, setFilteredWrecks, resetSelectedWreck })}>
+          onClick={() => randomizeWrecks({ wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck })}>
           Random
         </Form.Button>
         <Button.Or />
         <Form.Button
           className='search-form-button search-submit-button'
-          onClick={() => searchWrecks({ ...state, wrecks, resetMap, setFilteredWrecks, resetSelectedWreck })}
+          onClick={() => searchWrecks({ ...state, wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck })}
           positive>
           Search
         </Form.Button>
@@ -150,7 +150,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  resetMap,
+  setMapFilterType,
   setFilteredWrecks,
   resetSelectedWreck
 }, dispatch);
