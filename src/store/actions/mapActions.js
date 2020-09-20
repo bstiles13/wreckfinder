@@ -1,3 +1,5 @@
+import { get } from 'lodash';
+// import { INITIAL_STATE } from '../reducers/mapReducer';
 export const SET_MAP_VIEW = 'SET_MAP_VIEW';
 export const SET_MAP_ZOOM = 'SET_MAP_ZOOM';
 export const SET_MAP_FILTER_TYPE = 'SET_MAP_FILTER_TYPE';
@@ -32,4 +34,15 @@ export const setMapViewport = (viewport) => {
   };
 };
 
-export const resetMap = () => ({ type: RESET_MAP });
+export const resetMap = () => (dispatch, getStore) => {
+  const currentZoom = get(getStore(), 'map.viewport.zoom');
+  console.log('ZOOM', currentZoom);
+
+  // if (!currentZoom) return;
+
+  // if (currentZoom > 17) {
+  //   dispatch({ type: RESET_MAP });
+  // } else {
+  //   dispatch(setMapZoom(8));
+  // }
+};

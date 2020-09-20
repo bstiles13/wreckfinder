@@ -1,0 +1,21 @@
+.wreck-popup {
+  &-history {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+  }
+
+  &-controls {
+    display: flex;
+    justify-content: space-between;
+
+    &:after {
+      content: none !important;
+    }
+  }
+
+  .ui.card {
+    box-shadow: none !important;
+  }
+}

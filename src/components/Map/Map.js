@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Map as LeafletMap, Marker, Popup } from 'react-leaflet';
+import { Map as LeafletMap } from 'react-leaflet';
 import * as esri from 'esri-leaflet';
 import { isEmpty, map, get, some, debounce } from 'lodash';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
-import { Button, Card, Image, Icon } from 'semantic-ui-react';
 import { setMapView, setMapZoom, setMapViewport, setSelectedWreck, fetchFavorites, createFavorite, deleteFavorite } from '../../store/actions';
+import { Marker } from './Marker/Marker';
 
 import './Map.scss';
 
@@ -49,83 +49,22 @@ export const Map = ({
     esri.basemapLayer(layer.labels).addTo(map);
   }, [layer]);
 
-  const renderPopupImage = (type) => {
-    const types = {
-      wreck: require('../../assets/wreck_icon.png'),
-      obstruction: require('../../assets/rocks_icon.png')
-    };
-
-    return types[type];
-  };
-
-  const handleCreateFavorite = async (id) => {
-    await createFavorite(id);
-    fetchFavorites();
-  };
-
-  const handleDeleteFavorite = async (id) => {
-    await deleteFavorite(id);
-    fetchFavorites();
-  };
-
   const renderMarkers = ({ wrecks, selectedWreck, setSelectedWreck, favorites }) => {
     if (isEmpty(wrecks)) return;
 
-    const openPopup = marker => {
-      if (marker && marker.leafletElement && !!marker.props.selected) {
-        setTimeout(() => marker.leafletElement.openPopup());
-      }
-    };
-
-    return map(wrecks, (wreck, i) => {
+    return map(wrecks, wreck => {
       const isFavorite = some(favorites, favorite => favorite._id === wreck._id);
       return (
         <Marker
-          key={`wreck-${i}`}
-          selected={wreck.id === get(selectedWreck, 'id')}
-          position={wreck.geometry.coordinates}
-          transparent
-          ref={openPopup}
-          onClick={() => setSelectedWreck(wreck)}
-        >
-          <Popup className='wreck-popup'>
-            <Card>
-              <Card.Content>
-                <Image
-                  floated='right'
-                  size='mini'
-                  src={renderPopupImage(wreck.properties.featureTypeShort)}
-                />
-                <Card.Header><div className='wreck-popup-name'>{wreck.properties.name || 'Unknown'}</div></Card.Header>
-                <Card.Meta>
-                  {wreck.properties.featureTypeShort}
-                  {wreck.properties.yearSunk && `: sunk ${wreck.properties.yearSunk}`}
-                </Card.Meta>
-                <Card.Description>
-                  <div className='wreck-popup-history' title={wreck.properties.history}>{wreck.properties.history}</div>
-                </Card.Description>
-              </Card.Content>
-              <Card.Content extra className='wreck-popup-controls'>
-                {
-                  isFavorite
-                    ? (
-                      <Button basic color='red' size='tiny' onClick={() => handleDeleteFavorite(wreck._id)}>
-                        <Icon name='minus circle' />
-                        Remove Favorite
-                      </Button>
-                    )
-                    : (
-                      <Button basic color='green' size='tiny' onClick={() => handleCreateFavorite(wreck._id)}>
-                        <Icon name='star' />
-                        Add Favorite
-                      </Button>
-                    )
-                }
-                <Button basic color='black' size='tiny'>Learn More</Button>
-              </Card.Content>
-            </Card>
-          </Popup>
-        </Marker>
+          key={`wreck-${wreck.id}`}
+          wreck={wreck}
+          isFavorite={isFavorite}
+          selectedWreck={selectedWreck}
+          setSelectedWreck={setSelectedWreck}
+          createFavorite={createFavorite}
+          deleteFavorite={deleteFavorite}
+          fetchFavorites={fetchFavorites}
+        />
       );
     });
   };
