@@ -12,8 +12,8 @@ export const Results = ({ isActive, wrecks, selectedWreck, setSelectedWreck }) =
       if (element) element.scrollTop = 0;
     }
 
-    if (selectedWreck && selectedWreck.id) {
-      const element = document.getElementById(`result-${selectedWreck.id}`);
+    if (selectedWreck && selectedWreck._id) {
+      const element = document.getElementById(`result-${selectedWreck._id}`);
       element && element.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }, [selectedWreck]);

@@ -3,6 +3,7 @@ import {
   SET_MAP_ZOOM,
   SET_MAP_FILTER_TYPE,
   SET_MAP_VIEWPORT,
+  SET_MAP_CLICK_EVENT,
   RESET_MAP
 } from '../actions/mapActions';
 import { v4 as uuidv4 } from 'uuid';
@@ -23,6 +24,8 @@ export const mapReducer = (state = INITIAL_STATE, action) => {
       return { ...state, filterType: action.payload };
     case SET_MAP_VIEWPORT:
       return { ...state, viewport: action.payload };
+    case SET_MAP_CLICK_EVENT:
+      return { ...state, clickEvent: action.payload };
     case RESET_MAP:
       return { ...INITIAL_STATE, key: uuidv4() };
     default:

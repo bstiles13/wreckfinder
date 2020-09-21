@@ -4,6 +4,7 @@ export const SET_MAP_VIEW = 'SET_MAP_VIEW';
 export const SET_MAP_ZOOM = 'SET_MAP_ZOOM';
 export const SET_MAP_FILTER_TYPE = 'SET_MAP_FILTER_TYPE';
 export const SET_MAP_VIEWPORT = 'SET_MAP_VIEWPORT';
+export const SET_MAP_CLICK_EVENT = 'SET_MAP_CLICK_EVENT';
 export const RESET_MAP = 'RESET_MAP';
 
 export const setMapView = (coordinates) => {
@@ -31,6 +32,13 @@ export const setMapViewport = (viewport) => {
   return {
     type: SET_MAP_VIEWPORT,
     payload: viewport
+  };
+};
+
+export const setMapClickEvent = (payload) => {
+  return {
+    type: SET_MAP_CLICK_EVENT,
+    payload
   };
 };
 

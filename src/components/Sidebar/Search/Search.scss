@@ -2,6 +2,23 @@
   text-align: left;
   padding-bottom: 1rem;
 
+  &-controls {
+    display: flex;
+    justify-content: space-between;
+    text-transform: capitalize;
+    margin-bottom: 0.5rem;
+
+    .dropdown {
+      min-width: 100%;
+      width: 100% !important;
+
+      .dropdown.icon {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+
   &-buttons {
     display: flex;
     justify-content: flex-end;

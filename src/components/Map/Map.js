@@ -5,7 +5,16 @@ import { Map as LeafletMap } from 'react-leaflet';
 import * as esri from 'esri-leaflet';
 import { isEmpty, map, get, some, debounce } from 'lodash';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
-import { setMapView, setMapZoom, setMapViewport, setSelectedWreck, fetchFavorites, createFavorite, deleteFavorite } from '../../store/actions';
+import {
+  setMapView,
+  setMapZoom,
+  setMapViewport,
+  setMapClickEvent,
+  setSelectedWreck,
+  fetchFavorites,
+  createFavorite,
+  deleteFavorite
+} from '../../store/actions';
 import { Marker } from './Marker/Marker';
 
 import './Map.scss';
@@ -17,6 +26,7 @@ export const Map = ({
   setMapView,
   setMapZoom,
   setMapViewport,
+  setMapClickEvent,
   setSelectedWreck,
   filteredWrecks,
   selectedWreck,
@@ -29,7 +39,7 @@ export const Map = ({
 
   useEffect(() => {
     if (!isEmpty(selectedWreck) && !!selectedWreck.focus) {
-      setMapView([selectedWreck.geometry.coordinates[0], selectedWreck.geometry.coordinates[1] - 0.13]); // offset required to center marker
+      setMapView([selectedWreck.geometry.coordinates[1], selectedWreck.geometry.coordinates[0] - 0.13]); // offset required to center marker
       setMapZoom(11);
     }
   }, [selectedWreck]);
@@ -56,7 +66,7 @@ export const Map = ({
       const isFavorite = some(favorites, favorite => favorite._id === wreck._id);
       return (
         <Marker
-          key={`wreck-${wreck.id}`}
+          key={`wreck-${wreck._id}`}
           wreck={wreck}
           isFavorite={isFavorite}
           selectedWreck={selectedWreck}
@@ -80,9 +90,12 @@ export const Map = ({
       center={view}
       zoom={zoom}
       minZoom={3}
+      maxZoom={20}
       style={{ height: '100%', width: '100%' }}
       onViewportChanged={debounce(setMapViewport, 500)}
       worldCopyJump={true}
+      onClick={e => setMapClickEvent({ ...e, type: 'single' })}
+      onDblClick={e => setMapClickEvent({ ...e, type: 'double' })}
     >
       <MarkerClusterGroup maxClusterRadius={40}>
         {renderMarkers({ wrecks, selectedWreck, setSelectedWreck, favorites, createFavorite, deleteFavorite, fetchFavorites })}
@@ -110,6 +123,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setMapView,
   setMapZoom,
   setMapViewport,
+  setMapClickEvent,
   setSelectedWreck,
   fetchFavorites,
   createFavorite,

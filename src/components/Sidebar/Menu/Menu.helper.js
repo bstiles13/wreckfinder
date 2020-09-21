@@ -13,11 +13,11 @@ const renderPopupImage = (type) => {
 
 export const renderWreckList = ({ wrecks, selectedWreck, setSelectedWreck }) => {
   return map(wrecks, wreck => {
-    const isSelected = wreck.id === get(selectedWreck, 'id');
+    const isSelected = wreck._id === get(selectedWreck, '_id');
     return (
       <div
-        key={`result-${wreck.id}`}
-        id={`result-${wreck.id}`}
+        key={`result-${wreck._id}`}
+        id={`result-${wreck._id}`}
         className={`result-row selectable ${isSelected ? 'selected' : ''}`}
         onClick={() => setSelectedWreck({ ...wreck, focus: true })}
       >

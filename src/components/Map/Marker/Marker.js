@@ -35,8 +35,8 @@ export const Marker = ({ wreck, selectedWreck, setSelectedWreck, isFavorite, cre
   return (
     <ErrorBoundary>
       <LeafletMarker
-        selected={wreck.id === get(selectedWreck, 'id')}
-        position={wreck.geometry.coordinates}
+        selected={wreck._id === get(selectedWreck, '_id')}
+        position={[wreck.geometry.coordinates[1], wreck.geometry.coordinates[0]]}
         transparent
         ref={openPopup}
         onClick={() => setSelectedWreck(wreck)}
