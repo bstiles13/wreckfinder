@@ -8,11 +8,13 @@ export const BasicSearch = ({ description, handleChange }) => {
     <Form.Input
       id='description'
       fluid
+      label='Keyword(s)'
       placeholder='Sunk by submarine'
-      icon='search'
+      icon='ship'
       iconPosition='left'
       onChange={handleChange}
       value={description}
+      autoFocus
     />
   );
 };

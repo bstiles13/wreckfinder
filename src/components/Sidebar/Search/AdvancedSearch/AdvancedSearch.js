@@ -9,11 +9,13 @@ export const AdvancedSearch = ({ name, description, after, before, isVisible, ha
       <Form.Input
         id='description'
         fluid
+        label='Description'
         placeholder='Sunk by submarine'
         icon='search'
         iconPosition='left'
         onChange={handleChange}
         value={description}
+        autoFocus
       />
       <Form.Input
         id='name'

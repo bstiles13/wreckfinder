@@ -33,6 +33,7 @@ export const ProximitySearch = ({ latitude, longitude, radius, handleChange, vie
         label='Radius'
         onChange={handleChange}
         value={radius}
+        autoFocus
       />
       <Message
         info
