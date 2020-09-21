@@ -2,19 +2,17 @@
   text-align: left;
   padding-bottom: 1rem;
 
-  &-controls {
+  &-header {
     display: flex;
     justify-content: space-between;
-    text-transform: capitalize;
+    align-items: flex-end;
     margin-bottom: 0.5rem;
 
     .dropdown {
-      min-width: 100%;
-      width: 100% !important;
+      font-size: 0.9rem !important;
 
       .dropdown.icon {
-        display: flex;
-        justify-content: flex-end;
+        padding-top: 0.6rem !important;
       }
     }
   }
@@ -26,6 +24,11 @@
 
   &-submit-button {
     text-align: right;
+
+    button {
+      background-color: rgb(95, 142, 189) !important;
+      color: white !important;
+    }
   }
 
   &-clear-button {

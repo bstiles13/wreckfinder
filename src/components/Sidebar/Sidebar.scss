@@ -13,11 +13,13 @@
     &-header {
       display: flex;
       align-items: center;
-      padding: 0.5rem;
+      padding: 1.4rem 0.5rem 1rem 0.5rem;
+      background-color: rgb(95, 142, 189) !important;
+      color: rgb(247, 244, 244);
+      box-shadow: 0 3px 3px rgba(0,0,0,0.2);
 
       .app-title {
         flex: 1;
-        margin-top: 0.5rem;
         font-size: 1.6rem;
         font-weight: bold;
         text-transform: uppercase;
@@ -26,7 +28,7 @@
     }
 
     .search-container{
-      padding: 0.5rem;
+      padding: 0.8rem 0.5rem 0.5rem 0.5rem;
     }
 
     .menu-container {

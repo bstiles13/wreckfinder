@@ -124,13 +124,10 @@ export const Search = ({ wrecks, setMapFilterType, setFilteredWrecks, resetSelec
 
   return (
     <div className='search'>
-      <div className='search-controls'>
-        <SearchDropdown onChange={toggleSearchType} value={state.searchType} />
-      </div>
       <Form>
-        {state.searchType === 'basic' && <BasicSearch {...state} handleChange={handleChange} />}
-        {state.searchType === 'advanced' && <AdvancedSearch {...state} handleChange={handleChange} />}
-        {state.searchType === 'proximity' && <ProximitySearch {...state} handleChange={handleChange} viewport={viewport} />}
+        {state.searchType === 'basic' && <BasicSearch {...state} handleChange={handleChange}><SearchDropdown onChange={toggleSearchType} value={state.searchType} /></BasicSearch>}
+        {state.searchType === 'advanced' && <AdvancedSearch {...state} handleChange={handleChange}><SearchDropdown onChange={toggleSearchType} value={state.searchType} /></AdvancedSearch>}
+        {state.searchType === 'proximity' && <ProximitySearch {...state} handleChange={handleChange} viewport={viewport}><SearchDropdown onChange={toggleSearchType} value={state.searchType} /></ProximitySearch>}
         <Form.Group as={Button.Group} className='search-buttons'>
           <Form.Button
             type='button'
@@ -149,7 +146,7 @@ export const Search = ({ wrecks, setMapFilterType, setFilteredWrecks, resetSelec
           <Form.Button
             className='search-form-button search-submit-button'
             onClick={() => searchWrecks({ ...state, wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck })}
-            positive>
+          >
             Search
           </Form.Button>
         </Form.Group>

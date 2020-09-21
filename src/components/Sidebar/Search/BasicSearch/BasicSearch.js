@@ -3,14 +3,17 @@ import { Form, Message } from 'semantic-ui-react';
 
 // import './Search.scss';
 
-export const BasicSearch = ({ description, handleChange }) => {
+export const BasicSearch = ({ children, description, handleChange }) => {
   return (
     <>
+      <div className='search-header'>
+        <label>Keyword(s)</label>
+        {children}
+      </div>
       <Form.Input
         id='description'
         fluid
-        label='Keyword(s)'
-        placeholder='Sunk by submarine'
+        placeholder='"Titanic", "storm", "sunk by submarine", etc'
         icon='ship'
         iconPosition='left'
         onChange={handleChange}

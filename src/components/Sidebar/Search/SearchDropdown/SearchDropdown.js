@@ -28,7 +28,6 @@ const options = [
 export const SearchDropdown = ({ onChange, value }) => (
   <Dropdown
     selection
-    fluid
     options={options}
     defaultValue={options[0].value}
     onChange={onChange}

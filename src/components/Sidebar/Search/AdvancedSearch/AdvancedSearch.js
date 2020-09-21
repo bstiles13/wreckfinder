@@ -3,13 +3,16 @@ import { Form } from 'semantic-ui-react';
 
 // import './Search.scss';
 
-export const AdvancedSearch = ({ name, description, after, before, isVisible, hasName, handleChange }) => {
+export const AdvancedSearch = ({ children, name, description, after, before, isVisible, hasName, handleChange }) => {
   return (
     <>
+      <div className='search-header'>
+        <label>Description</label>
+        {children}
+      </div>
       <Form.Input
         id='description'
         fluid
-        label='Description'
         placeholder='Sunk by submarine'
         icon='search'
         iconPosition='left'

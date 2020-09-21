@@ -5,10 +5,20 @@ import { INITIAL_STATE } from '../../../../store/reducers/mapReducer';
 
 // import './Search.scss';
 
-export const ProximitySearch = ({ latitude, longitude, radius, handleChange, viewport }) => {
-  console.log('viewport', viewport);
+export const ProximitySearch = ({ children, latitude, longitude, radius, handleChange, viewport }) => {
   return (
     <>
+      <div className='search-header'>
+        <label>Radius</label>
+        {children}
+      </div>
+      <Form.Input
+        id='radius'
+        fluid
+        onChange={handleChange}
+        value={radius}
+        autoFocus
+      />
       <Form.Group widths='equal'>
         <Form.Input
           id='latitude'
@@ -27,14 +37,6 @@ export const ProximitySearch = ({ latitude, longitude, radius, handleChange, vie
           value={longitude}
         />
       </Form.Group>
-      <Form.Input
-        id='radius'
-        fluid
-        label='Radius'
-        onChange={handleChange}
-        value={radius}
-        autoFocus
-      />
       <Message
         info
         size='tiny'

@@ -40,7 +40,7 @@ export const Map = ({
   useEffect(() => {
     if (!isEmpty(selectedWreck) && !!selectedWreck.focus) {
       setMapView([selectedWreck.geometry.coordinates[1], selectedWreck.geometry.coordinates[0] - 0.13]); // offset required to center marker
-      setMapZoom(11);
+      setMapZoom(10);
     }
   }, [selectedWreck]);
 
