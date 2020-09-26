@@ -40,7 +40,6 @@ export const renderWreckList = ({ wrecks, selectedWreck, setSelectedWreck }) => 
               anchorClass='test'
               expanded={false}
               width={0}
-              onClick={(e, t) => console.log('e', e, t)}
             >
               {wreck.properties.history || 'No description'}
             </ShowMoreText>

@@ -1,8 +1,13 @@
 .map-sidebar {
-  min-width: 29%;
-  background-color: rgba(255, 255, 255, 0.98) !important;
-  resize: both !important;
-  overflow: auto !important;
+  &-left {
+    background-color: rgb(245, 252, 255) !important;
+    overflow: visible !important;
+  }
+
+  &-right {
+    background-color: rgb(245, 252, 255) !important;
+    min-width: 29%;
+  }
 
   &-content {
     display: flex;
@@ -31,7 +36,7 @@
       padding: 0.8rem 0.5rem 0.5rem 0.5rem;
     }
 
-    .menu-container {
+    .content-container {
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -43,22 +48,10 @@
       }
     }
   }
-
-  &-toggle {
-    cursor: pointer;
-
-    &-show {
-      position: fixed !important;
-      left: 10px;
-      top: 10px;
-      z-index: 1;
-      color: #383232 !important;
-    }
-  }
 }
 
 @media (max-width: 1280px) {
-  .map-sidebar {
+  .map-sidebar-right {
     min-width: 36%;
   }
 }

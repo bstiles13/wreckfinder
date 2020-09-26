@@ -11,7 +11,7 @@ export const Default = ({ isActive, handleItemClick }) => {
       <Button as='a' href='http://localhost:3001/auth/login/' color='facebook'>
         <Icon name='facebook' /> Sign In
       </Button>
-      <a className='default-guest-link' onClick={() => handleItemClick(null, { name: 'results' })}>or continue as a guest</a>
+      <a className='default-guest-link' onClick={() => handleItemClick(null, { name: 'search' })}>or continue as a guest</a>
     </Segment>
   );
 };

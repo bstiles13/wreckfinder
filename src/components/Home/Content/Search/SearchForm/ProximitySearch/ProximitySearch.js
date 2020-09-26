@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Message } from 'semantic-ui-react';
 import { get } from 'lodash';
-import { INITIAL_STATE } from '../../../../store/reducers/mapReducer';
+import { INITIAL_STATE } from '../../../../../../store/reducers/mapReducer';
 
 // import './Search.scss';
 

@@ -4,13 +4,13 @@ import { bindActionCreators } from 'redux';
 import { Form, Button } from 'semantic-ui-react';
 import { get, shuffle, filter, toLower, reduce, isEmpty } from 'lodash';
 import axios from 'axios';
-import { setMapFilterType, setFilteredWrecks, resetSelectedWreck } from '../../../store/actions';
+import { setMapFilterType, setFilteredWrecks, resetSelectedWreck } from '../../../../../store/actions';
 import { BasicSearch } from './BasicSearch/BasicSearch';
 import { AdvancedSearch } from './AdvancedSearch/AdvancedSearch';
 import { ProximitySearch } from './ProximitySearch/ProximitySearch';
 import { SearchDropdown } from './SearchDropdown/SearchDropdown';
 
-import './Search.scss';
+import './SearchForm.scss';
 
 const INITIAL_STATE = {
   searchType: 'basic',
@@ -25,7 +25,7 @@ const INITIAL_STATE = {
   radius: null
 };
 
-export const Search = ({ wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck, clickEvent, viewport }) => {
+export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck, clickEvent, viewport }) => {
   const [state, setState] = useState({ ...INITIAL_STATE });
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export const Search = ({ wrecks, setMapFilterType, setFilteredWrecks, resetSelec
 
   const clearWrecks = ({ setFilteredWrecks, setMapFilterType, resetSelectedWreck }) => {
     setState({ ...INITIAL_STATE });
-    setMapFilterType('results');
+    setMapFilterType('search');
     resetSelectedWreck();
     setFilteredWrecks([]);
   };
@@ -60,7 +60,7 @@ export const Search = ({ wrecks, setMapFilterType, setFilteredWrecks, resetSelec
   const randomizeWrecks = ({ wrecks, setFilteredWrecks, setMapFilterType, resetSelectedWreck }) => {
     let randomWrecks = shuffle(wrecks);
     randomWrecks = randomWrecks.slice(0, 100);
-    setMapFilterType('results');
+    setMapFilterType('search');
     resetSelectedWreck();
     setFilteredWrecks(randomWrecks);
   };
@@ -76,7 +76,7 @@ export const Search = ({ wrecks, setMapFilterType, setFilteredWrecks, resetSelec
       return descriptionMatch;
     }));
 
-    setMapFilterType('results');
+    setMapFilterType('search');
     resetSelectedWreck();
     setFilteredWrecks(results.slice(0, 100));
   };
@@ -97,7 +97,7 @@ export const Search = ({ wrecks, setMapFilterType, setFilteredWrecks, resetSelec
       return nameMatch && descriptionMatch && afterMatch && beforeMatch && hasNameMatch && isVisibleMatch;
     }));
 
-    setMapFilterType('results');
+    setMapFilterType('search');
     resetSelectedWreck();
     setFilteredWrecks(results.slice(0, 100));
   };
@@ -106,7 +106,7 @@ export const Search = ({ wrecks, setMapFilterType, setFilteredWrecks, resetSelec
     try {
       const res = await axios.get('/api/wrecks/radius', { params: { radius, lat: latitude, lng: longitude } });
       const wrecks = filter(res.data, wreck => wreck.properties.source !== 'enc');
-      setMapFilterType('results');
+      setMapFilterType('search');
       resetSelectedWreck();
       setFilteredWrecks(wrecks);
     } catch (err) {
@@ -167,4 +167,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   resetSelectedWreck
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchForm);

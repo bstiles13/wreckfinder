@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const INITIAL_STATE = {
   view: [38.0406, -84.5037],
   zoom: 4,
-  filterType: 'results'
+  filterType: 'search'
 };
 
 export const mapReducer = (state = INITIAL_STATE, action) => {

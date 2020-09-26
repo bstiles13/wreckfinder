@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { Segment } from 'semantic-ui-react';
 import { get, isEmpty } from 'lodash';
-import { renderWreckList } from '../Menu.helper';
+import { renderWreckList } from '../Content.helper';
 
-import './Results.scss';
+import './Favorites.scss';
 
-export const Results = ({ isActive, wrecks, selectedWreck, setSelectedWreck }) => {
+export const Favorites = ({ isActive, wrecks, selectedWreck, setSelectedWreck }) => {
   useEffect(() => {
     if (!selectedWreck) {
-      const element = get(document.getElementsByClassName('results'), '0');
+      const element = get(document.getElementsByClassName('favorites'), '0');
       if (element) element.scrollTop = 0;
     }
 
@@ -21,10 +21,10 @@ export const Results = ({ isActive, wrecks, selectedWreck, setSelectedWreck }) =
   if (!isActive) return false;
 
   return (
-    <Segment className='results' attached='bottom'>
+    <Segment className='favorites' attached='bottom'>
       {
         isEmpty(wrecks)
-          ? <div className='result-row'>No results</div>
+          ? <div className='result-row'>No Favorites</div>
           : renderWreckList({ wrecks, selectedWreck, setSelectedWreck })
       }
     </Segment>
