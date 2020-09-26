@@ -1,25 +1,28 @@
 import React from 'react';
-import { Form } from 'semantic-ui-react';
+import { Form, Input } from 'semantic-ui-react';
+import { delayAutoFocus } from '../../../../../../../utils';
 
 // import './Search.scss';
 
 export const AdvancedSearch = ({ children, name, description, after, before, isVisible, hasName, handleChange }) => {
   return (
     <>
-      <div className='search-header'>
+      <div className='search-form-header'>
         <label>Description</label>
         {children}
       </div>
-      <Form.Input
-        id='description'
-        fluid
-        placeholder='Sunk by submarine'
-        icon='search'
-        iconPosition='left'
-        onChange={handleChange}
-        value={description}
-        autoFocus
-      />
+      <Form.Field>
+        <Input
+          id='description'
+          fluid
+          placeholder='Sunk by submarine'
+          icon='search'
+          iconPosition='left'
+          onChange={handleChange}
+          value={description}
+          ref={delayAutoFocus}
+        />
+      </Form.Field>
       <Form.Input
         id='name'
         fluid

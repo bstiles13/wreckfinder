@@ -4,7 +4,6 @@ import { get } from 'lodash';
 import { Button, Card, Image, Icon } from 'semantic-ui-react';
 import ShowMoreText from 'react-show-more-text';
 import { ErrorBoundary } from '../../ErrorBoundary/ErrorBoundary';
-import axios from 'axios';
 
 import './Marker.scss';
 
@@ -33,13 +32,12 @@ const openPopup = marker => {
   }
 };
 
-const handleSearchArticles = () => {
-  return axios.get('/api/wrecks/articles')
-    .then(res => console.log(res.data))
-    .catch(err => err);
+const handleArticlesSearch = ({ query, fetchArticles, setActiveTab }) => {
+  setActiveTab('articles');
+  fetchArticles(query);
 };
 
-export const Marker = ({ wreck, selectedWreck, setSelectedWreck, isFavorite, createFavorite, deleteFavorite, fetchFavorites }) => {
+export const Marker = ({ wreck, selectedWreck, setSelectedWreck, isFavorite, createFavorite, deleteFavorite, fetchFavorites, fetchArticles, setActiveTab }) => {
   return (
     <ErrorBoundary>
       <LeafletMarker
@@ -101,7 +99,7 @@ export const Marker = ({ wreck, selectedWreck, setSelectedWreck, isFavorite, cre
                     </Button>
                   )
               }
-              <Button basic color='black' size='tiny' onClick={handleSearchArticles}>Learn More</Button>
+              <Button basic color='black' size='tiny' onClick={() => handleArticlesSearch({ query: wreck.properties.name, fetchArticles, setActiveTab })}>Articles</Button>
             </Card.Content>
           </Card>
         </Popup>

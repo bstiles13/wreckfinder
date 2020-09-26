@@ -1,22 +1,13 @@
 import React from 'react';
 import { Form, Message, Input } from 'semantic-ui-react';
+import { delayAutoFocus } from '../../../../../../../utils';
 
 // import './Search.scss';
 
 export const BasicSearch = ({ children, description, handleChange }) => {
-  // There is a side effect with Semantic sidebars causing a double render / fade-in when conflicting focuses occur
-  // This workaround waits for Semantic to finish before calling a subsequent focus
-  const handleRef = (input) => {
-    setTimeout(() => {
-      try {
-        input && input.focus();
-      } catch (err) { return err; }
-    }, 1000);
-  };
-
   return (
     <>
-      <div className='search-header'>
+      <div className='search-form-header'>
         <label>Keyword(s)</label>
         {children}
       </div>
@@ -29,7 +20,7 @@ export const BasicSearch = ({ children, description, handleChange }) => {
           iconPosition='left'
           onChange={handleChange}
           value={description}
-          ref={handleRef}
+          ref={delayAutoFocus}
         />
       </Form.Field>
       <Message

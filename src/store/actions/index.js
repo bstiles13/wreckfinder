@@ -4,3 +4,4 @@ export * from './mapActions';
 export * from './wrecksActions';
 export * from './selectedWreckActions';
 export * from './filteredWrecksActions';
+export * from './articlesActions';

@@ -13,7 +13,8 @@ import {
   setSelectedWreck,
   fetchFavorites,
   createFavorite,
-  deleteFavorite
+  deleteFavorite,
+  fetchArticles
 } from '../../store/actions';
 import { Marker } from './Marker/Marker';
 
@@ -33,7 +34,9 @@ export const Map = ({
   favorites,
   fetchFavorites,
   createFavorite,
-  deleteFavorite
+  deleteFavorite,
+  fetchArticles,
+  setActiveTab
 }) => {
   const mapRef = useRef();
 
@@ -59,7 +62,7 @@ export const Map = ({
     esri.basemapLayer(layer.labels).addTo(map);
   }, [layer]);
 
-  const renderMarkers = ({ wrecks, selectedWreck, setSelectedWreck, favorites }) => {
+  const renderMarkers = ({ wrecks, selectedWreck, setSelectedWreck, favorites, fetchArticles, setActiveTab }) => {
     if (isEmpty(wrecks)) return;
 
     return map(wrecks, wreck => {
@@ -74,6 +77,8 @@ export const Map = ({
           createFavorite={createFavorite}
           deleteFavorite={deleteFavorite}
           fetchFavorites={fetchFavorites}
+          fetchArticles={fetchArticles}
+          setActiveTab={setActiveTab}
         />
       );
     });
@@ -98,7 +103,7 @@ export const Map = ({
       onDblClick={e => setMapClickEvent({ ...e, type: 'double' })}
     >
       <MarkerClusterGroup maxClusterRadius={40}>
-        {renderMarkers({ wrecks, selectedWreck, setSelectedWreck, favorites, createFavorite, deleteFavorite, fetchFavorites })}
+        {renderMarkers({ wrecks, selectedWreck, setSelectedWreck, favorites, createFavorite, deleteFavorite, fetchFavorites, fetchArticles, setActiveTab })}
       </MarkerClusterGroup>
       <div
         className={`layer-toggle ${layer.type === 'Oceans' ? 'layer-toggle-imagery' : 'layer-toggle-oceans'}`}
@@ -127,7 +132,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setSelectedWreck,
   fetchFavorites,
   createFavorite,
-  deleteFavorite
+  deleteFavorite,
+  fetchArticles
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);

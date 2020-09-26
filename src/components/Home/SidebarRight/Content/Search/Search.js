@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Segment, Message } from 'semantic-ui-react';
+import { Message } from 'semantic-ui-react';
 import { get, isEmpty } from 'lodash';
 import { renderWreckList } from '../Content.helper';
 import SearchForm from './SearchForm/SearchForm';
@@ -22,11 +22,9 @@ export const Search = ({ isActive, wrecks, selectedWreck, setSelectedWreck }) =>
   if (!isActive) return false;
 
   return (
-    <>
-      <div className='search-container'>
-        <SearchForm />
-      </div>
-      <Segment className='results' attached='bottom'>
+    <div className='search'>
+      <SearchForm />
+      <div className='results'>
         {
           isEmpty(wrecks)
             ? (
@@ -39,7 +37,7 @@ export const Search = ({ isActive, wrecks, selectedWreck, setSelectedWreck }) =>
             )
             : renderWreckList({ wrecks, selectedWreck, setSelectedWreck })
         }
-      </Segment>
-    </>
+      </div>
+    </div>
   );
 };

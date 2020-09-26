@@ -7,6 +7,7 @@
   &-right {
     background-color: rgb(245, 252, 255) !important;
     min-width: 29%;
+    overflow-y: hidden !important;
   }
 
   &-content {
@@ -32,12 +33,8 @@
       }
     }
 
-    .search-container{
-      padding: 0.8rem 0.5rem 0.5rem 0.5rem;
-    }
-
     .content-container {
-      height: 100%;
+      flex: 1;
       display: flex;
       flex-direction: column;
       overflow: hidden;

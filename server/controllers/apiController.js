@@ -1,6 +1,7 @@
 const Wreck = require('../models/wreck');
-const { get } = require('lodash');
+const { get, isEmpty, slice } = require('lodash');
 const axios = require('axios');
+const { mapArticles } = require('../utils/articleHelper');
 
 module.exports = {
   getWrecks: async (req, res) => {
@@ -42,27 +43,52 @@ module.exports = {
   searchArticles: async (req, res) => {
     console.log(`Search articles REQUEST by: ${get(req, 'user.displayName', 'Guest User')}`);
 
-    let wikiURL = 'https://en.wikipedia.org/w/api.php?format=json&action=query&generator=search&gsrnamespace=0&gsrlimit=10&prop=pageimages|extracts&pilimit=max&exintro&explaintext&exsentences=1&exlimit=max&gsrsearch=titanic+shipwreck';
-    let nytURL = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=G7VeD2V5EoQQUNHeQXvtaGgrRjtONHcB&q=' + 'titanic+shipwreck';
-    let locURL = 'https://www.loc.gov/pictures/search/?fo=json&q=shipwreck';
+    const { query } = req.query;
+
+    console.log('query', query);
+
+    let wikiURL = `https://en.wikipedia.org/w/api.php?format=json&action=query&prop=info|pageimages|extracts&generator=allpages&inprop=url&gaplimit=10&exlimit=max&explaintext&exintro&gapfrom=${encodeURIComponent(query)}`;
+    let nytURL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=G7VeD2V5EoQQUNHeQXvtaGgrRjtONHcB&q=${encodeURIComponent(query)}`;
+    let locURL = `https://www.loc.gov/pictures/search/?fo=json&q=${encodeURIComponent(query)}`;
 
     try {
       const wikiResponse = await axios.get(wikiURL);
+      console.log('WIKI', wikiResponse);
       const nytResponse = await axios.get(nytURL);
       const locResponse = await axios.get(locURL);
 
       const articles = {};
 
-      if (get(wikiResponse, 'data.query.pages')) {
-        articles['wikipedia'] = wikiResponse.data.query.pages;
+      if (!isEmpty(get(wikiResponse, 'data.query.pages'))) {
+        const wikiArticles = slice(Object.values(wikiResponse.data.query.pages), 1);
+        articles['wikipedia'] = mapArticles({
+          articles: wikiArticles,
+          urlKey: 'fullurl',
+          titleKey: 'title',
+          descriptionKey: 'extract',
+          imgKey: 'thumbnail.source'
+        });
       }
 
-      if (get(nytResponse, 'data.response.docs')) {
-        articles['newYorkTimes'] = nytResponse.data.response.docs;
+      if (!isEmpty(get(nytResponse, 'data.response.docs'))) {
+        articles['newYorkTimes'] = mapArticles({
+          articles: nytResponse.data.response.docs,
+          urlKey: 'web_url',
+          titleKey: 'headline.main',
+          descriptionKey: 'abstract',
+          imgKey: 'multimedia.0.url',
+          imgPrefix: 'https://www.nytimes.com/'
+        });
       }
 
-      if (get(locResponse, 'data.results')) {
-        articles['libraryOfCongress'] = locResponse.data.results;
+      if (!isEmpty(get(locResponse, 'data.results'))) {
+        articles['libraryOfCongress'] = mapArticles({
+          articles: locResponse.data.results,
+          urlKey: 'links.item',
+          titleKey: 'title',
+          descriptionKey: 'extract',
+          imgKey: 'image.full'
+        });
       }
 
       res.status(200).send(articles);

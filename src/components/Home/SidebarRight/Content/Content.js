@@ -5,16 +5,15 @@ import { isEmpty } from 'lodash';
 import {
   Loader
 } from 'semantic-ui-react';
-import { Login } from './Login/Login';
 import { Search } from './Search/Search';
 import { Articles } from './Articles/Articles';
 import { Favorites } from './Favorites/Favorites';
 import { Trivia } from './Trivia/Trivia';
-import { resetMap, setMapFilterType, setSelectedWreck } from '../../../../store/actions';
+import { resetMap, setMapFilterType, setSelectedWreck, fetchArticles, clearArticles } from '../../../../store/actions';
 
 import './Content.scss';
 
-export const Content = ({ activeTab, setActiveTab, fetchingSession, filteredWrecks, selectedWreck, setSelectedWreck, favorites }) => {
+export const Content = ({ activeTab, setActiveTab, fetchingSession, filteredWrecks, selectedWreck, setSelectedWreck, favorites, articles, articlesQuery, articlesFetching, fetchArticles, clearArticles }) => {
   useEffect(() => {
     if (!isEmpty(filteredWrecks)) {
       setActiveTab('search');
@@ -24,13 +23,12 @@ export const Content = ({ activeTab, setActiveTab, fetchingSession, filteredWrec
   if (fetchingSession) return <Loader size='small' active inline='centered'>Loading</Loader>;
 
   return (
-    <>
+    <div className='content'>
       <Search isActive={activeTab === 'search'} wrecks={filteredWrecks} selectedWreck={selectedWreck} setSelectedWreck={setSelectedWreck} />
       <Favorites isActive={activeTab === 'favorites'} wrecks={favorites} selectedWreck={selectedWreck} setSelectedWreck={setSelectedWreck} />
-      <Articles isActive={activeTab === 'articles'} />
+      <Articles isActive={activeTab === 'articles'} articles={articles} query={articlesQuery} isFetching={articlesFetching} fetchArticles={fetchArticles} clearArticles={clearArticles} />
       <Trivia isActive={activeTab === 'trivia'} />
-      <Login isActive={activeTab === 'login'} />
-    </>
+    </div>
   );
 };
 
@@ -39,13 +37,18 @@ const mapStateToProps = state => ({
   fetchingSession: state.session.isFetching,
   filteredWrecks: state.filteredWrecks.filteredWrecks,
   favorites: state.user.favorites,
-  selectedWreck: state.selectedWreck.selectedWreck
+  selectedWreck: state.selectedWreck.selectedWreck,
+  articles: state.articles.articles,
+  articlesQuery: state.articles.query,
+  articlesFetching: state.articles.isFetching
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   resetMap,
   setMapFilterType,
-  setSelectedWreck
+  setSelectedWreck,
+  fetchArticles,
+  clearArticles
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Content);

@@ -1,24 +1,27 @@
 import React from 'react';
-import { Form, Message } from 'semantic-ui-react';
+import { Form, Message, Input } from 'semantic-ui-react';
 import { get } from 'lodash';
 import { INITIAL_STATE } from '../../../../../../../store/reducers/mapReducer';
+import { delayAutoFocus } from '../../../../../../../utils';
 
 // import './Search.scss';
 
 export const ProximitySearch = ({ children, latitude, longitude, radius, handleChange, viewport }) => {
   return (
     <>
-      <div className='search-header'>
+      <div className='search-form-header'>
         <label>Radius</label>
         {children}
       </div>
-      <Form.Input
-        id='radius'
-        fluid
-        onChange={handleChange}
-        value={radius}
-        autoFocus
-      />
+      <Form.Field>
+        <Input
+          id='radius'
+          fluid
+          onChange={handleChange}
+          value={radius}
+          ref={delayAutoFocus}
+        />
+      </Form.Field>
       <Form.Group widths='equal'>
         <Form.Input
           id='latitude'

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Map from './components/Map/Map';
 import Home from './components/Home/Home';
 import { Privacy } from './components/Privacy/Privacy';
 import { fetchSession, fetchFavorites, fetchWrecks } from './store/actions';
@@ -27,7 +26,7 @@ const App = ({ fetchSession, fetchFavorites, fetchWrecks, mapKey }) => {
   return (
     <div className='app'>
       <Switch>
-        <Route exact path='/'><Home><Map key={mapKey} /></Home></Route>
+        <Route exact path='/'><Home /></Route>
         <Route path='/privacy'><Privacy /></Route>
         <Redirect to='/' />
       </Switch>

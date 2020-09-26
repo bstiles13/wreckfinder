@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Segment } from 'semantic-ui-react';
+import { Message } from 'semantic-ui-react';
 import { get, isEmpty } from 'lodash';
 import { renderWreckList } from '../Content.helper';
 
@@ -21,12 +21,19 @@ export const Favorites = ({ isActive, wrecks, selectedWreck, setSelectedWreck })
   if (!isActive) return false;
 
   return (
-    <Segment className='favorites' attached='bottom'>
+    <div className='favorites'>
       {
         isEmpty(wrecks)
-          ? <div className='result-row'>No Favorites</div>
+          ? (
+            <div className='results-placeholder'>
+              <Message>
+                <Message.Header>No favorites</Message.Header>
+                <p>{`Having trouble getting started? Click "Random" in the Search menu to make new discoveries!`}</p>
+              </Message>
+            </div>
+          )
           : renderWreckList({ wrecks, selectedWreck, setSelectedWreck })
       }
-    </Segment>
+    </div>
   );
 };

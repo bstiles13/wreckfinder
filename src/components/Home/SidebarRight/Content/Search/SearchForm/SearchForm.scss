@@ -1,6 +1,7 @@
-.search {
+.search-form {
   text-align: left;
   padding-bottom: 1rem;
+  padding: 0.8rem 0.5rem 0.5rem 0.5rem;
 
   &-header {
     display: flex;
@@ -24,11 +25,6 @@
 
   &-submit-button {
     text-align: right;
-
-    button {
-      background-color: rgb(95, 142, 189) !important;
-      color: white !important;
-    }
   }
 
   &-clear-button {

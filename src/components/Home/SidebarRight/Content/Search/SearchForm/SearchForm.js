@@ -123,28 +123,28 @@ export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetS
   console.log('STATE', state);
 
   return (
-    <div className='search'>
+    <div className='search-form'>
       <Form>
         {state.searchType === 'basic' && <BasicSearch {...state} handleChange={handleChange}><SearchDropdown onChange={toggleSearchType} value={state.searchType} /></BasicSearch>}
         {state.searchType === 'advanced' && <AdvancedSearch {...state} handleChange={handleChange}><SearchDropdown onChange={toggleSearchType} value={state.searchType} /></AdvancedSearch>}
         {state.searchType === 'proximity' && <ProximitySearch {...state} handleChange={handleChange} viewport={viewport}><SearchDropdown onChange={toggleSearchType} value={state.searchType} /></ProximitySearch>}
-        <Form.Group as={Button.Group} className='search-buttons'>
+        <Form.Group as={Button.Group} className='search-form-buttons'>
           <Form.Button
             type='button'
-            className='search-form-button search-clear-button'
+            className='search-form-button search-form-clear-button'
             onClick={() => clearWrecks({ setMapFilterType, setFilteredWrecks, resetSelectedWreck })}
             inverted>
             Clear
           </Form.Button>
           <Form.Button
             type='button'
-            className='search-form-button search-random-button'
+            className='search-form-button search-form-random-button'
             onClick={() => randomizeWrecks({ wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck })}>
             Random
           </Form.Button>
           <Button.Or />
           <Form.Button
-            className='search-form-button search-submit-button'
+            className='search-form-button search-form-submit-button button-primary'
             onClick={() => searchWrecks({ ...state, wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck })}
           >
             Search
