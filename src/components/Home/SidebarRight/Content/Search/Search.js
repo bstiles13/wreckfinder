@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Message } from 'semantic-ui-react';
 import { get, isEmpty } from 'lodash';
 import { renderWreckList } from '../Content.helper';
 import SearchForm from './SearchForm/SearchForm';
@@ -29,7 +29,14 @@ export const Search = ({ isActive, wrecks, selectedWreck, setSelectedWreck }) =>
       <Segment className='results' attached='bottom'>
         {
           isEmpty(wrecks)
-            ? <div className='result-row'>No results</div>
+            ? (
+              <div className='results-placeholder'>
+                <Message>
+                  <Message.Header>No results</Message.Header>
+                  <p>Refine your results by modifying the search above</p>
+                </Message>
+              </div>
+            )
             : renderWreckList({ wrecks, selectedWreck, setSelectedWreck })
         }
       </Segment>

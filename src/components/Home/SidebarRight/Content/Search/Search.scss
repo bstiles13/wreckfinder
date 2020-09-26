@@ -1,8 +1,14 @@
 .results {
   padding: 0 !important;
 
-  .result {
+  &-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
 
+  .result {
     &-row {
       padding: 0.7rem;
 
