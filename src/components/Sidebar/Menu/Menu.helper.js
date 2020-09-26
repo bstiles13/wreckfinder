@@ -1,6 +1,7 @@
 import React from 'react';
 import { map, get } from 'lodash';
 import { Image, Icon } from 'semantic-ui-react';
+import ShowMoreText from 'react-show-more-text';
 
 const renderPopupImage = (type) => {
   const types = {
@@ -32,7 +33,17 @@ export const renderWreckList = ({ wrecks, selectedWreck, setSelectedWreck }) => 
             {wreck.properties.yearSunk && `: sunk ${wreck.properties.yearSunk}`}
           </div>
           <div className='result-description'>
-            {wreck.properties.history || 'No description'}
+            <ShowMoreText
+              lines={3}
+              more='Show more'
+              less='Show less'
+              anchorClass='test'
+              expanded={false}
+              width={0}
+              onClick={(e, t) => console.log('e', e, t)}
+            >
+              {wreck.properties.history || 'No description'}
+            </ShowMoreText>
           </div>
         </div>
       </div>

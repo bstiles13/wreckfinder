@@ -2,7 +2,9 @@ import React from 'react';
 import { Marker as LeafletMarker, Popup } from 'react-leaflet';
 import { get } from 'lodash';
 import { Button, Card, Image, Icon } from 'semantic-ui-react';
+import ShowMoreText from 'react-show-more-text';
 import { ErrorBoundary } from '../../ErrorBoundary/ErrorBoundary';
+import axios from 'axios';
 
 import './Marker.scss';
 
@@ -31,6 +33,12 @@ const openPopup = marker => {
   }
 };
 
+const handleSearchArticles = () => {
+  return axios.get('/api/wrecks/articles')
+    .then(res => console.log(res.data))
+    .catch(err => err);
+};
+
 export const Marker = ({ wreck, selectedWreck, setSelectedWreck, isFavorite, createFavorite, deleteFavorite, fetchFavorites }) => {
   return (
     <ErrorBoundary>
@@ -55,7 +63,16 @@ export const Marker = ({ wreck, selectedWreck, setSelectedWreck, isFavorite, cre
                 {wreck.properties.yearSunk && `: sunk ${wreck.properties.yearSunk}`}
               </Card.Meta>
               <Card.Description>
-                <div className='wreck-popup-history' title={wreck.properties.history}>{wreck.properties.history}</div>
+                <ShowMoreText
+                  lines={3}
+                  more='Show more'
+                  less='Show less'
+                  anchorClass='test'
+                  expanded={false}
+                  width={0}
+                >
+                  {wreck.properties.history}
+                </ShowMoreText>
               </Card.Description>
             </Card.Content>
             <Card.Content extra className='wreck-popup-controls'>
@@ -84,7 +101,7 @@ export const Marker = ({ wreck, selectedWreck, setSelectedWreck, isFavorite, cre
                     </Button>
                   )
               }
-              <Button basic color='black' size='tiny'>Learn More</Button>
+              <Button basic color='black' size='tiny' onClick={handleSearchArticles}>Learn More</Button>
             </Card.Content>
           </Card>
         </Popup>
