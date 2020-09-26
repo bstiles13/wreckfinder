@@ -1,8 +1,8 @@
 import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
-import BasicIcon from '../../../../../../assets/basic_icon.png';
-import AdvancedIcon from '../../../../../../assets/advanced_icon.png';
-import ProximityIcon from '../../../../../../assets/proximity_icon.png';
+import BasicIcon from '../../../../../../../assets/basic_icon.png';
+import AdvancedIcon from '../../../../../../../assets/advanced_icon.png';
+import ProximityIcon from '../../../../../../../assets/proximity_icon.png';
 
 const options = [
   {

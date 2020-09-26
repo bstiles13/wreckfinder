@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Form, Button } from 'semantic-ui-react';
 import { get, shuffle, filter, toLower, reduce, isEmpty } from 'lodash';
 import axios from 'axios';
-import { setMapFilterType, setFilteredWrecks, resetSelectedWreck } from '../../../../../store/actions';
+import { setMapFilterType, setFilteredWrecks, resetSelectedWreck } from '../../../../../../store/actions';
 import { BasicSearch } from './BasicSearch/BasicSearch';
 import { AdvancedSearch } from './AdvancedSearch/AdvancedSearch';
 import { ProximitySearch } from './ProximitySearch/ProximitySearch';

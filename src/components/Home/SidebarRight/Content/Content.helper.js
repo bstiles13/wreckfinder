@@ -5,8 +5,8 @@ import ShowMoreText from 'react-show-more-text';
 
 const renderPopupImage = (type) => {
   const types = {
-    wreck: require('../../../assets/wreck_icon.png'),
-    obstruction: require('../../../assets/rocks_icon.png')
+    wreck: require('../../../../assets/wreck_icon.png'),
+    obstruction: require('../../../../assets/rocks_icon.png')
   };
 
   return types[type];

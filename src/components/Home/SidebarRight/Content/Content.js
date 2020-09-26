@@ -10,7 +10,7 @@ import { Search } from './Search/Search';
 import { Articles } from './Articles/Articles';
 import { Favorites } from './Favorites/Favorites';
 import { Trivia } from './Trivia/Trivia';
-import { resetMap, setMapFilterType, setSelectedWreck } from '../../../store/actions';
+import { resetMap, setMapFilterType, setSelectedWreck } from '../../../../store/actions';
 
 import './Content.scss';
 
@@ -48,8 +48,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setSelectedWreck
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Content, (props, nextProps) => {
-  if (nextProps.activeTab === 'settings') {
-    return true;
-  }
-}));
+export default connect(mapStateToProps, mapDispatchToProps)(Content);
