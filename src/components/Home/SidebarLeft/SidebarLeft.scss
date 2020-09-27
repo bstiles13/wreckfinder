@@ -1,38 +1,40 @@
 .map-sidebar-left {
   display: flex !important;
   flex-direction: column !important;
-  justify-content: space-between;
-  align-content: space-between !important;
+  justify-content: flex-start !important;
 
-  &:after {
-    content: normal !important;
-  }
-
-  .layer-toggle {
-    position: relative;
-    cursor: pointer;
-    height: 11rem;
-    width: 100%;
+  .layer-toggle-container {
+    flex: 1;
     display: flex;
-    border-radius: 4px;
-    clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+    flex-direction: column;
+    justify-content: flex-end;
 
-    &-text {
-      position: absolute;
-      bottom: 2rem;
-      right: 1rem;
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: white;
-      font-family: 'Secular One', sans-serif;
-    }
-
-    &-oceans {
-      background-image: url('../../../assets/oceans.png');
-    }
-    
-    &-imagery {
-      background-image: url('../../../assets/imagery.png');
+    .layer-toggle {
+      cursor: pointer;
+      position: relative;
+      height: 11rem;
+      width: 100%;
+      display: flex;
+      border-radius: 4px;
+      clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+  
+      &-text {
+        position: absolute;
+        bottom: 2rem;
+        right: 1rem;
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: white;
+        font-family: 'Secular One', sans-serif;
+      }
+  
+      &-oceans {
+        background-image: url('../../../assets/oceans.png');
+      }
+      
+      &-imagery {
+        background-image: url('../../../assets/imagery.png');
+      }
     }
   }
 }
