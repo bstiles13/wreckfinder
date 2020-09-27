@@ -24,10 +24,14 @@ passport.deserializeUser((id, done) => {
   });
 });
 
+const authOrigin = process.env.NODE_ENV === 'development'
+  ? 'http://localhost:3000/'
+  : 'https://wreck-finder.herokuapp.com/';
+
 passport.use(new Strategy({
   clientID: '726097894634616',
   clientSecret: '837301744bba9edd73f7bfa00165c476',
-  callbackURL: '/auth/return'
+  callbackURL: authOrigin
 }, (accessToken, refreshToken, profile, done) => {
   User.findOne({ id: profile.id }, (err, user) => {
     if (err) {
