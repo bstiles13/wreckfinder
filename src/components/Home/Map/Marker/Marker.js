@@ -3,14 +3,14 @@ import { Marker as LeafletMarker, Popup } from 'react-leaflet';
 import { get } from 'lodash';
 import { Button, Card, Image, Icon } from 'semantic-ui-react';
 import ShowMoreText from 'react-show-more-text';
-import { ErrorBoundary } from '../../ErrorBoundary/ErrorBoundary';
+import { ErrorBoundary } from '../../../ErrorBoundary/ErrorBoundary';
 
 import './Marker.scss';
 
 const renderPopupImage = (type) => {
   const types = {
-    wreck: require('../../../assets/wreck_icon.png'),
-    obstruction: require('../../../assets/rocks_icon.png')
+    wreck: require('../../../../assets/wreck_icon.png'),
+    obstruction: require('../../../../assets/rocks_icon.png')
   };
 
   return types[type];

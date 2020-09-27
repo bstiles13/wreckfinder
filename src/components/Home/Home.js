@@ -5,7 +5,7 @@ import { Sidebar } from 'semantic-ui-react';
 import { resetMap, setMapFilterType, setSelectedWreck } from '../../store/actions';
 import { SidebarLeft } from './SidebarLeft/SidebarLeft';
 import SidebarRight from './SidebarRight/SidebarRight';
-import Map from '../Map/Map';
+import Map from './Map/Map';
 
 import './Home.scss';
 

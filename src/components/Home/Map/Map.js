@@ -15,7 +15,7 @@ import {
   createFavorite,
   deleteFavorite,
   fetchArticles
-} from '../../store/actions';
+} from '../../../store/actions';
 import { Marker } from './Marker/Marker';
 
 import './Map.scss';
@@ -85,6 +85,13 @@ export const Map = ({
     });
   };
 
+  const onMapClick = (e, type) => {
+    if (type === 'double') {
+      setActiveTab('search');
+    }
+    setMapClickEvent({ ...e, type });
+  };
+
   const wrecks = filterType === 'favorites'
     ? favorites
     : filteredWrecks;
@@ -100,8 +107,8 @@ export const Map = ({
       style={{ height: '100%', width: '100%' }}
       onViewportChanged={debounce(setMapViewport, 500)}
       worldCopyJump={true}
-      onClick={e => setMapClickEvent({ ...e, type: 'single' })}
-      onDblClick={e => setMapClickEvent({ ...e, type: 'double' })}
+      onClick={e => onMapClick(e, 'single')}
+      onDblClick={e => onMapClick(e, 'double')}
     >
       <MarkerClusterGroup key={`marker-group-${Date.now()}`} maxClusterRadius={40}>
         {renderMarkers({ wrecks, selectedWreck, setSelectedWreck, favorites, createFavorite, deleteFavorite, fetchFavorites, fetchArticles, setActiveTab })}
