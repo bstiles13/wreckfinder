@@ -92,7 +92,7 @@ const db = process.env.MONGODB_URI || 'mongodb://localhost/wreck_db';
 
 mongoose.connect(db, err => {
   if (err) {
-    console.error(err);
+    console.error(`Mongoose was unable to connect to the database: ${err}`);
   } else {
     console.log('Connected to MongoDB');
   }
