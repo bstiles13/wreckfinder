@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Item, Accordion, Icon, Form, Input, Button, Message, Step } from 'semantic-ui-react';
-import Skeleton from 'react-loading-skeleton';
 import { map, isEmpty, get } from 'lodash';
 import ShowMoreText from 'react-show-more-text';
 import { ARTICLE_LABELS } from '../../../../../constants';
 import { delayAutoFocus } from '../../../../../utils';
+import { Placeholder } from '../../../../Shared/Placeholder/Placeholder';
 
 import './Articles.scss';
 
@@ -30,18 +30,6 @@ export const Articles = ({ isActive, articles, query, isFetching, fetchArticles,
   };
 
   const renderArticles = (articles) => {
-    if (isEmpty(articles)) {
-      return (
-        <div className='results-placeholder'>
-          <Message>
-            <Message.Header>No results</Message.Header>
-            <p>Refine your results by modifying the search above or selecting a wreck
-            </p>
-          </Message>
-        </div>
-      );
-    }
-
     return map(Object.keys(articles), (source, i) => {
       const articleRows = map(articles[source], row => {
         return (
@@ -144,8 +132,15 @@ export const Articles = ({ isActive, articles, query, isFetching, fetchArticles,
       </Form>
       <div className='articles-results'>
         {
-          isFetching
-            ? <Skeleton count={20} />
+          isEmpty(articles) || isFetching
+            ? (
+              <Placeholder rowCount={10} isFetching={isFetching}>
+                <Message>
+                  <Message.Header>No results</Message.Header>
+                  <p>Refine your results by modifying the search above or selecting a wreck</p>
+                </Message>
+              </Placeholder>
+            )
             : renderArticles(articles)
         }
       </div>

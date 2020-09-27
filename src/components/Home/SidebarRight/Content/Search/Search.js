@@ -3,6 +3,7 @@ import { Message } from 'semantic-ui-react';
 import { get, isEmpty } from 'lodash';
 import { renderWreckList } from '../Content.helper';
 import SearchForm from './SearchForm/SearchForm';
+import { Placeholder } from '../../../../Shared/Placeholder/Placeholder';
 
 import './Search.scss';
 
@@ -28,12 +29,12 @@ export const Search = ({ isActive, wrecks, selectedWreck, setSelectedWreck }) =>
         {
           isEmpty(wrecks)
             ? (
-              <div className='results-placeholder'>
+              <Placeholder rowCount={10}>
                 <Message>
                   <Message.Header>No results</Message.Header>
                   <p>Refine your results by modifying the search above</p>
                 </Message>
-              </div>
+              </Placeholder>
             )
             : renderWreckList({ wrecks, selectedWreck, setSelectedWreck })
         }

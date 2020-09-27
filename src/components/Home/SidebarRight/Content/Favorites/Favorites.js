@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { Message, Step } from 'semantic-ui-react';
 import { get, isEmpty } from 'lodash';
 import { renderWreckList } from '../Content.helper';
+import { Placeholder } from '../../../../Shared/Placeholder/Placeholder';
 
 import './Favorites.scss';
 
-export const Favorites = ({ isActive, wrecks, selectedWreck, setSelectedWreck }) => {
+export const Favorites = ({ isActive, wrecks, selectedWreck, setSelectedWreck, isFetching }) => {
   useEffect(() => {
     if (!selectedWreck) {
       const element = get(document.getElementsByClassName('favorites'), '0');
@@ -23,14 +24,14 @@ export const Favorites = ({ isActive, wrecks, selectedWreck, setSelectedWreck })
   return (
     <div className='favorites'>
       {
-        isEmpty(wrecks)
+        isEmpty(wrecks) || isFetching
           ? (
-            <div className='results-placeholder'>
+            <Placeholder rowCount={10} isFetching={isFetching}>
               <Message>
                 <Message.Header>No favorites</Message.Header>
                 <p>{`Need help getting started? Click "Random" in the Search menu to fast track new discoveries!`}</p>
               </Message>
-            </div>
+            </Placeholder>
           )
           : renderWreckList({ wrecks, selectedWreck, setSelectedWreck })
       }

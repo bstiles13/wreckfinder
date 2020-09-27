@@ -1,0 +1,22 @@
+.custom-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  flex: 1;
+  height: 100%;
+  padding: 0 3rem;
+
+  &-rows {
+    position: absolute !important;
+    opacity: 0.2 !important;
+  }
+
+  &-row {
+    display: flex !important;
+    flex-direction: row !important;
+    padding: 1rem !important;
+    margin: 0 !important;
+  }
+}
