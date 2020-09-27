@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Message, Input } from 'semantic-ui-react';
+import { Form, Message, Input, Icon } from 'semantic-ui-react';
 import { delayAutoFocus } from '../../../../../../../utils';
 
 // import './Search.scss';
@@ -23,13 +23,13 @@ export const BasicSearch = ({ children, description, handleChange }) => {
           ref={delayAutoFocus}
         />
       </Form.Field>
-      <Message
-        info
-        size='tiny'
-        icon='pointing right'
-        header='Quick Search'
-        content={`Find wrecks in United States and territorial waters with names and descriptions matching your text`}
-      />
+      <Message info icon size='tiny'>
+        <Message.Content>
+          <Message.Header>Quick Search</Message.Header>
+          Find wrecks in United States and territorial waters with names and descriptions matching your text
+        </Message.Content>
+        <Icon name='hand point down' />
+      </Message>
     </>
   );
 };
