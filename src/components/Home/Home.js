@@ -12,6 +12,8 @@ import './Home.scss';
 export const Home = ({ children, session, resetMap, setMapFilterType }) => {
   const [activeTab, setActiveTab] = useState(null);
 
+  const [layer, setLayer] = useState({ type: 'Oceans', labels: 'OceansLabels' });
+
   return (
     <>
       <Sidebar.Pushable>
@@ -21,6 +23,8 @@ export const Home = ({ children, session, resetMap, setMapFilterType }) => {
           session={session}
           resetMap={resetMap}
           setMapFilterType={setMapFilterType}
+          layer={layer}
+          setLayer={setLayer}
         />
         <SidebarRight
           activeTab={activeTab}
@@ -28,7 +32,7 @@ export const Home = ({ children, session, resetMap, setMapFilterType }) => {
         />
 
         <Sidebar.Pusher className='map-container'>
-          <Map setActiveTab={setActiveTab} />
+          <Map layer={layer} setActiveTab={setActiveTab} />
         </Sidebar.Pusher>
       </Sidebar.Pushable>
     </>

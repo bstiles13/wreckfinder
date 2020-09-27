@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Map as LeafletMap } from 'react-leaflet';
@@ -21,6 +21,7 @@ import { Marker } from './Marker/Marker';
 import './Map.scss';
 
 export const Map = ({
+  layer,
   view,
   zoom,
   filterType,
@@ -47,7 +48,6 @@ export const Map = ({
     }
   }, [selectedWreck]);
 
-  const [layer, setLayer] = useState({ type: 'Oceans', labels: 'OceansLabels' });
   useEffect(() => {
     const map = get(mapRef, 'current.leafletElement');
 
@@ -106,11 +106,6 @@ export const Map = ({
       <MarkerClusterGroup key={`marker-group-${Date.now()}`} maxClusterRadius={40}>
         {renderMarkers({ wrecks, selectedWreck, setSelectedWreck, favorites, createFavorite, deleteFavorite, fetchFavorites, fetchArticles, setActiveTab })}
       </MarkerClusterGroup>
-      <div
-        className={`layer-toggle ${layer.type === 'Oceans' ? 'layer-toggle-imagery' : 'layer-toggle-oceans'}`}
-        onClick={() => layer.type === 'Oceans' ? setLayer({ type: 'Imagery', labels: 'ImageryLabels' }) : setLayer({ type: 'Oceans', labels: 'OceansLabels' })}>
-        {layer.type === 'Oceans' ? 'Imagery' : 'Oceans'}
-      </div>
     </LeafletMap>
   );
 };

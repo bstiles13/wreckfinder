@@ -7,9 +7,9 @@ import {
   Menu
 } from 'semantic-ui-react';
 
-// import './SidebarLeft.scss';
+import './SidebarLeft.scss';
 
-export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMapFilterType }) => {
+export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMapFilterType, layer, setLayer }) => {
   const handleItemClick = (e, { name: nextTab }) => {
     if (nextTab === activeTab) return setActiveTab(null);
 
@@ -38,56 +38,63 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
       width='extra thin'
       vertical
     >
-      <Menu.Item
-        name='search'
-        active={activeTab === 'search'}
-        onClick={handleItemClick}
-        as='a'
-      >
-        <Icon name='search' />Search
-      </Menu.Item>
-      <Menu.Item
-        name='articles'
-        active={activeTab === 'articles'}
-        onClick={handleItemClick}
-        as='a'
-      >
-        <Icon name='newspaper outline' />Articles
-      </Menu.Item>
-      <Menu.Item
-        name='favorites'
-        active={activeTab === 'favorites'}
-        onClick={handleItemClick}
-        as='a'
-      >
-        <Icon name='favorite' />Favorites
-      </Menu.Item>
-      <Menu.Item
-        disabled
-        name='trivia'
-        active={activeTab === 'trivia'}
-        onClick={handleItemClick}
-        as='a'
-      >
-        <Icon name='question' />Trivia
-      </Menu.Item>
-      <Menu.Item name='settings' onClick={handleItemClick} as='a'>
-        <Icon name='ellipsis horizontal' />Settings
-        {activeTab === 'settings' && (
-          <Menu.Menu onClick={e => e.stopPropagation()}>
-            {
-              get(session, 'id')
-                ? (<>
-                  {/* <Segment vertical>{`Hi, ${get(session, 'displayName')}!`}</Segment> */}
-                  <Menu.Item className='settings-option' vertical as='a' href={`${authOrigin}/auth/logout/`}>Sign Out</Menu.Item>
-                </>)
-                : <Menu.Item className='settings-option' vertical as='a' href={`${authOrigin}/auth/login/`}>Sign In</Menu.Item>
-            }
-            <Menu.Item className='settings-option' vertical as={Link} to='/privacy'>Privacy</Menu.Item>
-          </Menu.Menu>
-        )}
+      <div className='map-sidebar-left-menu-items'>
+        <Menu.Item
+          name='search'
+          active={activeTab === 'search'}
+          onClick={handleItemClick}
+          as='a'
+        >
+          <Icon name='search' />Search
+        </Menu.Item>
+        <Menu.Item
+          name='articles'
+          active={activeTab === 'articles'}
+          onClick={handleItemClick}
+          as='a'
+        >
+          <Icon name='newspaper outline' />Articles
+        </Menu.Item>
+        <Menu.Item
+          name='favorites'
+          active={activeTab === 'favorites'}
+          onClick={handleItemClick}
+          as='a'
+        >
+          <Icon name='favorite' />Favorites
+        </Menu.Item>
+        <Menu.Item
+          disabled
+          name='trivia'
+          active={activeTab === 'trivia'}
+          onClick={handleItemClick}
+          as='a'
+        >
+          <Icon name='question' />Trivia
+        </Menu.Item>
+        <Menu.Item name='settings' onClick={handleItemClick} as='a'>
+          <Icon name='ellipsis horizontal' />Settings
+          {activeTab === 'settings' && (
+            <Menu.Menu onClick={e => e.stopPropagation()}>
+              {
+                get(session, 'id')
+                  ? (<>
+                    {/* <Segment vertical>{`Hi, ${get(session, 'displayName')}!`}</Segment> */}
+                    <Menu.Item className='settings-option' vertical as='a' href={`${authOrigin}/auth/logout/`}>Sign Out</Menu.Item>
+                  </>)
+                  : <Menu.Item className='settings-option' vertical as='a' href={`${authOrigin}/auth/login/`}>Sign In</Menu.Item>
+              }
+              <Menu.Item className='settings-option' vertical as={Link} to='/privacy'>Privacy</Menu.Item>
+            </Menu.Menu>
+          )}
 
-      </Menu.Item>
+        </Menu.Item>
+      </div>
+      <div
+        className={`layer-toggle ${layer.type === 'Oceans' ? 'layer-toggle-imagery' : 'layer-toggle-oceans'}`}
+        onClick={() => layer.type === 'Oceans' ? setLayer({ type: 'Imagery', labels: 'ImageryLabels' }) : setLayer({ type: 'Oceans', labels: 'OceansLabels' })}>
+        <div className='layer-toggle-text'>{layer.type === 'Oceans' ? 'Imagery' : 'Oceans'}</div>
+      </div>
     </Sidebar>
   );
 };
