@@ -8,10 +8,10 @@ module.exports = {
 
   return: (req, res) => {
     console.log(`Authentication callback - returning to ${req.headers}`);
-    const authOrigin = process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000/'
-      : 'https://wreck-finder.herokuapp.com/';
-    res.redirect(authOrigin);
+    // const authOrigin = process.env.NODE_ENV === 'development'
+    //   ? 'http://localhost:3000/'
+    //   : 'https://wreck-finder.herokuapp.com/';
+    res.redirect('/');
   },
 
   profile: (req, res) => {
