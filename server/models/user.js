@@ -4,11 +4,7 @@ const { Schema } = mongoose;
 const User = new Schema({
   displayName: String,
   id: String,
-  favorites: Array,
-  created: {
-    type: Date,
-    default: Date.now
-  }
-});
+  favorites: Array
+}, { timestamps: true });
 
 module.exports = mongoose.model('user', User);
