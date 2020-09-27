@@ -27,8 +27,10 @@ const handleDeleteFavorite = async ({ id, deleteFavorite, fetchFavorites }) => {
 };
 
 const openPopup = marker => {
-  if (marker && marker.leafletElement && !!marker.props.selected) {
-    setTimeout(() => marker.leafletElement.openPopup());
+  const isSelected = get(marker, 'props.selected');
+  const element = get(marker, 'leafletElement');
+  if (element && isSelected) {
+    setTimeout(() => element.openPopup());
   }
 };
 
@@ -37,11 +39,11 @@ const handleArticlesSearch = ({ query, fetchArticles, setActiveTab }) => {
   fetchArticles(query);
 };
 
-export const Marker = ({ wreck, selectedWreck, setSelectedWreck, isFavorite, createFavorite, deleteFavorite, fetchFavorites, fetchArticles, setActiveTab }) => {
+export const Marker = ({ key, wreck, selected, setSelectedWreck, isFavorite, createFavorite, deleteFavorite, fetchFavorites, fetchArticles, setActiveTab }) => {
   return (
     <ErrorBoundary>
       <LeafletMarker
-        selected={wreck._id === get(selectedWreck, '_id')}
+        selected={!!selected}
         position={[wreck.geometry.coordinates[1], wreck.geometry.coordinates[0]]}
         transparent
         ref={openPopup}

@@ -67,12 +67,13 @@ export const Map = ({
 
     return map(wrecks, wreck => {
       const isFavorite = some(favorites, favorite => favorite._id === wreck._id);
+      const isSelected = wreck._id === get(selectedWreck, '_id')
       return (
         <Marker
           key={`wreck-${wreck._id}`}
           wreck={wreck}
           isFavorite={isFavorite}
-          selectedWreck={selectedWreck}
+          selected={isSelected}
           setSelectedWreck={setSelectedWreck}
           createFavorite={createFavorite}
           deleteFavorite={deleteFavorite}
@@ -102,7 +103,7 @@ export const Map = ({
       onClick={e => setMapClickEvent({ ...e, type: 'single' })}
       onDblClick={e => setMapClickEvent({ ...e, type: 'double' })}
     >
-      <MarkerClusterGroup maxClusterRadius={40}>
+      <MarkerClusterGroup key={`marker-group-${Date.now()}`} maxClusterRadius={40}>
         {renderMarkers({ wrecks, selectedWreck, setSelectedWreck, favorites, createFavorite, deleteFavorite, fetchFavorites, fetchArticles, setActiveTab })}
       </MarkerClusterGroup>
       <div
