@@ -24,6 +24,7 @@ module.exports = {
       if (err) {
         console.log(`Unable to clear session at logout: ${(err)}`);
       }
+      console.log('Logout SUCCESS');
       res.redirect('http://localhost:3000/');
     });
   }
