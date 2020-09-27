@@ -28,7 +28,7 @@ export const Favorites = ({ isActive, wrecks, selectedWreck, setSelectedWreck })
             <div className='results-placeholder'>
               <Message>
                 <Message.Header>No favorites</Message.Header>
-                <p>{`Having trouble getting started? Click "Random" in the Search menu to fast track new discoveries!`}</p>
+                <p>{`Need help getting started? Click "Random" in the Search menu to fast track new discoveries!`}</p>
               </Message>
             </div>
           )
