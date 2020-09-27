@@ -38,7 +38,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "start-watch": "nodemon --ignore server/sessions/ server.js",
+    "start-watch": "NODE_ENV=development nodemon --ignore server/sessions/ server.js",
     "start-ui": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -26,6 +26,8 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
     setActiveTab(nextTab);
   };
 
+  const authOrigin = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : document.location.origin;
+
   return (
     <Sidebar
       className='map-sidebar-left'
@@ -77,9 +79,9 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
               get(session, 'id')
                 ? (<>
                   {/* <Segment vertical>{`Hi, ${get(session, 'displayName')}!`}</Segment> */}
-                  <Menu.Item className='settings-option' vertical as='a' href='http://localhost:3001/auth/logout/'>Sign Out</Menu.Item>
+                  <Menu.Item className='settings-option' vertical as='a' href={`${authOrigin}/auth/logout/`}>Sign Out</Menu.Item>
                 </>)
-                : <Menu.Item className='settings-option' vertical as='a' href='http://localhost:3001/auth/login/'>Sign In</Menu.Item>
+                : <Menu.Item className='settings-option' vertical as='a' href={`${authOrigin}/auth/login/`}>Sign In</Menu.Item>
             }
             <Menu.Item className='settings-option' vertical as={Link} to='/privacy'>Privacy</Menu.Item>
           </Menu.Menu>

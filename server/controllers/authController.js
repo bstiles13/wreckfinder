@@ -8,7 +8,10 @@ module.exports = {
 
   return: (req, res) => {
     console.log(`Authentication callback - returning to ${req.headers}`);
-    res.redirect('https://wreck-finder.herokuapp.com/');
+    const authOrigin = process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000/'
+      : 'https://wreck-finder.herokuapp.com/';
+    res.redirect(authOrigin);
   },
 
   profile: (req, res) => {
@@ -25,7 +28,10 @@ module.exports = {
         console.log(`Unable to clear session at logout: ${(err)}`);
       }
       console.log(`Logout SUCCESS - returning to ${req.headers}`);
-      res.redirect('https://wreck-finder.herokuapp.com/');
+      const authOrigin = process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000/'
+        : 'https://wreck-finder.herokuapp.com/';
+      res.redirect(authOrigin);
     });
   }
 };
