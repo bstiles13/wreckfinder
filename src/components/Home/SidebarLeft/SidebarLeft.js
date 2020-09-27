@@ -61,6 +61,7 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
         <Icon name='favorite' />Favorites
       </Menu.Item>
       <Menu.Item
+        disabled
         name='trivia'
         active={activeTab === 'trivia'}
         onClick={handleItemClick}
