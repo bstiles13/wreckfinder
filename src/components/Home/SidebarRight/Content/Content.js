@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { isEmpty } from 'lodash';
-import {
-  Loader
-} from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
 import { Search } from './Search/Search';
 import { Articles } from './Articles/Articles';
 import { Favorites } from './Favorites/Favorites';
@@ -13,7 +11,23 @@ import { resetMap, setMapFilterType, setSelectedWreck, fetchArticles, clearArtic
 
 import './Content.scss';
 
-export const Content = ({ activeTab, setActiveTab, fetchingSession, filteredWrecks, selectedWreck, setSelectedWreck, favorites, articles, articlesQuery, articlesFetching, fetchArticles, clearArticles, favoritesFetching }) => {
+export const Content = (props) => {
+  const {
+    activeTab,
+    setActiveTab,
+    fetchingSession,
+    filteredWrecks,
+    selectedWreck,
+    setSelectedWreck,
+    favorites,
+    articles,
+    articlesQuery,
+    articlesFetching,
+    fetchArticles,
+    clearArticles,
+    favoritesFetching
+  } = props;
+
   useEffect(() => {
     if (!isEmpty(filteredWrecks)) {
       setActiveTab('search');
@@ -24,9 +38,27 @@ export const Content = ({ activeTab, setActiveTab, fetchingSession, filteredWrec
 
   return (
     <div className='sidebar-content'>
-      <Search isActive={activeTab === 'search'} wrecks={filteredWrecks} selectedWreck={selectedWreck} setSelectedWreck={setSelectedWreck} />
-      <Favorites isActive={activeTab === 'favorites'} wrecks={favorites} selectedWreck={selectedWreck} setSelectedWreck={setSelectedWreck} isFetching={favoritesFetching} />
-      <Articles isActive={activeTab === 'articles'} articles={articles} query={articlesQuery} isFetching={articlesFetching} fetchArticles={fetchArticles} clearArticles={clearArticles} />
+      <Search
+        isActive={activeTab === 'search'}
+        wrecks={filteredWrecks}
+        selectedWreck={selectedWreck}
+        setSelectedWreck={setSelectedWreck}
+      />
+      <Favorites
+        isActive={activeTab === 'favorites'}
+        wrecks={favorites}
+        selectedWreck={selectedWreck}
+        setSelectedWreck={setSelectedWreck}
+        isFetching={favoritesFetching}
+      />
+      <Articles
+        isActive={activeTab === 'articles'}
+        articles={articles}
+        query={articlesQuery}
+        isFetching={articlesFetching}
+        fetchArticles={fetchArticles}
+        clearArticles={clearArticles}
+      />
       <Trivia isActive={activeTab === 'trivia'} />
     </div>
   );

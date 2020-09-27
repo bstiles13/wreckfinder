@@ -4,8 +4,6 @@ import { get, isEmpty } from 'lodash';
 import { INITIAL_STATE } from '../../../../../../../store/reducers/mapReducer';
 import { delayAutoFocus } from '../../../../../../../utils';
 
-// import './Search.scss';
-
 export const ProximitySearch = ({ children, latitude, longitude, radius, handleChange, viewport }) => {
   return (
     <>

@@ -9,7 +9,7 @@ import Map from './Map/Map';
 
 import './Home.scss';
 
-export const Home = ({ children, session, resetMap, setMapFilterType }) => {
+export const Home = ({ session, resetMap, setMapFilterType }) => {
   const [activeTab, setActiveTab] = useState(null);
 
   const [layer, setLayer] = useState({ type: 'Oceans', labels: 'OceansLabels' });
@@ -32,7 +32,10 @@ export const Home = ({ children, session, resetMap, setMapFilterType }) => {
         />
 
         <Sidebar.Pusher className='map-container'>
-          <Map layer={layer} setActiveTab={setActiveTab} />
+          <Map
+            layer={layer}
+            setActiveTab={setActiveTab}
+          />
         </Sidebar.Pusher>
       </Sidebar.Pushable>
     </>

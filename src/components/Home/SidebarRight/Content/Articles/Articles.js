@@ -15,6 +15,7 @@ export const Articles = ({ isActive, articles, query, isFetching, fetchArticles,
   useEffect(() => {
     setArticleQuery(query);
   }, [query]);
+
   const handleChange = (e, { value }) => setArticleQuery(value);
 
   const handleClick = (e, titleProps) => {

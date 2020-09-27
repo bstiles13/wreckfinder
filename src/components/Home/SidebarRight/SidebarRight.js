@@ -6,8 +6,6 @@ import {
 } from 'semantic-ui-react';
 import Content from './Content/Content';
 
-// import './SidebarRight.scss';
-
 const SidebarRight = ({ activeTab, setActiveTab }) => {
   return (
     <Sidebar
@@ -16,14 +14,19 @@ const SidebarRight = ({ activeTab, setActiveTab }) => {
       animation='overlay'
       icon='labeled'
       vertical
-      visible={!!activeTab}
       width='thin'
       direction='right'
+      visible={!!activeTab}
     >
       <div className='map-sidebar-content'>
         <div className='map-sidebar-content-header'>
           <div className='app-title'>Wreck Finder</div>
-          <Icon className='map-sidebar-toggle' name='angle double left' size='large' onClick={() => setActiveTab(null)} />
+          <Icon
+            className='map-sidebar-toggle'
+            name='angle double left'
+            size='large'
+            onClick={() => setActiveTab(null)}
+          />
         </div>
         <div className='content-container'>
           <Content activeTab={activeTab} setActiveTab={setActiveTab} />

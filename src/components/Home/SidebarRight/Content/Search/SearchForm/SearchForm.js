@@ -81,7 +81,18 @@ export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetS
     setFilteredWrecks(results.slice(0, 100));
   };
 
-  const handleAdvancedSearch = ({ name, description, after, before, hasName, isVisible, wrecks, setFilteredWrecks, setMapFilterType, resetSelectedWreck }) => {
+  const handleAdvancedSearch = ({
+    name,
+    description,
+    after,
+    before,
+    hasName,
+    isVisible,
+    wrecks,
+    setFilteredWrecks,
+    setMapFilterType,
+    resetSelectedWreck
+  }) => {
     const results = shuffle(filter(wrecks, wreck => {
       const nameMatch = isEmpty(name) || toLower(get(wreck, 'properties.name', '')).includes(toLower(name));
       const descriptionMatch = (
@@ -147,9 +158,21 @@ export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetS
   return (
     <div className='search-form'>
       <Form>
-        {state.searchType === 'basic' && <BasicSearch {...state} handleChange={handleChange}><SearchDropdown onChange={toggleSearchType} value={state.searchType} /></BasicSearch>}
-        {state.searchType === 'advanced' && <AdvancedSearch {...state} handleChange={handleChange}><SearchDropdown onChange={toggleSearchType} value={state.searchType} /></AdvancedSearch>}
-        {state.searchType === 'proximity' && <ProximitySearch {...state} handleChange={handleChange} viewport={viewport}><SearchDropdown onChange={toggleSearchType} value={state.searchType} /></ProximitySearch>}
+        {state.searchType === 'basic' && (
+          <BasicSearch {...state} handleChange={handleChange}>
+            <SearchDropdown onChange={toggleSearchType} value={state.searchType} />
+          </BasicSearch>
+        )}
+        {state.searchType === 'advanced' && (
+          <AdvancedSearch {...state} handleChange={handleChange}>
+            <SearchDropdown onChange={toggleSearchType} value={state.searchType} />
+          </AdvancedSearch>
+        )}
+        {state.searchType === 'proximity' && (
+          <ProximitySearch {...state} handleChange={handleChange} viewport={viewport}>
+            <SearchDropdown onChange={toggleSearchType} value={state.searchType} />
+          </ProximitySearch>
+        )}
         <Form.Group as={Button.Group} className='search-form-buttons'>
           <Form.Button
             type='button'

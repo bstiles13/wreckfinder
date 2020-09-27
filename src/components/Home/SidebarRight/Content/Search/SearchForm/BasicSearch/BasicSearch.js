@@ -2,8 +2,6 @@ import React from 'react';
 import { Form, Message, Input, Icon } from 'semantic-ui-react';
 import { delayAutoFocus } from '../../../../../../../utils';
 
-// import './Search.scss';
-
 export const BasicSearch = ({ children, description, handleChange }) => {
   return (
     <>

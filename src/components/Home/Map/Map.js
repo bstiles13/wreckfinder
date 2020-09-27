@@ -20,25 +20,27 @@ import { Marker } from './Marker/Marker';
 
 import './Map.scss';
 
-export const Map = ({
-  layer,
-  view,
-  zoom,
-  filterType,
-  setMapView,
-  setMapZoom,
-  setMapViewport,
-  setMapClickEvent,
-  setSelectedWreck,
-  filteredWrecks,
-  selectedWreck,
-  favorites,
-  fetchFavorites,
-  createFavorite,
-  deleteFavorite,
-  fetchArticles,
-  setActiveTab
-}) => {
+export const Map = props => {
+  const {
+    layer,
+    view,
+    zoom,
+    filterType,
+    setMapView,
+    setMapZoom,
+    setMapViewport,
+    setMapClickEvent,
+    setSelectedWreck,
+    filteredWrecks,
+    selectedWreck,
+    favorites,
+    fetchFavorites,
+    createFavorite,
+    deleteFavorite,
+    fetchArticles,
+    setActiveTab
+  } = props;
+
   const mapRef = useRef();
 
   useEffect(() => {
@@ -67,7 +69,7 @@ export const Map = ({
 
     return map(wrecks, wreck => {
       const isFavorite = some(favorites, favorite => favorite._id === wreck._id);
-      const isSelected = wreck._id === get(selectedWreck, '_id')
+      const isSelected = wreck._id === get(selectedWreck, '_id');
       return (
         <Marker
           key={`wreck-${wreck._id}`}
@@ -111,7 +113,19 @@ export const Map = ({
       onDblClick={e => onMapClick(e, 'double')}
     >
       <MarkerClusterGroup key={`marker-group-${Date.now()}`} maxClusterRadius={40}>
-        {renderMarkers({ wrecks, selectedWreck, setSelectedWreck, favorites, createFavorite, deleteFavorite, fetchFavorites, fetchArticles, setActiveTab })}
+        {
+          renderMarkers({
+            wrecks,
+            selectedWreck,
+            setSelectedWreck,
+            favorites,
+            createFavorite,
+            deleteFavorite,
+            fetchFavorites,
+            fetchArticles,
+            setActiveTab
+          })
+        }
       </MarkerClusterGroup>
     </LeafletMap>
   );

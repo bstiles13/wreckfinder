@@ -39,7 +39,19 @@ const handleArticlesSearch = ({ query, fetchArticles, setActiveTab }) => {
   fetchArticles(query);
 };
 
-export const Marker = ({ key, wreck, selected, setSelectedWreck, isFavorite, createFavorite, deleteFavorite, fetchFavorites, fetchArticles, setActiveTab }) => {
+export const Marker = props => {
+  const {
+    wreck,
+    selected,
+    setSelectedWreck,
+    isFavorite,
+    createFavorite,
+    deleteFavorite,
+    fetchFavorites,
+    fetchArticles,
+    setActiveTab
+  } = props;
+
   return (
     <ErrorBoundary>
       <LeafletMarker
@@ -101,7 +113,14 @@ export const Marker = ({ key, wreck, selected, setSelectedWreck, isFavorite, cre
                     </Button>
                   )
               }
-              <Button basic color='black' size='tiny' onClick={() => handleArticlesSearch({ query: wreck.properties.name, fetchArticles, setActiveTab })}>Articles</Button>
+              <Button
+                basic
+                color='black'
+                size='tiny'
+                onClick={() => handleArticlesSearch({ query: wreck.properties.name, fetchArticles, setActiveTab })}
+              >
+                Articles
+              </Button>
             </Card.Content>
           </Card>
         </Popup>

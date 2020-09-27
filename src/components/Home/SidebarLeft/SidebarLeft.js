@@ -26,7 +26,9 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
     setActiveTab(nextTab);
   };
 
-  const authOrigin = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : document.location.origin;
+  const authOrigin = process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3001'
+    : document.location.origin;
 
   return (
     <Sidebar
@@ -79,7 +81,6 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
               {
                 get(session, 'id')
                   ? (<>
-                    {/* <Segment vertical>{`Hi, ${get(session, 'displayName')}!`}</Segment> */}
                     <Menu.Item className='settings-option' vertical as='a' href={`${authOrigin}/auth/logout/`}>Sign Out</Menu.Item>
                   </>)
                   : <Menu.Item className='settings-option' vertical as='a' href={`${authOrigin}/auth/login/`}>Sign In</Menu.Item>
@@ -92,7 +93,11 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
       </div>
       <div
         className={`layer-toggle ${layer.type === 'Oceans' ? 'layer-toggle-imagery' : 'layer-toggle-oceans'}`}
-        onClick={() => layer.type === 'Oceans' ? setLayer({ type: 'Imagery', labels: 'ImageryLabels' }) : setLayer({ type: 'Oceans', labels: 'OceansLabels' })}>
+        onClick={() => (
+          layer.type === 'Oceans'
+            ? setLayer({ type: 'Imagery', labels: 'ImageryLabels' })
+            : setLayer({ type: 'Oceans', labels: 'OceansLabels' })
+        )}>
         <div className='layer-toggle-text'>{layer.type === 'Oceans' ? 'Imagery' : 'Oceans'}</div>
       </div>
     </Sidebar>
