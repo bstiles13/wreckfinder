@@ -81,7 +81,7 @@ export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetS
     setFilteredWrecks(results.slice(0, 100));
   };
 
-  const handleAdvancedSearch = ({ after, before, description, hasName, isVisible, name, wrecks, setFilteredWrecks, setMapFilterType, resetSelectedWreck }) => {
+  const handleAdvancedSearch = ({ name, description, after, before, hasName, isVisible, wrecks, setFilteredWrecks, setMapFilterType, resetSelectedWreck }) => {
     const results = shuffle(filter(wrecks, wreck => {
       const nameMatch = isEmpty(name) || toLower(get(wreck, 'properties.name', '')).includes(toLower(name));
       const descriptionMatch = (
@@ -120,6 +120,28 @@ export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetS
     if (state.searchType === 'proximity') handleProximitySearch({ ...state, wrecks, setFilteredWrecks, setMapFilterType, resetSelectedWreck });
   };
 
+  const validateForm = ({ searchType, name, description, after, before, radius, latitude, longitude }) => {
+    if (searchType === 'basic') {
+      return !isEmpty(description);
+    }
+
+    if (searchType === 'advanced') {
+      return (
+        !(isEmpty(name) && isEmpty(description) && isEmpty(after) && isEmpty(before)) &&
+        (isEmpty(after) || !isNaN(parseInt(after))) &&
+        (isEmpty(before) || !isNaN(parseInt(before)))
+      );
+    }
+
+    if (searchType === 'proximity') {
+      return (
+        !isNaN(parseInt(radius)) &&
+        !isNaN(parseInt(latitude)) &&
+        !isNaN(parseInt(longitude))
+      );
+    }
+  };
+
   console.log('STATE', state);
 
   return (
@@ -144,6 +166,7 @@ export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetS
           </Form.Button>
           <Button.Or />
           <Form.Button
+            disabled={!validateForm({ ...state })}
             className='search-form-button search-form-submit-button button-primary'
             onClick={() => searchWrecks({ ...state, wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck })}
           >

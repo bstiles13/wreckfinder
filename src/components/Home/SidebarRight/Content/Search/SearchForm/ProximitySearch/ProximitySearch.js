@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Message, Input } from 'semantic-ui-react';
-import { get } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import { INITIAL_STATE } from '../../../../../../../store/reducers/mapReducer';
 import { delayAutoFocus } from '../../../../../../../utils';
 
@@ -13,7 +13,7 @@ export const ProximitySearch = ({ children, latitude, longitude, radius, handleC
         <label>Radius</label>
         {children}
       </div>
-      <Form.Field>
+      <Form.Field error={!isEmpty(radius) && isNaN(parseInt(radius))}>
         <Input
           id='radius'
           fluid
@@ -30,6 +30,7 @@ export const ProximitySearch = ({ children, latitude, longitude, radius, handleC
           placeholder={get(viewport, 'center.0', INITIAL_STATE.view[0])}
           onChange={handleChange}
           value={latitude}
+          error={!isEmpty(latitude) && isNaN(parseInt(latitude))}
         />
         <Form.Input
           id='longitude'
@@ -38,6 +39,7 @@ export const ProximitySearch = ({ children, latitude, longitude, radius, handleC
           placeholder={get(viewport, 'center.1', INITIAL_STATE.view[1])}
           onChange={handleChange}
           value={longitude}
+          error={!isEmpty(longitude) && isNaN(parseInt(longitude))}
         />
       </Form.Group>
       <Message
