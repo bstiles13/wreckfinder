@@ -7,8 +7,8 @@ module.exports = {
   },
 
   return: (req, res) => {
-    console.log(`Authentication callback - returning to ${req.headers.referer}`);
-    res.redirect(req.headers.referer);
+    console.log(`Authentication callback - returning to ${req.headers}`);
+    res.redirect('https://wreck-finder.herokuapp.com/');
   },
 
   profile: (req, res) => {
@@ -24,8 +24,8 @@ module.exports = {
       if (err) {
         console.log(`Unable to clear session at logout: ${(err)}`);
       }
-      console.log(`Logout SUCCESS - returning to ${req.headers.referer}`);
-      res.redirect(req.headers.referer);
+      console.log(`Logout SUCCESS - returning to ${req.headers}`);
+      res.redirect('https://wreck-finder.herokuapp.com/');
     });
   }
 };
