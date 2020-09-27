@@ -1,5 +1,6 @@
 import React from 'react';
-import { Segment } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { Segment, Button } from 'semantic-ui-react';
 
 import './Privacy.scss';
 
@@ -16,6 +17,8 @@ export const Privacy = () => (
       <p>Your continued use of our website will be regarded as acceptance of our practices around privacy and personal information. If you have any questions about how we handle user data and personal information, feel free to contact us.</p>
       <p>This policy is effective as of 13 September 2020.</p>
       <p><a href='https://getterms.io' title='Generate a free privacy policy'>Privacy Policy created with GetTerms.</a></p>
+      <br />
+      <Button as={Link} to='/'>Back</Button>
     </Segment>
   </div>
 );
