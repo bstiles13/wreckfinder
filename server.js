@@ -25,8 +25,8 @@ passport.deserializeUser((id, done) => {
 });
 
 const authOrigin = process.env.NODE_ENV === 'development'
-  ? 'http://localhost:3000/'
-  : 'https://wreck-finder.herokuapp.com/';
+  ? 'http://localhost:3001/auth/return'
+  : 'https://wreck-finder.herokuapp.com/auth/return';
 
 passport.use(new Strategy({
   clientID: '726097894634616',
