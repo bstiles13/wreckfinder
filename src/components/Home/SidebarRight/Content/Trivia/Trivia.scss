@@ -1,0 +1,10 @@
+.trivia {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100%;
+
+  &-content {
+    flex: 1;
+  }
+}

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Form, Input } from 'semantic-ui-react';
 import { delayAutoFocus } from '../../../../../../../utils';
-
-// import './Search.scss';
+import { isEmpty } from 'lodash';
 
 export const AdvancedSearch = ({ children, name, description, after, before, isVisible, hasName, handleChange }) => {
   return (
@@ -34,8 +33,28 @@ export const AdvancedSearch = ({ children, name, description, after, before, isV
         value={name}
       />
       <Form.Group widths='equal'>
-        <Form.Input id='after' fluid label='After' placeholder='1910' icon='arrow up' iconPosition='left' onChange={handleChange} value={after} />
-        <Form.Input id='before' fluid label='Before' placeholder='1990' icon='arrow down' iconPosition='left' onChange={handleChange} value={before} />
+        <Form.Input
+          id='after'
+          fluid
+          label='After'
+          placeholder='1910'
+          icon='arrow up'
+          iconPosition='left'
+          onChange={handleChange}
+          value={after}
+          error={!isEmpty(after) && isNaN(parseInt(after))}
+        />
+        <Form.Input
+          id='before'
+          fluid
+          label='Before'
+          placeholder='1990'
+          icon='arrow down'
+          iconPosition='left'
+          onChange={handleChange}
+          value={before}
+          error={!isEmpty(before) && isNaN(parseInt(before))}
+        />
       </Form.Group>
       <Form.Group>
         <Form.Checkbox

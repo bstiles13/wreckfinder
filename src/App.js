@@ -8,7 +8,7 @@ import { fetchSession, fetchFavorites, fetchWrecks } from './store/actions';
 
 import './App.scss';
 
-const App = ({ fetchSession, fetchFavorites, fetchWrecks, mapKey }) => {
+const App = ({ fetchSession, fetchFavorites, fetchWrecks }) => {
   const clearHash = () => { // Removes url hash appended by passport facebook bug
     if (document.location.hash === '#_=_') {
       // eslint-disable-next-line no-restricted-globals

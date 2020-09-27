@@ -1,5 +1,7 @@
 .favorites {
-  padding: 0 !important;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 
   .result {
 

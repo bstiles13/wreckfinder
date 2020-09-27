@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Item, Accordion, Icon, Form, Input, Button, Message } from 'semantic-ui-react';
+import { Item, Accordion, Icon, Form, Input, Button, Message, Step } from 'semantic-ui-react';
 import Skeleton from 'react-loading-skeleton';
 import { map, isEmpty, get } from 'lodash';
 import ShowMoreText from 'react-show-more-text';
@@ -110,11 +110,20 @@ export const Articles = ({ isActive, articles, query, isFetching, fetchArticles,
             fluid
             icon='newspaper outline'
             iconPosition='left'
+            placeholder='Search articles'
             onChange={handleChange}
             defaultValue={articleQuery || ''}
             ref={delayAutoFocus}
           />
         </Form.Field>
+        <Message
+          style={{ textAlign: 'left' }}
+          info
+          size='tiny'
+          icon='pointing right'
+          header='Article Search'
+          content={`Search for publications from Wikipedia, New York Times, and the Library of Congress`}
+        />
         <Form.Group as={Button.Group} className='search-form-buttons'>
           <Form.Button
             type='button'
@@ -140,6 +149,10 @@ export const Articles = ({ isActive, articles, query, isFetching, fetchArticles,
             : renderArticles(articles)
         }
       </div>
+      <Step.Group size='mini' style={{ marginTop: '0.5rem' }}>
+        <Step disabled><Step.Content><Step.Title>MENU</Step.Title></Step.Content></Step>
+        <Step><Step.Content><Step.Title>ARTICLES</Step.Title></Step.Content></Step>
+      </Step.Group>
     </div>
   );
 };
