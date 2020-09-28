@@ -7,7 +7,7 @@ import { Placeholder } from '../../../../Shared/Placeholder/Placeholder';
 
 import './Search.scss';
 
-export const Search = ({ isActive, wrecks, selectedWreck, setSelectedWreck }) => {
+export const Search = ({ isActive, wrecks, selectedWreck, setSelectedWreck, fetchArticles, createFavorite, deleteFavorite, fetchFavorites, setActiveTab, favorites }) => {
   useEffect(() => {
     if (!selectedWreck) {
       const element = get(document.getElementsByClassName('results'), '0');
@@ -36,7 +36,7 @@ export const Search = ({ isActive, wrecks, selectedWreck, setSelectedWreck }) =>
                 </Message>
               </Placeholder>
             )
-            : renderWreckList({ wrecks, selectedWreck, setSelectedWreck })
+            : renderWreckList({ wrecks, selectedWreck, setSelectedWreck, fetchArticles, createFavorite, deleteFavorite, fetchFavorites, setActiveTab, favorites })
         }
       </div>
     </div>

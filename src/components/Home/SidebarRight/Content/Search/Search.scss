@@ -9,47 +9,5 @@
     flex: 1;
     border-top: 1px solid rgba(34, 36, 38, .15);
     overflow-y: auto;
-  
-    .result {
-      &-row {
-        position: relative;
-        padding: 0.7rem;
-  
-        &.selectable {
-          display: flex;
-          text-align: left;
-          cursor: pointer;
-        }
-  
-        &.selected, &.selectable:hover {
-          background-color: rgb(243, 243, 243);
-        }
-      }
-  
-      &-content-right {
-        flex: 1;
-        padding-left: 0.5rem;
-      }
-  
-      &-selected-icon {
-        position: absolute;
-        right: 0.4rem;
-      }
-  
-      &-header {
-        text-transform: uppercase;
-        font-weight: bold;
-        word-break: break-all;
-  
-        &.selected {
-          padding-right: 1.2rem;
-        }
-      }
-  
-      &-meta {
-        font-size: 0.9rem;
-        color: gray;
-      }
-    }
   }
 }

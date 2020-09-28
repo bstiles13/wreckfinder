@@ -7,7 +7,16 @@ import { Search } from './Search/Search';
 import { Articles } from './Articles/Articles';
 import { Favorites } from './Favorites/Favorites';
 import { Trivia } from './Trivia/Trivia';
-import { resetMap, setMapFilterType, setSelectedWreck, fetchArticles, clearArticles } from '../../../../store/actions';
+import {
+  resetMap,
+  setMapFilterType,
+  setSelectedWreck,
+  fetchArticles,
+  clearArticles,
+  createFavorite,
+  deleteFavorite,
+  fetchFavorites
+} from '../../../../store/actions';
 
 import './Content.scss';
 
@@ -19,13 +28,16 @@ export const Content = (props) => {
     filteredWrecks,
     selectedWreck,
     setSelectedWreck,
+    createFavorite,
+    deleteFavorite,
+    fetchArticles,
     favorites,
     articles,
     articlesQuery,
     articlesFetching,
-    fetchArticles,
     clearArticles,
-    favoritesFetching
+    favoritesFetching,
+    fetchFavorites
   } = props;
 
   useEffect(() => {
@@ -43,6 +55,12 @@ export const Content = (props) => {
         wrecks={filteredWrecks}
         selectedWreck={selectedWreck}
         setSelectedWreck={setSelectedWreck}
+        fetchArticles={fetchArticles}
+        createFavorite={createFavorite}
+        deleteFavorite={deleteFavorite}
+        fetchFavorites={fetchFavorites}
+        setActiveTab={setActiveTab}
+        favorites={favorites}
       />
       <Favorites
         isActive={activeTab === 'favorites'}
@@ -50,6 +68,12 @@ export const Content = (props) => {
         selectedWreck={selectedWreck}
         setSelectedWreck={setSelectedWreck}
         isFetching={favoritesFetching}
+        fetchArticles={fetchArticles}
+        createFavorite={createFavorite}
+        deleteFavorite={deleteFavorite}
+        fetchFavorites={fetchFavorites}
+        setActiveTab={setActiveTab}
+        favorites={favorites}
       />
       <Articles
         isActive={activeTab === 'articles'}
@@ -81,7 +105,10 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setMapFilterType,
   setSelectedWreck,
   fetchArticles,
-  clearArticles
+  clearArticles,
+  createFavorite,
+  deleteFavorite,
+  fetchFavorites
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Content);
