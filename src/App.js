@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Home from './components/Home/Home';
 import { Privacy } from './components/Privacy/Privacy';
+import { PageLoader } from './components/PageLoader/PageLoader';
 import { fetchSession, fetchFavorites, fetchWrecks } from './store/actions';
 
 import './App.scss';
@@ -16,27 +17,31 @@ const App = ({ fetchSession, fetchFavorites, fetchWrecks }) => {
     };
   };
 
+  const [pageLoaded, setPageLoaded] = useState(false);
   useEffect(async () => {
     clearHash();
     await fetchSession();
     fetchFavorites();
-    fetchWrecks();
+    await fetchWrecks();
+    setPageLoaded(true);
   }, []);
 
   return (
     <div className='app'>
-      <Switch>
-        <Route exact path='/'><Home /></Route>
-        <Route path='/privacy'><Privacy /></Route>
-        <Redirect to='/' />
-      </Switch>
+      {
+        !pageLoaded
+          ? <PageLoader />
+          : (
+            <Switch>
+              <Route exact path='/'><Home /></Route>
+              <Route path='/privacy'><Privacy /></Route>
+              <Redirect to='/' />
+            </Switch>
+          )
+      }
     </div>
   );
 };
-
-const mapStateToProps = state => ({
-  mapKey: state.map.key
-});
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
@@ -46,4 +51,4 @@ const mapDispatchToProps = dispatch => {
   }, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
