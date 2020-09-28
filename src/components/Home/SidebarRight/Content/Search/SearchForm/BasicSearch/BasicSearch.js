@@ -21,7 +21,7 @@ export const BasicSearch = ({ children, description, handleChange }) => {
           ref={delayAutoFocus}
         />
       </Form.Field>
-      <Message info icon size='tiny'>
+      <Message className='basic-search-help-message' info icon size='tiny'>
         <Message.Content>
           <Message.Header>Quick Search</Message.Header>
           Find wrecks in United States and territorial waters with names and descriptions matching your text
