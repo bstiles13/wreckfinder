@@ -91,13 +91,14 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
       </Menu.Item>
       <div className='layer-toggle-container'>
         <div
-          className={`layer-toggle ${layer.type === 'Oceans' ? 'layer-toggle-imagery' : 'layer-toggle-oceans'}`}
-          onClick={() => (
-            layer.type === 'Oceans'
-              ? setLayer({ type: 'Imagery', labels: 'ImageryLabels' })
-              : setLayer({ type: 'Oceans', labels: 'OceansLabels' })
-          )}>
-          <div className='layer-toggle-text'>{layer.type === 'Oceans' ? 'Imagery' : 'Oceans'}</div>
+          className={`layer-toggle layer-toggle-top layer-toggle-oceans ${layer.type === 'Oceans' ? 'active' : 'inactive'}`}
+          onClick={() => setLayer({ type: 'Oceans', labels: 'OceansLabels' })}>
+          <div className='layer-toggle-text layer-toggle-top-text'>Oceans</div>
+        </div>
+        <div
+          className={`layer-toggle layer-toggle-bottom layer-toggle-imagery ${layer.type === 'Imagery' ? 'active' : 'inactive'}`}
+          onClick={() => setLayer({ type: 'Imagery', labels: 'ImageryLabels' })}>
+          <div className='layer-toggle-text layer-toggle-bottom-text'>Imagery</div>
         </div>
       </div>
     </Sidebar>

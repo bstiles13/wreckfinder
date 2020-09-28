@@ -11,21 +11,45 @@
 
     .layer-toggle {
       cursor: pointer;
-      position: relative;
+      position: absolute;
+      bottom: 0;
       height: 11rem;
       width: 100%;
       display: flex;
       border-radius: 4px;
-      clip-path: polygon(100% 0, 0% 100%, 100% 100%);
-  
+
       &-text {
         position: absolute;
-        bottom: 2rem;
-        right: 1rem;
         font-size: 1.3rem;
         font-weight: bold;
         color: white;
         font-family: 'Secular One', sans-serif;
+      }
+
+      &.inactive {
+        opacity: 0.6;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+
+      &-top {
+        clip-path: polygon(100% 0, 0% 100%, 0 0);
+    
+        &-text {
+          top: 3rem;
+          left: 1rem;
+        } 
+      }
+
+      &-bottom {
+        clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+    
+        &-text {
+          bottom: 2rem;
+          right: 1rem;
+        } 
       }
   
       &-oceans {
