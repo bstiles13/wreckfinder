@@ -19,6 +19,36 @@ module.exports = {
     }
   },
 
+  searchWrecks: (req, res) => {
+    let query = { $and: [] };
+    if (!isEmpty(req.query.description)) {
+      query['$and'].push({ '$text': { '$search': req.query.description } });
+    };
+    if (!isEmpty(req.query.name)) {
+      query['$and'].push({ 'properties.name': new RegExp(`${req.query.name}`, 'i') });
+    };
+    if (!isEmpty(req.query.after) && isEmpty(req.query.before)) {
+      query['$and'].push({ '$where': `parseInt(this.properties.yearSunk) > ${req.query.after}` });
+    };
+    if (!isEmpty(req.query.before) && isEmpty(req.query.after)) {
+      query['$and'].push({ '$where': `parseInt(this.properties.yearSunk) < ${req.query.before}` });
+    };
+    if (!isEmpty(req.query.after) && !isEmpty(req.query.before)) {
+      query['$and'].push({ '$where': `parseInt(this.properties.yearSunk) > ${req.query.after} && parseInt(this.properties.yearSunk) < ${req.query.before}` });
+    }
+    if (req.query.hasName === 'true') {
+      query['$and'].push({ 'properties.name': { '$nin': [null, '', 'UNKNOWN', 'UNKNOWN ', 'WRECK', 'WRECK ', 'OBSTRUCTION', 'OBSTRUCTION '] } });
+    };
+    if (req.query.isVisible === 'true') {
+      query['$and'].push({ 'properties.featureType': /visible/i });
+    };
+    Wreck.find(query).limit(300).then(data => {
+      res.json(data);
+    }).catch(err => {
+      console.log(err);
+    });
+  },
+
   searchRadius: (req, res) => {
     console.log(`Search radius REQUEST by: ${get(req, 'user.displayName', 'Guest User')}`);
 

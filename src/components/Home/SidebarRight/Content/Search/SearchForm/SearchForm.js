@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Form, Button } from 'semantic-ui-react';
-import { get, shuffle, filter, toLower, reduce, isEmpty } from 'lodash';
+import { get, shuffle, filter, isEmpty } from 'lodash';
 import axios from 'axios';
 import { setMapFilterType, setFilteredWrecks, resetSelectedWreck } from '../../../../../../store/actions';
 import { BasicSearch } from './BasicSearch/BasicSearch';
@@ -65,55 +65,29 @@ export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetS
     setFilteredWrecks(randomWrecks);
   };
 
-  const handleBasicSearch = ({ description, wrecks, setFilteredWrecks, setMapFilterType, resetSelectedWreck }) => {
-    const results = shuffle(filter(wrecks, wreck => {
-      const descriptionMatch = (
-        isEmpty(description) ||
-        reduce(description.split(' '), (acc, word) => { acc = toLower(get(wreck, 'properties.history', '')).includes(toLower(word)); return acc; }, true) ||
-        reduce(description.split(' '), (acc, word) => { acc = toLower(get(wreck, 'properties.name', '')).includes(toLower(word)); return acc; }, true)
-      );
+  const handleBasicSearch = ({ description }) => submitTextSearch({ description });
 
-      return descriptionMatch;
-    }));
-
-    setMapFilterType('search');
-    resetSelectedWreck();
-    setFilteredWrecks(results.slice(0, 100));
-  };
-
-  const handleAdvancedSearch = ({
+  const handleAdvancedSearch = ({ name, description, after, before, hasName, isVisible }) => submitTextSearch({
     name,
     description,
     after,
     before,
     hasName,
-    isVisible,
-    wrecks,
-    setFilteredWrecks,
-    setMapFilterType,
-    resetSelectedWreck
-  }) => {
-    const results = shuffle(filter(wrecks, wreck => {
-      const nameMatch = isEmpty(name) || toLower(get(wreck, 'properties.name', '')).includes(toLower(name));
-      const descriptionMatch = (
-        isEmpty(description) ||
-        reduce(description.split(' '), (acc, word) => { acc = toLower(get(wreck, 'properties.history', '')).includes(toLower(word)); return acc; }, true) ||
-        reduce(description.split(' '), (acc, word) => { acc = toLower(get(wreck, 'properties.name', '')).includes(toLower(word)); return acc; }, true)
-      );
-      const afterMatch = isEmpty(after) || parseInt(get(wreck, 'properties.yearSunk', 0)) > parseInt(after);
-      const beforeMatch = isEmpty(before) || parseInt(get(wreck, 'properties.yearSunk', 0)) < parseInt(before);
-      const hasNameMatch = !hasName || (!!wreck.properties.name && toLower(wreck.properties.name) !== 'unknown' && toLower(wreck.properties.name) !== 'obstruction' && toLower(wreck.properties.name) !== 'wreck');
-      const isVisibleMatch = !isVisible || (!!wreck.properties.featureType && toLower(wreck.properties.featureType).includes('visible'));
+    isVisible
+  });
 
-      return nameMatch && descriptionMatch && afterMatch && beforeMatch && hasNameMatch && isVisibleMatch;
-    }));
-
-    setMapFilterType('search');
-    resetSelectedWreck();
-    setFilteredWrecks(results.slice(0, 100));
+  const submitTextSearch = async (params) => {
+    try {
+      const res = await axios.get('/api/wrecks/search', { params });
+      setMapFilterType('search');
+      resetSelectedWreck();
+      setFilteredWrecks(res.data);
+    } catch (err) {
+      return err;
+    }
   };
 
-  const handleProximitySearch = async ({ radius, latitude, longitude }) => {
+  const submitProximitySearch = async ({ radius, latitude, longitude }) => {
     try {
       const res = await axios.get('/api/wrecks/radius', { params: { radius, lat: latitude, lng: longitude } });
       const wrecks = filter(res.data, wreck => wreck.properties.source !== 'enc');
@@ -128,17 +102,17 @@ export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetS
   const searchWrecks = ({ wrecks, setFilteredWrecks, setMapFilterType, resetSelectedWreck }) => {
     if (state.searchType === 'basic') handleBasicSearch({ ...state, wrecks, setFilteredWrecks, setMapFilterType, resetSelectedWreck });
     if (state.searchType === 'advanced') handleAdvancedSearch({ ...state, wrecks, setFilteredWrecks, setMapFilterType, resetSelectedWreck });
-    if (state.searchType === 'proximity') handleProximitySearch({ ...state, wrecks, setFilteredWrecks, setMapFilterType, resetSelectedWreck });
+    if (state.searchType === 'proximity') submitProximitySearch({ ...state, wrecks, setFilteredWrecks, setMapFilterType, resetSelectedWreck });
   };
 
-  const validateForm = ({ searchType, name, description, after, before, radius, latitude, longitude }) => {
+  const validateForm = ({ searchType, name, description, after, before, radius, latitude, longitude, hasName, isVisible }) => {
     if (searchType === 'basic') {
       return !isEmpty(description);
     }
 
     if (searchType === 'advanced') {
       return (
-        !(isEmpty(name) && isEmpty(description) && isEmpty(after) && isEmpty(before)) &&
+        !(isEmpty(name) && isEmpty(description) && isEmpty(after) && isEmpty(before) && !hasName && !isVisible) &&
         (isEmpty(after) || !isNaN(parseInt(after))) &&
         (isEmpty(before) || !isNaN(parseInt(before)))
       );
