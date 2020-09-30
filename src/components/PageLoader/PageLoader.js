@@ -8,4 +8,4 @@ export const PageLoader = () => {
       <div className='page-loader-content'>Wreck Finder</div>
     </div>
   );
-}
+};
