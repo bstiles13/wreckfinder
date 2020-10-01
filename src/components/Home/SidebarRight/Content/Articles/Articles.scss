@@ -4,6 +4,17 @@
   flex-direction: column !important;
   height: 100%;
 
+  &-help-message {
+    .content {
+      text-align: left;
+    }
+
+    .icon.hand.point.down {
+      margin-right: 0 !important;
+      margin-left: 0.6em !important;
+    }
+  }
+
   &-form {
     padding: 0.8rem 0.5rem 0.5rem 0.5rem;
   }

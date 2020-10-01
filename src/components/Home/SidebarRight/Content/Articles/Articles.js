@@ -105,14 +105,13 @@ export const Articles = ({ isActive, articles, query, isFetching, fetchArticles,
             ref={delayAutoFocus}
           />
         </Form.Field>
-        <Message
-          style={{ textAlign: 'left' }}
-          info
-          size='tiny'
-          icon='pointing right'
-          header='Article Search'
-          content={`Search for publications from Wikipedia, New York Times, and the Library of Congress`}
-        />
+        <Message className='articles-help-message' info icon size='tiny'>
+          <Message.Content>
+            <Message.Header>Article Search</Message.Header>
+            <p>Search for publications from Wikipedia, New York Times, and the Library of Congress</p>
+          </Message.Content>
+          <Icon name='hand point down' />
+        </Message>
         <Form.Group as={Button.Group} className='search-form-buttons'>
           <Form.Button
             type='button'

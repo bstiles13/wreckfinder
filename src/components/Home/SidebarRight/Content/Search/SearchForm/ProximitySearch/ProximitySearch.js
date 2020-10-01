@@ -44,7 +44,7 @@ export const ProximitySearch = ({ children, latitude, longitude, radius, handleC
         info
         size='tiny'
         icon='pointing right'
-        header='Tip'
+        header='Pro Tip'
         content={`Double clicking on the map will auto-fill your latitude and longitude at the cursor's location`}
       />
     </>
