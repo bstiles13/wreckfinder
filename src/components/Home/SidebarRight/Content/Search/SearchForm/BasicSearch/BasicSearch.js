@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Message, Input, Icon } from 'semantic-ui-react';
-import { delayAutoFocus } from '../../../../../../../utils';
+// import { delayAutoFocus } from '../../../../../../../utils';
 
 export const BasicSearch = ({ children, description, handleChange }) => {
   return (
@@ -18,7 +18,6 @@ export const BasicSearch = ({ children, description, handleChange }) => {
           iconPosition='left'
           onChange={handleChange}
           value={description}
-          ref={delayAutoFocus}
         />
       </Form.Field>
       <Message className='basic-search-help-message' info icon size='tiny'>

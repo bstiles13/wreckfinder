@@ -3,8 +3,8 @@ import { Item, Accordion, Icon, Form, Input, Button, Message, Step } from 'seman
 import { map, isEmpty, get } from 'lodash';
 import ShowMoreText from 'react-show-more-text';
 import { ARTICLE_LABELS } from '../../../../../constants';
-import { delayAutoFocus } from '../../../../../utils';
 import { Placeholder } from '../../../../Shared/Placeholder/Placeholder';
+// import { delayAutoFocus } from '../../../../../utils';
 
 import './Articles.scss';
 
@@ -102,7 +102,6 @@ export const Articles = ({ isActive, articles, query, isFetching, fetchArticles,
             placeholder='Search articles'
             onChange={handleChange}
             defaultValue={articleQuery || ''}
-            ref={delayAutoFocus}
           />
         </Form.Field>
         <Message className='articles-help-message' info icon size='tiny'>
