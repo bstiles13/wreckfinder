@@ -25,7 +25,7 @@ const INITIAL_STATE = {
   radius: null
 };
 
-export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck, clickEvent, viewport }) => {
+export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck, clickEvent, viewport, setIsFetching }) => {
   const [state, setState] = useState({ ...INITIAL_STATE });
 
   useEffect(() => {
@@ -78,23 +78,29 @@ export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetS
 
   const submitTextSearch = async (params) => {
     try {
+      setIsFetching(true);
       const res = await axios.get('/api/wrecks/search', { params });
       setMapFilterType('search');
       resetSelectedWreck();
       setFilteredWrecks(res.data);
+      setIsFetching(false);
     } catch (err) {
+      setIsFetching(false);
       return err;
     }
   };
 
   const submitProximitySearch = async ({ radius, latitude, longitude }) => {
     try {
+      setIsFetching(true);
       const res = await axios.get('/api/wrecks/radius', { params: { radius, lat: latitude, lng: longitude } });
       const wrecks = filter(res.data, wreck => wreck.properties.source !== 'enc');
       setMapFilterType('search');
       resetSelectedWreck();
       setFilteredWrecks(wrecks);
+      setIsFetching(false);
     } catch (err) {
+      setIsFetching(false);
       return err;
     }
   };

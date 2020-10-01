@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Message } from 'semantic-ui-react';
 import { get, isEmpty } from 'lodash';
 import { renderWreckList } from '../Content.helper';
@@ -8,6 +8,8 @@ import { Placeholder } from '../../../../Shared/Placeholder/Placeholder';
 import './Search.scss';
 
 export const Search = ({ isActive, wrecks, selectedWreck, setSelectedWreck, fetchArticles, createFavorite, deleteFavorite, fetchFavorites, setActiveTab, favorites }) => {
+  const [isFetching, setIsFetching] = useState(false);
+
   useEffect(() => {
     if (!selectedWreck) {
       const element = get(document.getElementsByClassName('results'), '0');
@@ -24,12 +26,12 @@ export const Search = ({ isActive, wrecks, selectedWreck, setSelectedWreck, fetc
 
   return (
     <div className='search'>
-      <SearchForm />
+      <SearchForm setIsFetching={setIsFetching} />
       <div className='results'>
         {
-          isEmpty(wrecks)
+          isEmpty(wrecks) || isFetching
             ? (
-              <Placeholder rowCount={10}>
+              <Placeholder rowCount={10} isFetching={isFetching}>
                 <Message>
                   <Message.Header>No results</Message.Header>
                   <p>Refine your results by modifying the search above</p>
