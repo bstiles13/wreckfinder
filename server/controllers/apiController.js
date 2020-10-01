@@ -28,13 +28,13 @@ module.exports = {
       query['$and'].push({ 'properties.name': new RegExp(`${req.query.name}`, 'i') });
     };
     if (!isEmpty(req.query.after) && isEmpty(req.query.before)) {
-      query['$and'].push({ '$where': `parseInt(this.properties.yearSunk) > ${req.query.after}` });
+      query['$and'].push({ 'properties.yearSunk': { $gt: parseInt(req.query.after) } });
     };
     if (!isEmpty(req.query.before) && isEmpty(req.query.after)) {
-      query['$and'].push({ '$where': `parseInt(this.properties.yearSunk) < ${req.query.before}` });
+      query['$and'].push({ 'properties.yearSunk': { $lt: parseInt(req.query.before) } });
     };
     if (!isEmpty(req.query.after) && !isEmpty(req.query.before)) {
-      query['$and'].push({ '$where': `parseInt(this.properties.yearSunk) > ${req.query.after} && parseInt(this.properties.yearSunk) < ${req.query.before}` });
+      query['$and'].push({ 'properties.yearSunk': { $gt: parseInt(req.query.after), $lt: parseInt(req.query.before) } });
     }
     if (req.query.hasName === 'true') {
       query['$and'].push({ 'properties.name': { '$nin': [null, '', 'UNKNOWN', 'UNKNOWN ', 'WRECK', 'WRECK ', 'OBSTRUCTION', 'OBSTRUCTION '] } });
