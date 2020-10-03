@@ -16,7 +16,8 @@ import {
   fetchFavorites,
   createFavorite,
   deleteFavorite,
-  fetchArticles
+  fetchArticles,
+  resetSelectedWreck
 } from '../../../store/actions';
 import { Marker } from './Marker/Marker';
 
@@ -41,7 +42,8 @@ export const Map = props => {
     deleteFavorite,
     fetchArticles,
     setActiveTab,
-    clickEvent
+    clickEvent,
+    resetSelectedWreck
   } = props;
 
   const mapRef = useRef();
@@ -92,6 +94,7 @@ export const Map = props => {
 
   const onMapClick = (e, type) => {
     if (type === 'double') {
+      resetSelectedWreck();
       setActiveTab('search');
     }
     setMapClickEvent({ ...e, type });
@@ -171,7 +174,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchFavorites,
   createFavorite,
   deleteFavorite,
-  fetchArticles
+  fetchArticles,
+  resetSelectedWreck
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);
