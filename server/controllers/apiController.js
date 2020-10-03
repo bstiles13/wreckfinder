@@ -19,6 +19,23 @@ module.exports = {
     }
   },
 
+  randomizeWrecks: (req, res) => {
+    Wreck.aggregate([
+      { $match: { 'properties.name': { '$nin': [null, '', 'UNKNOWN', 'UNKNOWN ', 'WRECK', 'WRECK ', 'OBSTRUCTION', 'OBSTRUCTION '] } } },
+      { $sample: { size: 100 } }
+    ]).then(data => {
+      res.json(data);
+    }).catch(err => {
+      console.log(`Randomize wrecks ERROR by: ${get(req, 'user.displayName', 'Guest User')}: ${err}`);
+
+      return res.status(400).json({
+        status: 'Failed',
+        message: 'Database Error',
+        data: err
+      });
+    });
+  },
+
   searchWrecks: (req, res) => {
     let query = { $and: [] };
     if (!isEmpty(req.query.description)) {
@@ -45,7 +62,13 @@ module.exports = {
     Wreck.find(query).limit(300).then(data => {
       res.json(data);
     }).catch(err => {
-      console.log(err);
+      console.log(`Search wrecks ERROR by: ${get(req, 'user.displayName', 'Guest User')}: ${err}`);
+
+      return res.status(400).json({
+        status: 'Failed',
+        message: 'Database Error',
+        data: err
+      });
     });
   },
 

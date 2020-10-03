@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Form, Button } from 'semantic-ui-react';
-import { get, shuffle, filter, isEmpty } from 'lodash';
+import { get, filter, isEmpty } from 'lodash';
 import axios from 'axios';
 import { setMapFilterType, setFilteredWrecks, resetSelectedWreck } from '../../../../../../store/actions';
 import { BasicSearch } from './BasicSearch/BasicSearch';
@@ -57,12 +57,18 @@ export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetS
     setFilteredWrecks([]);
   };
 
-  const randomizeWrecks = ({ wrecks, setFilteredWrecks, setMapFilterType, resetSelectedWreck }) => {
-    let randomWrecks = shuffle(wrecks);
-    randomWrecks = randomWrecks.slice(0, 100);
-    setMapFilterType('search');
-    resetSelectedWreck();
-    setFilteredWrecks(randomWrecks);
+  const randomizeWrecks = async ({ setFilteredWrecks, setMapFilterType, resetSelectedWreck }) => {
+    try {
+      setIsFetching(true);
+      const res = await axios.get('/api/wrecks/random');
+      setMapFilterType('search');
+      resetSelectedWreck();
+      setFilteredWrecks(res.data);
+      setIsFetching(false);
+    } catch (err) {
+      setIsFetching(false);
+      return err;
+    }
   };
 
   const handleBasicSearch = ({ description }) => submitTextSearch({ description });
