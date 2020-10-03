@@ -62,6 +62,25 @@
       }
     }
   }
+
+  .settings {
+    &-option {
+      &:first-of-type {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        align-items: center !important;
+
+        .icon:not(.dropdown) {
+          margin-right: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+.ui.labeled.icon.menu .item>.login-icon.facebook.icon:not(.dropdown) {
+  margin: 0 !important;
 }
 
 .menu-item-animated {

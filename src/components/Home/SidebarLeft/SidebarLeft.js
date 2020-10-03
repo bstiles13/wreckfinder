@@ -91,7 +91,7 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
                 ? (<>
                   <Menu.Item className='settings-option' vertical as='a' href={`${authOrigin}/auth/logout/`}>Sign Out</Menu.Item>
                 </>)
-                : <Menu.Item className='settings-option' vertical as='a' href={`${authOrigin}/auth/login/`}>Sign In</Menu.Item>
+                : <Menu.Item className='settings-option' vertical as='a' href={`${authOrigin}/auth/login/`}><Icon className='login-icon' name='facebook' />Sign In</Menu.Item>
             }
             <Menu.Item className='settings-option' vertical as={Link} to='/privacy'>Privacy</Menu.Item>
           </Menu.Menu>
