@@ -119,7 +119,7 @@ export const Marker = props => {
                 size='tiny'
                 onClick={() => handleArticlesSearch({ query: wreck.properties.name, fetchArticles, setActiveTab })}
               >
-                Articles
+                Find Articles
               </Button>
             </Card.Content>
           </Card>

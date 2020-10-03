@@ -45,10 +45,6 @@ export const renderWreckList = ({ wrecks, selectedWreck, setSelectedWreck, fetch
           >
             <div className='result-content'>
               <div className='result-content-left'>
-                <Image size='tiny' src={renderPopupImage(wreck.properties.featureTypeShort)} />
-              </div>
-              <div className='result-content-right'>
-                {isSelected && <Icon className='result-selected-icon' name='eye' color='grey' />}
                 <div className={`result-header ${isSelected ? 'selected' : ''}`}>{wreck.properties.name || 'Unknown'}</div>
                 <div className='result-meta'>
                   {wreck.properties.featureTypeShort}
@@ -67,41 +63,47 @@ export const renderWreckList = ({ wrecks, selectedWreck, setSelectedWreck, fetch
                   </ShowMoreText>
                 </div>
               </div>
+              <div className='result-content-right'>
+                <Image size='tiny' src={renderPopupImage(wreck.properties.featureTypeShort)} />
+              </div>
             </div>
             <div className='result-footer'>
-              {
-                isFavorite
-                  ? (
-                    <Button
-                      basic
-                      color='red'
-                      size='tiny'
-                      onClick={event => handleDeleteFavorite({ event, id: wreck._id, deleteFavorite, fetchFavorites })}
-                    >
-                      <Icon name='minus circle' />
+              <div className='result-footer-buttons'>
+                {
+                  isFavorite
+                    ? (
+                      <Button
+                        basic
+                        color='red'
+                        size='tiny'
+                        onClick={event => handleDeleteFavorite({ event, id: wreck._id, deleteFavorite, fetchFavorites })}
+                      >
+                        <Icon name='minus circle' />
                     Remove Favorite
-                    </Button>
-                  )
-                  : (
-                    <Button
-                      basic
-                      color='green'
-                      size='tiny'
-                      onClick={event => handleCreateFavorite({ event, id: wreck._id, createFavorite, fetchFavorites })}
-                    >
-                      <Icon name='star' />
+                      </Button>
+                    )
+                    : (
+                      <Button
+                        basic
+                        color='green'
+                        size='tiny'
+                        onClick={event => handleCreateFavorite({ event, id: wreck._id, createFavorite, fetchFavorites })}
+                      >
+                        <Icon name='star' />
                     Add Favorite
-                    </Button>
-                  )
-              }
-              <Button
-                basic
-                color='black'
-                size='tiny'
-                onClick={event => handleArticlesSearch({ event, query: wreck.properties.name, fetchArticles, setActiveTab })}
-              >
-                Articles
-              </Button>
+                      </Button>
+                    )
+                }
+                <Button
+                  basic
+                  color='black'
+                  size='tiny'
+                  onClick={event => handleArticlesSearch({ event, query: wreck.properties.name, fetchArticles, setActiveTab })}
+                >
+                  Find Articles
+                </Button>
+              </div>
+              {isSelected && <Icon className='result-selected-icon' name='eye' color='grey' size='large' />}
             </div>
           </div>
         );
