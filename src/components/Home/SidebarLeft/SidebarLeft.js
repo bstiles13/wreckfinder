@@ -4,7 +4,8 @@ import { get, isUndefined } from 'lodash';
 import {
   Icon,
   Sidebar,
-  Menu
+  Menu,
+  Popup
 } from 'semantic-ui-react';
 
 import './SidebarLeft.scss';
@@ -66,15 +67,21 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
       >
         <Icon name='favorite' />Favorites
       </Menu.Item>
-      <Menu.Item
-        disabled
-        name='trivia'
-        active={activeTab === 'trivia'}
-        onClick={handleItemClick}
-        as='a'
-      >
-        <Icon name='question' />Trivia
-      </Menu.Item>
+      <Popup
+        content='Coming soon'
+        position='bottom center'
+        trigger={
+          <Menu.Item
+            disabled
+            name='trivia'
+            active={activeTab === 'trivia'}
+            onClick={handleItemClick}
+            as='a'
+          >
+            <Icon name='question' />Trivia
+          </Menu.Item>
+        }
+      />
       <Menu.Item name='settings' onClick={handleItemClick} as='a'>
         <Icon name='ellipsis horizontal' />Settings
         {activeTab === 'settings' && (
