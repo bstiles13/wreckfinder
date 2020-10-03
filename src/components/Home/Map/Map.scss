@@ -1,4 +1,18 @@
 .map {
+  &-logo {
+    background-image: url('../../../assets/wreck_finder_logo_alternative.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 20rem;
+    width: 20rem;
+    z-index: 1000;
+    position: absolute;
+    bottom: -97px;
+    right: 38px;
+    transform: rotate(1deg);
+  }
+
   .leaflet-control-zoom {
     bottom: 0.8rem !important;
     position: fixed !important;

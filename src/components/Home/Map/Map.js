@@ -150,6 +150,7 @@ export const Map = props => {
           })
         }
       </MarkerClusterGroup>
+      <div className='map-logo' />
     </LeafletMap>
   );
 };
