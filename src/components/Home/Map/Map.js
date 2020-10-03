@@ -135,7 +135,7 @@ export const Map = props => {
           </LeafletMarker>
         )
       }
-      <MarkerClusterGroup key={`marker-group-${get(selectedWreck, '_id')}`} maxClusterRadius={40}>
+      <MarkerClusterGroup key={`marker-group-${get(selectedWreck, '_id', '')}`} maxClusterRadius={40}>
         {
           renderMarkers({
             wrecks,
