@@ -1,8 +1,10 @@
 import React, { useRef, useEffect } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Map as LeafletMap } from 'react-leaflet';
+import { Map as LeafletMap, Marker as LeafletMarker, Popup } from 'react-leaflet';
 import * as esri from 'esri-leaflet';
+import { divIcon } from 'leaflet';
 import { isEmpty, map, get, some, debounce } from 'lodash';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import {
@@ -38,7 +40,8 @@ export const Map = props => {
     createFavorite,
     deleteFavorite,
     fetchArticles,
-    setActiveTab
+    setActiveTab,
+    clickEvent
   } = props;
 
   const mapRef = useRef();
@@ -112,6 +115,23 @@ export const Map = props => {
       onClick={e => onMapClick(e, 'single')}
       onDblClick={e => onMapClick(e, 'double')}
     >
+      {
+        (!isEmpty(clickEvent.latlng) && clickEvent.type === 'double') && (
+          <LeafletMarker
+            position={[clickEvent.latlng.lat, clickEvent.latlng.lng]}
+            icon={divIcon({
+              html: renderToStaticMarkup(
+                <div className='radius-marker-container'>
+                  <div className='radius-marker' />
+                </div>
+              )
+            })}>
+            <Popup>
+              {`Double click automatically opens and populates the proximity search at the cursor's coordinates`}
+            </Popup>
+          </LeafletMarker>
+        )
+      }
       <MarkerClusterGroup key={`marker-group-${Date.now()}`} maxClusterRadius={40}>
         {
           renderMarkers({
@@ -138,7 +158,8 @@ const mapStateToProps = state => ({
   wrecks: state.wrecks.wrecks,
   favorites: state.user.favorites,
   filteredWrecks: state.filteredWrecks.filteredWrecks,
-  selectedWreck: state.selectedWreck.selectedWreck
+  selectedWreck: state.selectedWreck.selectedWreck,
+  clickEvent: get(state, 'map.clickEvent', {})
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

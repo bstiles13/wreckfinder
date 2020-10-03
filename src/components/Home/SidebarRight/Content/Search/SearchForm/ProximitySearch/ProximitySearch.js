@@ -8,7 +8,7 @@ export const ProximitySearch = ({ children, latitude, longitude, radius, handleC
   return (
     <>
       <div className='search-form-header'>
-        <label>Radius</label>
+        <label>Radius (miles)</label>
         {children}
       </div>
       <Form.Field error={!isEmpty(radius) && isNaN(parseInt(radius))}>
