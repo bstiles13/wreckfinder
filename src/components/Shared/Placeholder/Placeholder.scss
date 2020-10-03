@@ -19,4 +19,23 @@
     padding: 1rem !important;
     margin: 0 !important;
   }
+
+  .logo-spinner {
+    height: 5.5rem;
+    width: 5.5rem;
+    background-image: url('../../../assets/wreck_finder_logo.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: spinning 1500ms linear infinite;
+  }
+}
+
+@keyframes spinning {
+  from {
+      transform:rotate(0deg);
+  }
+  to {
+      transform:rotate(360deg);
+  }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { map } from 'lodash';
-import { Item, Image, Loader } from 'semantic-ui-react';
+import { Item, Image } from 'semantic-ui-react';
 
 import './Placeholder.scss';
 
@@ -22,7 +22,7 @@ export const Placeholder = ({ children, rowCount = 1, isFetching }) => {
       </Item.Group>
       {
         isFetching
-          ? <Loader active inline='centered' />
+          ? <div className='logo-spinner' />
           : children
       }
     </div>
