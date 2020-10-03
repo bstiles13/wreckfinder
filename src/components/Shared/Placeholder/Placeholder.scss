@@ -21,13 +21,13 @@
   }
 
   .logo-spinner {
-    height: 5.5rem;
-    width: 5.5rem;
+    height: 12rem;
+    width: 12rem;
     background-image: url('../../../assets/wreck_finder_logo.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    animation: spinning 1500ms linear infinite;
+    animation: spinning 2000ms linear infinite;
   }
 }
 

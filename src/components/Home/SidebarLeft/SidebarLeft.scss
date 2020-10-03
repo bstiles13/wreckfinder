@@ -2,6 +2,7 @@
   display: flex !important;
   flex-direction: column !important;
   justify-content: flex-start !important;
+  overflow-x: hidden !important;
 
   .layer-toggle-container {
     flex: 1;
@@ -61,4 +62,21 @@
       }
     }
   }
+}
+
+.menu-item-animated {
+  animation-duration: 1800ms;
+  animation-iteration-count: infinite;
+  transform-origin: bottom;
+  animation-name: bouncer;
+}
+
+@keyframes bouncer {
+  0%   { transform: scale(1,1)      translateY(0); }
+  10%  { transform: scale(1.1,.9)   translateY(0); }
+  30%  { transform: scale(.9,1.1)   translateY(-15px); }
+  50%  { transform: scale(1.05,.95) translateY(0); }
+  57%  { transform: scale(1,1)      translateY(-7px); }
+  64%  { transform: scale(1,1)      translateY(0); }
+  100% { transform: scale(1,1)      translateY(0); }
 }

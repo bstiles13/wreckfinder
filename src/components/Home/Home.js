@@ -10,7 +10,7 @@ import Map from './Map/Map';
 import './Home.scss';
 
 export const Home = ({ session, resetMap, setMapFilterType }) => {
-  const [activeTab, setActiveTab] = useState(null);
+  const [activeTab, setActiveTab] = useState();
 
   const [layer, setLayer] = useState({ type: 'Oceans', labels: 'OceansLabels' });
 

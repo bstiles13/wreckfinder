@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { get } from 'lodash';
+import { get, isUndefined } from 'lodash';
 import {
   Icon,
   Sidebar,
@@ -33,6 +33,7 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
   return (
     <Sidebar
       className='map-sidebar-left'
+      style={{ overflow: 'hidden !important' }}
       as={Menu}
       direction='left'
       icon='labeled'
@@ -41,6 +42,7 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
       vertical
     >
       <Menu.Item
+        className={isUndefined(activeTab) ? 'menu-item-animated' : ''}
         name='search'
         active={activeTab === 'search'}
         onClick={handleItemClick}
