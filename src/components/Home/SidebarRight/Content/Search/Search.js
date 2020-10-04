@@ -7,7 +7,7 @@ import { Placeholder } from '../../../../Shared/Placeholder/Placeholder';
 
 import './Search.scss';
 
-export const Search = ({ isActive, wrecks, selectedWreck, setSelectedWreck, fetchArticles, createFavorite, deleteFavorite, fetchFavorites, setActiveTab, favorites }) => {
+export const Search = ({ isActive, wrecks, selectedWreck, setSelectedWreck, fetchArticles, createFavorite, deleteFavorite, fetchFavorites, setActiveTab, favorites, favoritesFetching }) => {
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export const Search = ({ isActive, wrecks, selectedWreck, setSelectedWreck, fetc
 
   return (
     <div className='search'>
-      <SearchForm setIsFetching={setIsFetching} />
+      <SearchForm setIsFetching={setIsFetching} isFetching={favoritesFetching} />
       <div className='results'>
         {
           isEmpty(wrecks) || isFetching

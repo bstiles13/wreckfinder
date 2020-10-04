@@ -16,13 +16,13 @@ const renderPopupImage = (type) => {
   return types[type];
 };
 
-const handleCreateFavorite = async ({ id, createFavorite, fetchFavorites }) => {
-  await createFavorite(id);
+const handleCreateFavorite = async ({ wreck, createFavorite, fetchFavorites }) => {
+  await createFavorite(wreck);
   fetchFavorites();
 };
 
-const handleDeleteFavorite = async ({ id, deleteFavorite, fetchFavorites }) => {
-  await deleteFavorite(id);
+const handleDeleteFavorite = async ({ wreck, deleteFavorite, fetchFavorites }) => {
+  await deleteFavorite(wreck);
   fetchFavorites();
 };
 
@@ -95,7 +95,7 @@ export const Marker = props => {
                       basic
                       color='red'
                       size='tiny'
-                      onClick={() => handleDeleteFavorite({ id: wreck._id, deleteFavorite, fetchFavorites })}
+                      onClick={() => handleDeleteFavorite({ wreck, deleteFavorite, fetchFavorites })}
                     >
                       <Icon name='minus circle' />
                     Remove Favorite
@@ -106,7 +106,7 @@ export const Marker = props => {
                       basic
                       color='green'
                       size='tiny'
-                      onClick={() => handleCreateFavorite({ id: wreck._id, createFavorite, fetchFavorites })}
+                      onClick={() => handleCreateFavorite({ wreck, createFavorite, fetchFavorites })}
                     >
                       <Icon name='star' />
                     Add Favorite

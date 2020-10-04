@@ -18,6 +18,16 @@
     }
   }
 
+  &-footer, &-spinner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .ui.inline.loader.active {
+      margin-right: 0.5rem;
+    }
+  }
+
   &-buttons {
     display: flex;
     justify-content: flex-end;

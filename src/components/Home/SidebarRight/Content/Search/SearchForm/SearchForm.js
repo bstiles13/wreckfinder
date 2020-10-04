@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Loader } from 'semantic-ui-react';
 import { get, filter, isEmpty } from 'lodash';
 import axios from 'axios';
 import { setMapFilterType, setFilteredWrecks, resetSelectedWreck } from '../../../../../../store/actions';
@@ -25,7 +25,7 @@ const INITIAL_STATE = {
   radius: null
 };
 
-export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck, clickEvent, viewport, setIsFetching }) => {
+export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck, clickEvent, viewport, setIsFetching, isFetching }) => {
   const [state, setState] = useState({ ...INITIAL_STATE });
 
   useEffect(() => {
@@ -159,29 +159,36 @@ export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetS
             <SearchDropdown onChange={toggleSearchType} value={state.searchType} />
           </ProximitySearch>
         )}
-        <Form.Group as={Button.Group} className='search-form-buttons'>
-          <Form.Button
-            type='button'
-            className='search-form-button search-form-clear-button'
-            onClick={() => clearWrecks({ setMapFilterType, setFilteredWrecks, resetSelectedWreck })}
-            inverted>
-            Clear
-          </Form.Button>
-          <Form.Button
-            type='button'
-            className='search-form-button search-form-random-button'
-            onClick={() => randomizeWrecks({ wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck })}>
-            Random
-          </Form.Button>
-          <Button.Or />
-          <Form.Button
-            disabled={!validateForm({ ...state })}
-            className='search-form-button search-form-submit-button button-primary'
-            onClick={() => searchWrecks({ ...state, wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck })}
-          >
-            Search
-          </Form.Button>
-        </Form.Group>
+        <div className='search-form-footer'>
+          <div className='search-form-spinner'>
+            {isFetching && (<>
+              <Loader active inline size='small' />Saving
+            </>)}
+          </div>
+          <Form.Group as={Button.Group} className='search-form-buttons'>
+            <Form.Button
+              type='button'
+              className='search-sform-button search-form-clear-button'
+              onClick={() => clearWrecks({ setMapFilterType, setFilteredWrecks, resetSelectedWreck })}
+              inverted>
+              Clear
+            </Form.Button>
+            <Form.Button
+              type='button'
+              className='search-form-button search-form-random-button'
+              onClick={() => randomizeWrecks({ wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck })}>
+              Random
+            </Form.Button>
+            <Button.Or />
+            <Form.Button
+              disabled={!validateForm({ ...state })}
+              className='search-form-button search-form-submit-button button-primary'
+              onClick={() => searchWrecks({ ...state, wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck })}
+            >
+              Search
+            </Form.Button>
+          </Form.Group>
+        </div>
       </Form>
     </div>
   );

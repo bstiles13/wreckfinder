@@ -61,6 +61,7 @@ export const Content = (props) => {
         fetchFavorites={fetchFavorites}
         setActiveTab={setActiveTab}
         favorites={favorites}
+        favoritesFetching={favoritesFetching}
       />
       <Favorites
         isActive={activeTab === 'favorites'}

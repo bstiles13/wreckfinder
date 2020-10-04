@@ -1,6 +1,6 @@
 import React from 'react';
 import { map, get, some } from 'lodash';
-import { Image, Icon, Button } from 'semantic-ui-react';
+import { Image, Icon, Button, Loader } from 'semantic-ui-react';
 import ShowMoreText from 'react-show-more-text';
 
 const renderPopupImage = (type) => {
@@ -12,15 +12,15 @@ const renderPopupImage = (type) => {
   return types[type];
 };
 
-const handleCreateFavorite = async ({ event, id, createFavorite, fetchFavorites }) => {
+const handleCreateFavorite = async ({ event, wreck, createFavorite, fetchFavorites }) => {
   event.stopPropagation();
-  await createFavorite(id);
+  await createFavorite(wreck);
   fetchFavorites();
 };
 
-const handleDeleteFavorite = async ({ event, id, deleteFavorite, fetchFavorites }) => {
+const handleDeleteFavorite = async ({ event, wreck, deleteFavorite, fetchFavorites }) => {
   event.stopPropagation();
-  await deleteFavorite(id);
+  await deleteFavorite(wreck);
   fetchFavorites();
 };
 
@@ -30,7 +30,7 @@ const handleArticlesSearch = ({ event, query, fetchArticles, setActiveTab }) => 
   fetchArticles(query);
 };
 
-export const renderWreckList = ({ wrecks, selectedWreck, setSelectedWreck, fetchArticles, createFavorite, deleteFavorite, fetchFavorites, setActiveTab, favorites }) => (
+export const renderWreckList = ({ wrecks, selectedWreck, setSelectedWreck, fetchArticles, createFavorite, deleteFavorite, fetchFavorites, setActiveTab, favorites, isFetching }) => (
   <div className='wreck-list'>
     {
       map(wrecks, wreck => {
@@ -76,10 +76,10 @@ export const renderWreckList = ({ wrecks, selectedWreck, setSelectedWreck, fetch
                         basic
                         color='red'
                         size='tiny'
-                        onClick={event => handleDeleteFavorite({ event, id: wreck._id, deleteFavorite, fetchFavorites })}
+                        onClick={event => handleDeleteFavorite({ event, wreck, deleteFavorite, fetchFavorites })}
                       >
                         <Icon name='minus circle' />
-                    Remove Favorite
+                        Remove Favorite
                       </Button>
                     )
                     : (
@@ -87,10 +87,10 @@ export const renderWreckList = ({ wrecks, selectedWreck, setSelectedWreck, fetch
                         basic
                         color='green'
                         size='tiny'
-                        onClick={event => handleCreateFavorite({ event, id: wreck._id, createFavorite, fetchFavorites })}
+                        onClick={event => handleCreateFavorite({ event, wreck, createFavorite, fetchFavorites })}
                       >
                         <Icon name='star' />
-                    Add Favorite
+                        Add Favorite
                       </Button>
                     )
                 }
@@ -103,6 +103,7 @@ export const renderWreckList = ({ wrecks, selectedWreck, setSelectedWreck, fetch
                   Find Articles
                 </Button>
               </div>
+              {isFetching && <Loader active inline />}
               {isSelected && <Icon className='result-selected-icon' name='eye' color='grey' size='large' />}
             </div>
           </div>

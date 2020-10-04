@@ -39,7 +39,7 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
       direction='left'
       icon='labeled'
       visible={true}
-      width='extra thin'
+      width='thin'
       vertical
     >
       <Menu.Item
