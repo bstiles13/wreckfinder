@@ -1,7 +1,6 @@
 import React from 'react';
 import { Form, Input } from 'semantic-ui-react';
 import { isEmpty } from 'lodash';
-// import { delayAutoFocus } from '../../../../../../../utils';
 
 export const AdvancedSearch = ({ children, name, description, after, before, isVisible, hasName, handleChange }) => {
   return (

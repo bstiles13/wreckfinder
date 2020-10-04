@@ -4,7 +4,6 @@ import { map, isEmpty, get } from 'lodash';
 import ShowMoreText from 'react-show-more-text';
 import { ARTICLE_LABELS } from '../../../../../constants';
 import { Placeholder } from '../../../../Shared/Placeholder/Placeholder';
-// import { delayAutoFocus } from '../../../../../utils';
 
 import './Articles.scss';
 
@@ -87,8 +86,6 @@ export const Articles = ({ isActive, articles, query, isFetching, fetchArticles,
   };
 
   if (!isActive) return false;
-
-  console.log('QUERY', query);
 
   return (
     <div className='articles'>

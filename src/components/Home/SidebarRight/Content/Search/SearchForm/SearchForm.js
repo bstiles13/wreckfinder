@@ -25,7 +25,18 @@ const INITIAL_STATE = {
   radius: null
 };
 
-export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetSelectedWreck, clickEvent, viewport, setIsFetching, isFetching }) => {
+export const SearchForm = props => {
+  const {
+    wrecks,
+    setMapFilterType,
+    setFilteredWrecks,
+    resetSelectedWreck,
+    clickEvent,
+    viewport,
+    setIsFetching,
+    isFetching
+  } = props;
+
   const [state, setState] = useState({ ...INITIAL_STATE });
 
   useEffect(() => {
@@ -138,8 +149,6 @@ export const SearchForm = ({ wrecks, setMapFilterType, setFilteredWrecks, resetS
       );
     }
   };
-
-  console.log('STATE', state);
 
   return (
     <div className='search-form'>
