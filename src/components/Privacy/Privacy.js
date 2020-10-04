@@ -4,6 +4,7 @@ import { Segment, Button } from 'semantic-ui-react';
 
 import './Privacy.scss';
 
+/* eslint-disable max-len */
 export const Privacy = () => (
   <div className='privacy'>
     <Segment className='privacy-content' raised>
