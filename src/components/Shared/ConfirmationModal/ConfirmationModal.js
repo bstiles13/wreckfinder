@@ -20,11 +20,11 @@ export const ConfirmationModal = ({
       centered={false}
       size={size}
     >
-      <Modal.Header className='confirmation-modal-header'>{header || 'Confirmation'}</Modal.Header>
+      <Modal.Header className='confirmation-modal-header'>{header || 'Confirm'}</Modal.Header>
       <Modal.Content className='confirmation-modal-content'>{children}</Modal.Content>
       <Modal.Actions>
         <Button
-          className='m1-button-secondary confirmation-modal-cancel-button'
+          className='button-secondary confirmation-modal-cancel-button'
           onClick={onCancel}
         >
           Cancel

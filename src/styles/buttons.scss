@@ -1,9 +1,11 @@
- @import './colors.scss';
+@import './colors.scss';
 
- .button-primary {
+.button-primary {
+  background-color: $theme-primary-color !important;
+  color: $white !important;
 
   button {
     background-color: $theme-primary-color !important;
     color: $white !important;
   }
- }
+}
