@@ -18,9 +18,13 @@
           display: flex;
           text-align: left;
           cursor: pointer;
+
+          &:not(.selected):hover {
+            background-color: rgb(239, 248, 252);
+          }
         }
   
-        &.selected, &.selectable:hover {
+        &.selected {
           background-color: rgb(227, 244, 252);
           box-shadow: 0 8px 8px -5px rgb(227, 244, 252);
         }
