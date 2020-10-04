@@ -68,7 +68,7 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
         <Icon name='favorite' />Favorites
       </Menu.Item>
       <Popup
-        content='Coming soon'
+        content='Coming Soon'
         position='bottom center'
         trigger={
           <Menu.Item

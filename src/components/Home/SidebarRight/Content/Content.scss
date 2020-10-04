@@ -11,7 +11,8 @@
       &-row {
         display: flex;
         flex-direction: column;
-        padding: 0.7rem;
+        padding: 0.7rem 0.7rem 1rem 0.7rem;
+        border-bottom: 1px solid rgb(228, 228, 228);
   
         &.selectable {
           display: flex;
@@ -20,7 +21,8 @@
         }
   
         &.selected, &.selectable:hover {
-          background-color: rgb(243, 243, 243);
+          background-color: rgb(227, 244, 252);
+          box-shadow: 0 8px 8px -5px rgb(227, 244, 252);
         }
       }
   
