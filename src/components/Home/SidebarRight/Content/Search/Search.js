@@ -7,7 +7,14 @@ import { Placeholder } from '../../../../Shared/Placeholder/Placeholder';
 
 import './Search.scss';
 
-export const Search = ({ isActive, wrecks, selectedWreck, setSelectedWreck, fetchArticles, createFavorite, deleteFavorite, fetchFavorites, setActiveTab, favorites, favoritesFetching }) => {
+export const Search = props => {
+  const {
+    isActive,
+    wrecks,
+    selectedWreck,
+    favoritesFetching
+  } = props;
+
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
@@ -38,7 +45,7 @@ export const Search = ({ isActive, wrecks, selectedWreck, setSelectedWreck, fetc
                 </Message>
               </Placeholder>
             )
-            : renderWreckList({ wrecks, selectedWreck, setSelectedWreck, fetchArticles, createFavorite, deleteFavorite, fetchFavorites, setActiveTab, favorites })
+            : renderWreckList({ ...props })
         }
       </div>
     </div>

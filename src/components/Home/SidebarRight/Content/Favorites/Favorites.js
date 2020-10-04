@@ -6,7 +6,14 @@ import { Placeholder } from '../../../../Shared/Placeholder/Placeholder';
 
 import './Favorites.scss';
 
-export const Favorites = ({ isActive, wrecks, selectedWreck, setSelectedWreck, isFetching, fetchArticles, createFavorite, deleteFavorite, fetchFavorites, setActiveTab, favorites }) => {
+export const Favorites = props => {
+  const {
+    isActive,
+    wrecks,
+    selectedWreck,
+    isFetching
+  } = props;
+
   useEffect(() => {
     if (!selectedWreck) {
       const element = get(document.getElementsByClassName('favorites'), '0');
@@ -33,7 +40,7 @@ export const Favorites = ({ isActive, wrecks, selectedWreck, setSelectedWreck, i
               </Message>
             </Placeholder>
           )
-          : renderWreckList({ wrecks, selectedWreck, setSelectedWreck, fetchArticles, createFavorite, deleteFavorite, fetchFavorites, setActiveTab, favorites })
+          : renderWreckList({ ...props })
       }
       <Step.Group size='mini' style={{ marginTop: '0.5rem' }}>
         <Step disabled><Step.Content><Step.Title>MENU</Step.Title></Step.Content></Step>

@@ -30,7 +30,18 @@ const handleArticlesSearch = ({ event, query, fetchArticles, setActiveTab }) => 
   fetchArticles(query);
 };
 
-export const renderWreckList = ({ wrecks, selectedWreck, setSelectedWreck, fetchArticles, createFavorite, deleteFavorite, fetchFavorites, setActiveTab, favorites, isFetching }) => (
+export const renderWreckList = ({
+  wrecks,
+  selectedWreck,
+  setSelectedWreck,
+  fetchArticles,
+  createFavorite,
+  deleteFavorite,
+  fetchFavorites,
+  setActiveTab,
+  favorites,
+  isFetching
+}) => (
   <div className='wreck-list'>
     {
       map(wrecks, wreck => {
@@ -79,7 +90,7 @@ export const renderWreckList = ({ wrecks, selectedWreck, setSelectedWreck, fetch
                         onClick={event => handleDeleteFavorite({ event, wreck, deleteFavorite, fetchFavorites })}
                       >
                         <Icon name='minus circle' />
-                        Remove Favorite
+                      Remove Favorite
                       </Button>
                     )
                     : (
@@ -90,7 +101,7 @@ export const renderWreckList = ({ wrecks, selectedWreck, setSelectedWreck, fetch
                         onClick={event => handleCreateFavorite({ event, wreck, createFavorite, fetchFavorites })}
                       >
                         <Icon name='star' />
-                        Add Favorite
+                      Add Favorite
                       </Button>
                     )
                 }

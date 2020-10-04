@@ -20,7 +20,7 @@ import {
 
 import './Content.scss';
 
-export const Content = (props) => {
+export const Content = props => {
   const {
     activeTab,
     setActiveTab,

@@ -88,10 +88,23 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
           <Menu.Menu onClick={e => e.stopPropagation()}>
             {
               get(session, 'id')
-                ? (<>
-                  <Menu.Item className='settings-option' vertical as='a' href={`${authOrigin}/auth/logout/`}>Sign Out</Menu.Item>
-                </>)
-                : <Menu.Item className='settings-option' vertical as='a' href={`${authOrigin}/auth/login/`}><Icon className='login-icon' name='facebook' />Sign In</Menu.Item>
+                ? <Menu.Item
+                  className='settings-option'
+                  vertical
+                  as='a'
+                  href={`${authOrigin}/auth/logout/`}>
+                  Sign Out
+                </Menu.Item>
+                : (
+                  <Menu.Item
+                    className='settings-option'
+                    vertical
+                    as='a'
+                    href={`${authOrigin}/auth/login/`}>
+                    <Icon className='login-icon' name='facebook' />
+                    Sign In
+                  </Menu.Item>
+                )
             }
             <Menu.Item className='settings-option' vertical as={Link} to='/privacy'>Privacy</Menu.Item>
           </Menu.Menu>
