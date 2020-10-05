@@ -74,9 +74,9 @@ export const Marker = props => {
                 {wreck.properties.featureTypeShort}
                 {wreck.properties.yearSunk && `: sunk ${wreck.properties.yearSunk}`}
               </Card.Meta>
-              <Card.Description>
+              <Card.Description className='wreck-popup-description'>
                 <ShowMoreText
-                  lines={3}
+                  lines={4}
                   more='Show more'
                   less='Show less'
                   anchorClass='test'

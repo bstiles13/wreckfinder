@@ -9,6 +9,11 @@
     }
   }
 
+  &-description {
+    max-height: 25rem !important;
+    overflow-y: auto !important;
+  }
+
   .ui.card {
     box-shadow: none !important;
   }
