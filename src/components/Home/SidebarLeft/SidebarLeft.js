@@ -5,8 +5,10 @@ import {
   Icon,
   Sidebar,
   Menu,
-  Popup
+  Popup,
+  Modal
 } from 'semantic-ui-react';
+import { About } from './About/About';
 
 import './SidebarLeft.scss';
 
@@ -109,8 +111,18 @@ export const SidebarLeft = ({ session, activeTab, setActiveTab, resetMap, setMap
             <Menu.Item className='settings-option' vertical as={Link} to='/privacy'>Privacy</Menu.Item>
           </Menu.Menu>
         )}
-
       </Menu.Item>
+      <Modal
+        trigger={
+          <Menu.Item as='a'>
+            <Icon name='info circle' />About
+          </Menu.Item>
+        }
+        centered={false}
+        closeIcon
+      >
+        <About />
+      </Modal>
       <div className='layer-toggle-container'>
         <div
           className={`layer-toggle layer-toggle-top layer-toggle-oceans ${layer.type === 'Oceans' ? 'active' : 'inactive'}`}
