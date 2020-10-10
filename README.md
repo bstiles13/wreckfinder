@@ -1,6 +1,6 @@
 # US Shipwreck Finder
 
-Search for over 24,000 shipwrecks and obstructions recorded in United States waters. Wreck data is extracted from NOAA archives and imported into MongoDB. React-Redux frontend features an advasnced search and user favorites. Backend is built with Node.js, Express, MongoDB and Passport. Mapping via Leaflet.
+Search for over 24,000 shipwrecks and obstructions recorded in United States waters. Wreck data is extracted from NOAA archives and imported into MongoDB. React-Redux frontend features an advanced search and user favorites. Backend is built with Node.js, Express, MongoDB and Passport. Mapping via Leaflet.
 
 ## Search
 
