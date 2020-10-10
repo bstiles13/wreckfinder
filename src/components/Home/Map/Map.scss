@@ -17,12 +17,17 @@
     &-zoom {
       transform: rotate(90deg);
       left: 40%;
-      bottom: -0.8rem !important;
-      position: fixed !important;
+      bottom: -0.8rem;
+      position: fixed;
     }
 
     &-zoom-in, &-zoom-out {
-      background-color: rgba(255, 255, 255, 0.5) !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(90deg);
+      background-color: rgba(255, 255, 255, 0.5);
+      padding-bottom: 0.1rem;
     }
   }
   
