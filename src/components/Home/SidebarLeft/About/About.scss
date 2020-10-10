@@ -1,7 +1,7 @@
 @import '../../../../styles/colors.scss';
 
-$link: #014496;
-$link-hover: #0f57ae;
+$link: #397cbe;
+$link-hover: #3985cf;
 
 .about-content {
   &-segment {
@@ -19,6 +19,8 @@ $link-hover: #0f57ae;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: .28571429rem;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
     height: 10rem;
     width: 18rem;
     padding: 1rem 0.5rem;
