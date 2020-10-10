@@ -13,9 +13,17 @@
     transform: rotate(1deg);
   }
 
-  .leaflet-control-zoom {
-    bottom: 0.8rem !important;
-    position: fixed !important;
+  .leaflet-control {
+    &-zoom {
+      transform: rotate(90deg);
+      left: 40%;
+      bottom: -0.8rem !important;
+      position: fixed !important;
+    }
+
+    &-zoom-in, &-zoom-out {
+      background-color: rgba(255, 255, 255, 0.5) !important;
+    }
   }
   
   .leaflet-div-icon {
